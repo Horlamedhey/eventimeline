@@ -7,6 +7,14 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0"
+    "gridsome": "^0.7.0",
+    "gridsome-plugin-base-components": "^0.0.12"
+  },
+  "devDependencies": {
+    "gridsome-plugin-svg": "^0.0.14",
+    "gridsome-plugin-tailwindcss": "^3.0.1",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "tailwindcss-plugin-fancy": "^1.2.22"
   }
 }

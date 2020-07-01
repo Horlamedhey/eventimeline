@@ -5,6 +5,38 @@
 // To restart press CTRL + C in terminal and run `gridsome develop`
 
 module.exports = {
-  siteName: 'Gridsome',
-  plugins: []
-}
+  siteName: "Eventimeline",
+  siteUrl: "https://eventimeline.vercel.app",
+  // runtimeCompiler: true,
+  plugins: [
+    { use: "gridsome-plugin-tailwindcss" },
+    { use: "gridsome-plugin-base-components" },
+    {
+      use: "gridsome-plugin-svg",
+      options: {
+        // default options below
+        goesBothWays: false,
+        svgo: [
+          {
+            removeTitle: false,
+          },
+          {
+            prefixIds: {
+              prefix: (_, { path }) => basename(path, ".svg"),
+              delim: "-",
+            },
+          },
+          {
+            removeDesc: false,
+          },
+          {
+            removeViewBox: false,
+          },
+          {
+            sortAttrs: true,
+          },
+        ],
+      },
+    },
+  ],
+};

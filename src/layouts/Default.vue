@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="h-full">
     <header class="header">
       <strong>
         <g-link to="/">{{ $static.metadata.siteName }}</g-link>
@@ -9,7 +9,27 @@
         <g-link class="nav__link" to="/about/">About</g-link>
       </nav>
     </header>
-    <slot/>
+    <transition name="fade" appear>
+      <main>
+        <slot />
+      </main>
+    </transition>
+    <div
+      class="flex items-center justify-center fixed top-0 bottom-0 left-0 right-0 bg-primary"
+    >
+      <g-image
+        src="~/assets/svg/confetti-49.gif"
+        quality="100"
+        fit="contain"
+        class="h-full w-full"
+      ></g-image>
+      <g-image
+        src="~/assets/svg/bg-logo.svg"
+        quality="100"
+        fit="contain"
+        class="absolute top-auto left-auto"
+      ></g-image>
+    </div>
   </div>
 </template>
 
@@ -22,10 +42,14 @@ query {
 </static-query>
 
 <style>
+html {
+  height: 100vh;
+}
 body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
+  height: inherit;
+  font-family: Quicksand;
+  margin: 0;
+  padding: 0;
   line-height: 1.5;
 }
 
