@@ -14,22 +14,26 @@
         <slot />
       </main>
     </transition>
-    <div
-      class="flex items-center justify-center fixed top-0 bottom-0 left-0 right-0 bg-primary"
-    >
-      <g-image
-        src="~/assets/svg/confetti-49.gif"
-        quality="100"
-        fit="contain"
-        class="h-full w-full"
-      ></g-image>
-      <g-image
-        src="~/assets/svg/bg-logo.svg"
-        quality="100"
-        fit="contain"
-        class="absolute top-auto left-auto"
-      ></g-image>
-    </div>
+    <transition name="fade">
+      <div
+        v-if="loading"
+        class="flex items-center justify-center fixed top-0 bottom-0 left-0 right-0 bg-primary"
+      >
+        <g-image
+          src="~/assets/svg/confetti-49.gif"
+          quality="100"
+          fit="contain"
+          class="h-full w-full"
+        ></g-image>
+        <g-image
+          src="~/assets/svg/bg-logo.svg"
+          quality="100"
+          fit="contain"
+          blur="90"
+          class="absolute top-auto left-auto"
+        ></g-image>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -40,7 +44,20 @@ query {
   }
 }
 </static-query>
-
+<script>
+export default {
+  data() {
+    return {
+      loading: true,
+    };
+  },
+  mounted() {
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
+  },
+};
+</script>
 <style>
 html {
   height: 100vh;
@@ -53,11 +70,14 @@ body {
   line-height: 1.5;
 }
 
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.8s;
+}
+.fade-enter,
+.fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
 }
 
 .header {
