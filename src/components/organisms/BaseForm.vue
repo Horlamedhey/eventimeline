@@ -42,12 +42,14 @@
 <script>
 import validationErrorMessages from "@/mixins/validationErrorMessages";
 import scrollTo from "@/mixins/scrollTo";
+import BaseButton from "~/components/atoms/BaseButton.vue";
 
 export default {
   name: "BaseForm",
   components: {
     /* eslint-disable vue/no-unused-components */
     BaseFormText: () => import("@/components/molecules/BaseFormText"),
+    BaseButton,
     // VFormRadio: () => import("molecules/VFormRadio"),
     // VFormSelect: () => import("molecules/VFormSelect"),
     // VFormCheckbox: () => import("molecules/VFormCheckbox"),

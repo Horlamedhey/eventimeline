@@ -29,8 +29,11 @@
 </template>
 
 <script>
+import BasePlaceholder from "~/components/atoms/BasePlaceholder.vue";
+import BaseImage from "~/components/atoms/BaseImage.vue";
 export default {
   name: "BaseLazyImage",
+  components: { BasePlaceholder, BaseImage },
   props: {
     /** Image src. Can be a url or local filename which loads from assets folder */
     src: String,

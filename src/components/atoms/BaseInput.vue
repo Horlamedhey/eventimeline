@@ -76,8 +76,12 @@
 </template>
 
 <script>
+import BaseSearchIcon from "~/components/atoms/BaseSearchIcon.vue";
 export default {
   name: "BaseInput",
+  components: {
+    BaseSearchIcon,
+  },
   props: {
     /** Type of the text input. Options ['text', 'email', 'url', 'tel', 'search', 'password'] */
     type: {

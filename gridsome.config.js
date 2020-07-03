@@ -10,7 +10,7 @@ module.exports = {
   runtimeCompiler: true,
   plugins: [
     { use: "gridsome-plugin-tailwindcss" },
-    { use: "gridsome-plugin-base-components" },
+    // { use: "gridsome-plugin-base-components" },
     {
       use: "gridsome-plugin-svg",
       options: {

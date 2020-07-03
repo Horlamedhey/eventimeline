@@ -14,8 +14,6 @@
         </g-link>
       </div>
     </div>
-    <!--  -->
-    <!--  -->
     <div class="flex items-center justify-end w-9/12">
       <BaseInput
         id="search-input"
@@ -59,16 +57,25 @@
         </ul>
       </nav>
     </div>
-    <!--  -->
   </header>
 </template>
 
 <script>
+import BaseInput from "~/components/atoms/BaseInput.vue";
+import BaseButton from "~/components/atoms/BaseButton.vue";
+import BaseChevronDownIcon from "~/components/atoms/BaseChevronDownIcon.vue";
+import BaseAddIcon from "~/components/atoms/BaseAddIcon.vue";
+import BaseSearchIcon from "~/components/atoms/BaseSearchIcon.vue";
+import BaseNavItem from "~/components/atoms/BaseNavItem.vue";
 export default {
   name: "BaseHeader",
-  props: {
-    /** An array of nav item objects. List format: { label: String, to: [String, Array], href: String } */
-    navList: Array,
+  components: {
+    BaseInput,
+    BaseButton,
+    BaseChevronDownIcon,
+    BaseAddIcon,
+    BaseSearchIcon,
+    BaseNavItem,
   },
   data() {
     return {

@@ -27,8 +27,12 @@
 </template>
 
 <script>
+import BaseText from "~/components/atoms/BaseText.vue";
 export default {
   name: "BaseValidationMessages",
+  components: {
+    BaseText,
+  },
   props: {
     errorMessages: {
       type: [Array, String],

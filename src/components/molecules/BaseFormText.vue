@@ -40,8 +40,16 @@
 </template>
 
 <script>
+import BaseInput from "~/components/atoms/BaseInput.vue";
+import BaseLabel from "~/components/atoms/BaseLabel.vue";
+import BaseValidationMessages from '~/components/molecules/BaseValidationMessages.vue'
 export default {
   name: "BaseFormText",
+  components: {
+    BaseInput,
+    BaseLabel,
+    BaseValidationMessages
+  },
   props: {
     /** Label text for the field */
     label: String,

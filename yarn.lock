@@ -4278,11 +4278,6 @@ graphql@^14.4.2:
   dependencies:
     iterall "^1.2.2"
 
-gridsome-plugin-base-components@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/gridsome-plugin-base-components/-/gridsome-plugin-base-components-0.0.12.tgz#4e86d0393cfa0461dc8d76bebae7a5c8eca0155e"
-  integrity sha512-7X6rSmxORccw0pla6zU5aQ1mpxddSrEmsuDjTU6tppRUnrEM2ysmIKgExFodXCH5FuiuRGRmRd5o1BWWYq6yEQ==
-
 gridsome-plugin-svg@^0.0.14:
   version "0.0.14"
   resolved "https://registry.yarnpkg.com/gridsome-plugin-svg/-/gridsome-plugin-svg-0.0.14.tgz#53b46912d0a15e7ac140e0c273657c687123fedf"

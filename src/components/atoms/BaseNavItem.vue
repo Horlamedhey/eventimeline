@@ -13,8 +13,12 @@
 </template>
 
 <script>
+import BaseButton from "~/components/atoms/BaseButton.vue";
 export default {
   name: "BaseNavItem",
+  components: {
+    BaseButton,
+  },
   props: {
     /** to attribute for <router-link> */
     to: {

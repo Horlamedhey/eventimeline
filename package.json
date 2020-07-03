@@ -7,8 +7,7 @@
     "explore": "gridsome explore"
   },
   "dependencies": {
-    "gridsome": "^0.7.0",
-    "gridsome-plugin-base-components": "^0.0.12"
+    "gridsome": "^0.7.0"
   },
   "devDependencies": {
     "gridsome-plugin-svg": "^0.0.14",

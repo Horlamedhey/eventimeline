@@ -18,7 +18,13 @@ query {
 }
 </static-query>
 <script>
+import BaseHeader from "~/components/organisms/BaseHeader.vue";
+import BaseLoader from "~/components/atoms/BaseLoader.vue";
 export default {
+  components: {
+    BaseHeader,
+    BaseLoader,
+  },
   data() {
     return {
       loading: false,
