@@ -7,7 +7,7 @@
 module.exports = {
   siteName: "Eventimeline",
   siteUrl: "https://eventimeline.vercel.app",
-  // runtimeCompiler: true,
+  runtimeCompiler: true,
   plugins: [
     { use: "gridsome-plugin-tailwindcss" },
     { use: "gridsome-plugin-base-components" },

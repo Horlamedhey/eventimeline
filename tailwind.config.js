@@ -1,6 +1,12 @@
 module.exports = {
   purge: [],
   theme: {
+    screens: {
+      sm: { min: "600px" },
+      md: { min: "960px" },
+      lg: { min: "1264px" },
+      xl: { min: "1904px" },
+    },
     fill: (theme) => ({
       secondary: theme("colors.secondary"),
       accent: theme("colors.accent"),
@@ -16,7 +22,7 @@ module.exports = {
         "4-5xl": "2.5rem",
       },
       colors: {
-        primary: "#4d31bf",
+        primary: { default: "#4d31bf", light: "#6B4FDD" },
         secondary: "#ffc510",
         accent: "#ea218d",
         accent2: "#5ee2b3",

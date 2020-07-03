@@ -1,24 +1,10 @@
 <template>
-  <div class="rounded relative" :class="[classList]">
+  <div class="relative rounded " :class="[classList]">
     <div
       v-if="type === 'search'"
-      class="absolute top-0 bottom-0 left-3 m-auto w-8 h-8 group"
+      class="absolute top-0 bottom-0 w-8 h-8 m-auto left-3 group"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-search text-gray-500"
-      >
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-      </svg>
+      <BaseSearchIcon class="w-7 h-7"></BaseSearchIcon>
     </div>
     <input
       :id="id"
@@ -30,7 +16,7 @@
       :placeholder="placeholder"
       :pattern="pattern"
       :inputmode="inputmode"
-      class="px-3 py-4 leading-none bg-transparent outline-none w-full"
+      class="w-full leading-none bg-transparent outline-none"
       :class="[
         inputClassList,
         {
@@ -47,7 +33,7 @@
 
     <div
       v-if="type === 'password'"
-      class="absolute top-0 bottom-0 right-1 m-auto w-8 h-8"
+      class="absolute top-0 bottom-0 w-8 h-8 m-auto right-1"
       @click="handleIconClick"
     >
       <svg

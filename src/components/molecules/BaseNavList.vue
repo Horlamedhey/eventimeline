@@ -1,7 +1,7 @@
 <template>
-  <ul v-if="list.length">
+  <ul v-if="items.length">
     <BaseNavItem
-      v-for="item in list"
+      v-for="item in items"
       :to="item.to"
       :href="item.href"
       :key="item.label"
@@ -16,7 +16,7 @@ export default {
   name: "BaseNavList",
   props: {
     /** An array of nav item objects. List format: { label: String, to: [String, Array], href: String } */
-    list: Array,
+    items: Array,
   },
 };
 </script>

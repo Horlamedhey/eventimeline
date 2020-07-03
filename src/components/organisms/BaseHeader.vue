@@ -1,53 +1,65 @@
 <template>
   <header
-    class="header sm:flex sm:justify-between sm:items-center sm:px-5 sm:py-11"
+    class="flex items-center justify-between px-5 py-3 header sm:px-11 sm:py-5"
   >
-    <div class="flex items-center justify-between px-4 py-3 sm:p-0">
-      <div>
+    <div class="w-auto">
+      <div class="hidden md:block">
         <g-link to="/">
-          <g-image src="~/assets/images/logo.png"></g-image>
+          <g-image src="~/assets/images/logo.png" class=""></g-image>
         </g-link>
       </div>
-      <div class="sm:hidden">
-        <button
-          @click="toggleMenu"
-          type="button"
-          class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
-        >
-          <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path
-              v-if="menuIsOpen"
-              fill-rule="evenodd"
-              d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-            />
-            <path
-              v-if="!menuIsOpen"
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            />
-          </svg>
-        </button>
+      <div class="md:hidden">
+        <g-link to="/">
+          <g-image src="~/assets/images/logo-small.png" class=""></g-image>
+        </g-link>
       </div>
     </div>
+    <!--  -->
+    <!--  -->
+    <div class="flex items-center justify-end w-9/12">
+      <BaseInput
+        id="search-input"
+        name="search"
+        type="search"
+        placeholder="Search for events near you..."
+        classList="bg-gray-200 xl:w-4/6 lg:w-3/6 md:w-4/6 sm:w-7/12 hidden sm:block"
+        inputClassList="text-sm font-inter placeholder-gray-500 py-3"
+      ></BaseInput>
 
-    <BaseInput
-      id="search-input"
-      name="search"
-      type="search"
-      placeholder="Search for events near you..."
-      classList="bg-gray-200 sm:w-1/3 w-9/12"
-      inputClassList="text-sm font-inter placeholder-gray-500"
-    ></BaseInput>
-    <nav :class="menuIsOpen ? 'hidden' : 'block'">
-      <BaseNavList>
-        <BaseNavItem>Help</BaseNavItem>
-        <BaseNavItem>Create</BaseNavItem>
-      </BaseNavList>
-    </nav>
-    <nav
-      :class="menuIsOpen ? 'block' : 'hidden'"
-      class="px-2 pt-2 pb-4 sm:flex sm:p-0"
-    ></nav>
+      <nav class="w-auto text-right ">
+        <ul class="flex items-center justify-end space-x-2">
+          <BaseButton class="sm:hidden">
+            <BaseSearchIcon class="w-6 h-6 sm:hidden"></BaseSearchIcon>
+          </BaseButton>
+
+          <BaseNavItem
+            class="text-sm font-inter"
+            contentClass=" text-gray-500 hover:text-black px-4 py-2 flex items-center  hover:bg-gray-200 rounded transition-colors duration-500 ease-in-out focus:outline-none active:bg-gray-400"
+          >
+            <span>
+              Help
+            </span>
+
+            <BaseChevronDownIcon
+              class="inline-block w-5 h-5"
+            ></BaseChevronDownIcon>
+          </BaseNavItem>
+          <BaseNavItem
+            to="/create"
+            class="text-sm font-inter text-primary"
+            contentClass="px-4 py-2 flex items-center  hover:bg-primary hover:text-white rounded transition-colors duration-500 ease-in-out"
+          >
+            <span class="font-semibold">Create Event</span>
+
+            <BaseAddIcon
+              class="inline-block w-5 h-5"
+              stroke-width="2.5"
+            ></BaseAddIcon>
+          </BaseNavItem>
+        </ul>
+      </nav>
+    </div>
+    <!--  -->
   </header>
 </template>
 

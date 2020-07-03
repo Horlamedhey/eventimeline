@@ -1,12 +1,14 @@
 <template>
   <li @click="$emit('click', $event)" class="list-none">
-    <a v-if="href" :href="href" target="_blank">
+    <a v-if="href" :href="href" target="_blank" :class="contentClass">
       <slot></slot>
     </a>
-    <g-link v-else-if="to" :to="to">
+    <g-link v-else-if="to" :to="to" :class="contentClass">
       <slot></slot>
     </g-link>
-    <slot v-else></slot>
+    <BaseButton v-else :class="contentClass">
+      <slot></slot>
+    </BaseButton>
   </li>
 </template>
 
@@ -20,6 +22,7 @@ export default {
     },
     /** href attribute for <a> */
     href: String,
+    contentClass: [String, Array],
   },
 };
 </script>
