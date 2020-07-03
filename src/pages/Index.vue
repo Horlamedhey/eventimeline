@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <BaseText tag="h1">hey</BaseText>
+    <!-- <BaseText tag="h1">hey</BaseText> -->
   </Layout>
 </template>
 
@@ -12,5 +12,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

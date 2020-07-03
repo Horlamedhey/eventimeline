@@ -1,38 +1,12 @@
 @tailwind base;
 
 @font-face {
-    font-family: "Quicksand";
-    src: url("../assets/Quicksand-Light.ttf");
-    font-weight: 100;
-    font-style: normal;
+    font-family: "Inter";
+    src: url("../assets/fonts/Inter.ttf");
 }
 @font-face {
     font-family: "Quicksand";
-    src: url("../assets/Quicksand-Regular.ttf");
-    font-weight: 200;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Quicksand";
-    src: url("../assets/Quicksand-Medium.ttf");
-    font-weight: 300;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Quicksand";
-    src: url("../assets/Quicksand-SemiBold.ttf");
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: "Quicksand";
-    src: url("../assets/Quicksand-Bold.ttf");
-    font-weight: 500;
-    font-style: normal;
-}
-
-.bg-primary {
-    background-color: #4d31bf;
+    src: url("../assets/fonts/Quicksand.ttf");
 }
 // h1 {
 //     @apply text-2xl;
