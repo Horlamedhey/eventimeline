@@ -43,7 +43,7 @@
             ></BaseChevronDownIcon>
           </BaseNavItem>
           <BaseNavItem
-            to="/create"
+            to="/create-event"
             class="text-sm font-inter text-primary"
             contentClass="px-4 py-2 flex items-center  hover:bg-primary hover:text-white rounded transition-colors duration-500 ease-in-out"
           >
@@ -79,13 +79,13 @@ export default {
   },
   data() {
     return {
-      menuIsOpen: false,
+      // menuIsOpen: false,
     };
   },
   methods: {
-    toggleMenu() {
-      this.menuIsOpen = !this.menuIsOpen;
-    },
+    // toggleMenu() {
+    //   this.menuIsOpen = !this.menuIsOpen;
+    // },
   },
 };
 </script>

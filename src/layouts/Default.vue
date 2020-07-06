@@ -6,6 +6,7 @@
         <slot />
       </main>
     </transition>
+    <BaseFooter></BaseFooter>
     <BaseLoader :loading="loading"></BaseLoader>
   </div>
 </template>
@@ -19,10 +20,12 @@ query {
 </static-query>
 <script>
 import BaseHeader from "~/components/organisms/BaseHeader.vue";
+import BaseFooter from "~/components/organisms/BaseFooter.vue";
 import BaseLoader from "~/components/atoms/BaseLoader.vue";
 export default {
   components: {
     BaseHeader,
+    BaseFooter,
     BaseLoader,
   },
   data() {

@@ -5,6 +5,7 @@
       :to="item.to"
       :href="item.href"
       :key="item.label"
+      :contentClass="contentClass"
       @click="$emit('click', $emit)"
       >{{ item.label }}</BaseNavItem
     >
@@ -21,6 +22,7 @@ export default {
   props: {
     /** An array of nav item objects. List format: { label: String, to: [String, Array], href: String } */
     items: Array,
+    contentClass: [String, Array],
   },
 };
 </script>

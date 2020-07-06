@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <h1 class="text-6xl">Create Event</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error doloremque
       omnis animi, eligendi magni a voluptatum, vitae, consequuntur rerum illum
