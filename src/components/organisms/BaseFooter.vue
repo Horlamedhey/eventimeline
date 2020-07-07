@@ -8,18 +8,18 @@
         :key="`footerLinksList-${i}`"
         class="mt-10"
       >
-        <h2 class="text-2xl font-black">
+        <h2 class="text-lg font-bold">
           {{ footerLinksList.heading }}
         </h2>
         <BaseNavList
           :items="footerLinksList.links"
-          contentClass="text-1xl block mt-2 font-hairline"
+          contentClass="text-base block mt-2"
           class="mt-8"
         ></BaseNavList>
       </div>
     </div>
     <div class="relative z-30 z-40 flex justify-around pb-2">
-      <p class="text-base font-hairline">
+      <p class="text-xs">
         {{ `© ${new Date().getFullYear()} Eventimeline` }}
       </p>
     </div>
