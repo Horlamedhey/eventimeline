@@ -5,12 +5,16 @@
     <div class="w-auto">
       <div class="hidden md:block">
         <g-link to="/">
-          <g-image src="~/assets/images/logo.png" class=""></g-image>
+          <g-image src="~/assets/images/logo.png" alt="logo" class=""></g-image>
         </g-link>
       </div>
       <div class="md:hidden">
         <g-link to="/">
-          <g-image src="~/assets/images/logo-small.png" class=""></g-image>
+          <g-image
+            src="~/assets/images/logo-small.png"
+            alt="logo"
+            class=""
+          ></g-image>
         </g-link>
       </div>
     </div>

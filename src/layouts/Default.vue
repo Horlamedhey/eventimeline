@@ -38,9 +38,7 @@ export default {
   },
   mounted() {
     if (document && document.readyState == "complete") {
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
+      this.loading = false;
       // fetch to next page or some code
     }
   },

@@ -2,13 +2,14 @@
   <transition name="fade">
     <div
       v-if="loading"
-      class="bg-fixed bg-contain flex items-center justify-center fixed top-0 bottom-0 left-0 right-0 bg-primary"
+      class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-fixed bg-contain bg-primary"
       :style="{
         backgroundImage: `url(${require('~/assets/svg/confetti-49.gif')})`,
       }"
     >
       <g-image
         src="~/assets/svg/bg-logo.svg"
+        alt="logo"
         immediate
         quality="100"
         class="loading-logo"

@@ -5,6 +5,7 @@
         <div class="relative sm:mt-12 celebrate-div">
           <g-image
             src="@/assets/svg/celebrate.svg"
+            alt=""
             class="ml-auto sm:ml-0"
           ></g-image>
           <div class="absolute ml-4 sm:-ml-16 top-6">
@@ -30,7 +31,11 @@
         </div>
         <!--  -->
         <div class="-mt-16 selfie-div">
-          <g-image src="@/assets/svg/selfie.svg" class="ml-auto"></g-image>
+          <g-image
+            src="@/assets/svg/selfie.svg"
+            alt=""
+            class="ml-auto"
+          ></g-image>
           <p
             class="px-5 py-4 text-base font-medium font-inter"
             style="margin-left: 3.4rem; color: rgba(77,49,191,0.4)"
