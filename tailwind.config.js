@@ -23,7 +23,7 @@ module.exports = {
       },
       colors: {
         primary: { default: "#4d31bf", light: "#6B4FDD" },
-        secondary: "#ffc510",
+        secondary: { default: "#ffc510", dark: "#FFC100" },
         accent: "#ea218d",
         accent2: "#5ee2b3",
         error: "#ff5252",
@@ -35,6 +35,7 @@ module.exports = {
       fontFamily: {
         inter: ["Inter"],
         quicksand: ["Quicksand"],
+        josefinsans: ["JosefinSans"],
       },
     },
   },

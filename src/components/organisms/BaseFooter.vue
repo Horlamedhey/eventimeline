@@ -1,5 +1,5 @@
 <template>
-  <div class="relative text-white footer sm:absolute font-quicksand">
+  <div class="footer">
     <div
       class="text-center pb-36 pt-full sm:pt-1/3 content-wrapper sm:text-left sm:flex sm:justify-evenly"
     >
@@ -13,7 +13,7 @@
         </h2>
         <BaseNavList
           :items="footerLinksList.links"
-          contentClass="text-base block mt-2"
+          contentClass="text-base block mt-2 font-hairline"
           class="mt-8"
         ></BaseNavList>
       </div>
@@ -79,7 +79,7 @@ export default {
 
 <style lang="scss" scoped>
 .footer {
-  @apply bottom-0 overflow-hidden z-10 w-full bg-transparent;
+  @apply overflow-hidden z-10 w-full bg-transparent text-white relative font-quicksand;
 }
 .content-wrapper {
   @apply w-full relative z-30;

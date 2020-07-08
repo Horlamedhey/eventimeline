@@ -1,13 +1,16 @@
 <template>
-  <div class="h-full">
-    <BaseHeader></BaseHeader>
-    <transition name="fade" appear>
-      <main>
-        <slot />
-      </main>
-    </transition>
+  <div>
+    <div class="h-full">
+      <BaseHeader></BaseHeader>
+      <transition name="fade" appear>
+        <main>
+          <slot />
+        </main>
+      </transition>
+      <BaseLoader :loading="loading" class="z-50"></BaseLoader>
+    </div>
+
     <BaseFooter></BaseFooter>
-    <BaseLoader :loading="loading"></BaseLoader>
   </div>
 </template>
 
@@ -30,13 +33,16 @@ export default {
   },
   data() {
     return {
-      loading: false,
+      loading: true,
     };
   },
   mounted() {
-    // setTimeout(() => {
-    //   this.loading = false;
-    // }, 5000);
+    if (document && document.readyState == "complete") {
+      setTimeout(() => {
+        this.loading = false;
+      }, 2000);
+      // fetch to next page or some code
+    }
   },
   methods: {},
 };
@@ -46,6 +52,7 @@ html {
   height: 100vh;
 }
 body {
+  user-select: none;
   height: inherit;
   margin: 0;
   padding: 0;

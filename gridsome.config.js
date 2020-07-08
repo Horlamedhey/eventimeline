@@ -3,7 +3,6 @@
 
 // Changes here require a server restart.
 // To restart press CTRL + C in terminal and run `gridsome develop`
-
 module.exports = {
   siteName: "Eventimeline",
   siteUrl: "https://eventimeline.vercel.app",
@@ -11,32 +10,10 @@ module.exports = {
   plugins: [
     { use: "gridsome-plugin-tailwindcss" },
     // { use: "gridsome-plugin-base-components" },
-    {
-      use: "gridsome-plugin-svg",
-      options: {
-        // default options below
-        goesBothWays: false,
-        svgo: [
-          {
-            removeTitle: false,
-          },
-          {
-            prefixIds: {
-              prefix: (_, { path }) => basename(path, ".svg"),
-              delim: "-",
-            },
-          },
-          {
-            removeDesc: false,
-          },
-          {
-            removeViewBox: false,
-          },
-          {
-            sortAttrs: true,
-          },
-        ],
-      },
-    },
   ],
+  chainWebpack: (config) => {
+    const svgRule = config.module.rule("svg");
+    svgRule.uses.clear();
+    svgRule.use("vue-svg-loader").loader("vue-svg-loader");
+  },
 };
