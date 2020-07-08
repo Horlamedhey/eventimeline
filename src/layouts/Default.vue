@@ -37,10 +37,7 @@ export default {
     };
   },
   mounted() {
-    if (document && document.readyState == "complete") {
-      this.loading = false;
-      // fetch to next page or some code
-    }
+    this.loading = false;
   },
   methods: {},
 };
