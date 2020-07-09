@@ -2,9 +2,9 @@
   <div class="relative rounded " :class="[classList]">
     <div
       v-if="type === 'search'"
-      class="absolute top-0 bottom-0 w-8 h-8 m-auto left-3 group"
+      class="absolute top-0 bottom-0 flex items-center w-8 h-8 m-auto left-3 group"
     >
-      <BaseSearchIcon class="w-7 h-7"></BaseSearchIcon>
+      <BaseSearchIcon class="w-5 h-5"></BaseSearchIcon>
     </div>
     <input
       :id="id"
@@ -21,7 +21,7 @@
         inputClassList,
         {
           'pr-16': inputType === 'password',
-          'pl-16': inputType === 'search',
+          'pl-12': inputType === 'search',
         },
       ]"
       @input="$emit('input', $event.target.value)"

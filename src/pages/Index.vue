@@ -15,34 +15,34 @@
               to turn-up
               <span class="italic">!</span>
             </h1>
+            <!-- // padding-left: 1rem; // padding-right: 1rem; // padding-top:
+            0.3rem; // padding-bottom: 0.3rem; // margin-top: 0.8rem; -->
             <BaseButton
               to="/events"
-              class="event-buttons bg-secondary-dark focus:outline-none hover:bg-opacity-75"
+              class="px-4 py-1 mt-3 md:px-5 md:py-2 md:mt-5 event-buttons bg-secondary-dark focus:outline-none hover:bg-opacity-75"
             >
               Find events
             </BaseButton>
             <BaseButton
               to="/create-event"
-              class="event-buttons bg-accent focus:outline-none hover:bg-opacity-75"
+              class="px-4 py-1 mt-3 md:px-5 md:py-2 md:mt-5 event-buttons bg-accent focus:outline-none hover:bg-opacity-75"
             >
               Organise event and ticketing
             </BaseButton>
           </div>
         </div>
         <!--  -->
-        <div class="-mt-16 selfie-div">
+        <div class="relative selfie-div">
           <g-image
             src="@/assets/svg/selfie.svg"
             alt=""
             class="ml-auto"
           ></g-image>
           <p
-            class="px-5 py-4 text-base font-medium font-inter"
-            style="margin-left: 3.4rem; color: rgba(77,49,191,0.4)"
+            class="absolute flex justify-end px-5 py-4 ml-0 text-base font-medium font-inter intro-text sm:block sm:ml-8"
+            style="color: rgba(77,49,191,0.4)"
           >
-            Find and organise events
-            <br />
-            close to you & everything in-between
+            Find and organise events close to you & everything in-between
           </p>
         </div>
       </div>
@@ -72,15 +72,29 @@ export default {
 </script>
 
 <style lang="scss">
+.selfie-div {
+  margin-top: -1rem;
+}
 @media (min-width: 600px) {
   .selfie-div {
-    margin-left: -3rem;
+    margin-left: -2.3rem;
     margin-top: 0 !important;
+
+    .intro-text {
+      // margin-left: 3.4rem;
+    }
+  }
+}
+@media (min-width: 960px) {
+  .selfie-div {
+    margin-left: -2.6rem;
   }
 }
 @media (max-width: 330px) {
   .celebrate-div {
-    padding-bottom: 2rem;
+  }
+  .selfie-div {
+    margin-top: -0.85rem;
   }
 }
 @media (max-width: 600px) {
@@ -88,13 +102,8 @@ export default {
     z-index: -1;
   }
 }
-@media (min-width: 960px) {
-  .selfie-div {
-    margin-left: -3.4rem;
-  }
-}
 .event-buttons {
   width: fit-content;
-  @apply block px-5 py-3 mt-10 rounded font-inter font-semibold text-base text-white transition-all duration-500 ease-in-out;
+  @apply block rounded font-inter font-semibold text-base text-white transition-all duration-500 ease-in-out;
 }
 </style>

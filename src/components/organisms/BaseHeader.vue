@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex items-center justify-between px-5 py-3 header sm:px-11 sm:py-5"
+    class="flex items-center justify-between px-2 py-3 header sm:px-11 sm:py-5"
   >
     <div class="w-auto">
       <div class="hidden md:block">
@@ -24,32 +24,32 @@
         name="search"
         type="search"
         placeholder="Search for events near you..."
-        classList="bg-gray-200 xl:w-4/6 lg:w-3/6 md:w-4/6 sm:w-7/12 hidden sm:block"
+        classList="bg-gray-200 xl:w-4/6 lg:w-3/6 md:w-4/6 sm:w-7/12 hidden sm:block mr-1"
         inputClassList="text-sm font-inter placeholder-gray-500 py-3"
       ></BaseInput>
 
-      <nav class="w-auto text-right ">
-        <ul class="flex items-center justify-end space-x-2">
+      <nav class="w-auto text-right">
+        <ul class="flex items-center justify-end sm:space-x-2">
           <BaseButton class="sm:hidden">
-            <BaseSearchIcon class="w-6 h-6 sm:hidden"></BaseSearchIcon>
+            <BaseSearchIcon class="w-5 h-5 sm:hidden"></BaseSearchIcon>
           </BaseButton>
 
           <BaseNavItem
-            class="text-sm font-inter"
-            contentClass=" text-gray-500 hover:text-black px-4 py-2 flex items-center  hover:bg-gray-200 rounded transition-colors duration-500 ease-in-out focus:outline-none active:bg-gray-400"
+            class="ml-1 text-xs sm:text-sm font-inter"
+            contentClass=" text-gray-500 hover:text-black px-2 py-1 flex items-center  hover:bg-gray-200 rounded transition-colors duration-500 ease-in-out focus:outline-none active:bg-gray-400"
           >
             <span>
               Help
             </span>
 
             <BaseChevronDownIcon
-              class="inline-block w-5 h-5"
+              class="inline-block w-4 h-4"
             ></BaseChevronDownIcon>
           </BaseNavItem>
           <BaseNavItem
             to="/create-event"
-            class="text-sm font-inter text-primary"
-            contentClass="px-4 py-2 flex items-center  hover:bg-primary hover:text-white rounded transition-colors duration-500 ease-in-out"
+            class="text-xs sm:text-sm font-inter text-primary"
+            contentClass="px-2 py-1 flex items-center  hover:bg-primary hover:text-white rounded transition-colors duration-500 ease-in-out whitespace-no-wrap"
           >
             <span class="font-semibold">Create Event</span>
 
