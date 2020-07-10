@@ -7,7 +7,6 @@
           <slot />
         </main>
       </transition>
-      <BaseLoader :loading="loading" class="z-50"></BaseLoader>
     </div>
 
     <BaseFooter></BaseFooter>
@@ -24,21 +23,15 @@ query {
 <script>
 import BaseHeader from "~/components/organisms/BaseHeader.vue";
 import BaseFooter from "~/components/organisms/BaseFooter.vue";
-import BaseLoader from "~/components/atoms/BaseLoader.vue";
 export default {
   components: {
     BaseHeader,
     BaseFooter,
-    BaseLoader,
   },
   data() {
-    return {
-      loading: true,
-    };
+    return {};
   },
-  mounted() {
-    this.loading = false;
-  },
+  mounted() {},
   methods: {},
 };
 </script>

@@ -24,12 +24,28 @@ module.exports = {
       colors: {
         primary: { default: "#4d31bf", light: "#6B4FDD" },
         secondary: { default: "#ffc510", dark: "#FFC100" },
+        black: {
+          default: "#000000",
+          "100": "rgba(0, 0, 0, 0.1)",
+          "200": "rgba(0, 0, 0, 0.2)",
+          "300": "rgba(0, 0, 0, 0.3)",
+          "400": "rgba(0, 0, 0, 0.4)",
+          "500": "rgba(0, 0, 0, 0.5)",
+          "600": "rgba(0, 0, 0, 0.6)",
+          "700": "rgba(0, 0, 0, 0.7)",
+          "800": "rgba(0, 0, 0, 0.8)",
+          "900": "rgba(0, 0, 0, 0.9)",
+        },
         accent: "#ea218d",
         accent2: "#5ee2b3",
         error: "#ff5252",
         info: "#2196f3",
         success: "#4caf50",
         warning: "#ffc107",
+        "gray-variant": "#c4c4c4",
+        "gray-variant1": "#f0f0f0",
+        "gray-variant2": "#b5b5b5",
+        "gray-variant3": "#8b8b8b",
         // ...
       },
       fontFamily: {

@@ -1,12 +1,13 @@
 <template>
   <div class="footer">
     <div
-      class="text-center pb-36 pt-full sm:pt-1/3 content-wrapper sm:text-left sm:flex sm:justify-evenly"
+      class="flex flex-wrap justify-center sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
     >
       <div
         v-for="(footerLinksList, i) in footerLinksLists"
         :key="`footerLinksList-${i}`"
-        class="mt-10"
+        class="m-4"
+        style="width: fit-content"
       >
         <h2 class="text-lg font-bold">
           {{ footerLinksList.heading }}
@@ -14,7 +15,8 @@
         <BaseNavList
           :items="footerLinksList.links"
           contentClass="text-base block mt-2 font-hairline"
-          class="mt-8"
+          class="mt-5"
+          style="width: fit-content"
         ></BaseNavList>
       </div>
     </div>

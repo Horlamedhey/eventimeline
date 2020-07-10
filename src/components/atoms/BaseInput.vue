@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import BaseSearchIcon from "~/components/atoms/BaseSearchIcon.vue";
+import BaseSearchIcon from "~/components/atoms/icons/BaseSearchIcon.vue";
 export default {
   name: "BaseInput",
   components: {

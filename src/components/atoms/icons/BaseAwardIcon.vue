@@ -9,15 +9,16 @@
     stroke-width="2"
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="feather feather-chevron-down"
+    class="feather feather-award"
   >
-    <polyline points="6 9 12 15 18 9"></polyline>
+    <circle cx="12" cy="8" r="7"></circle>
+    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
   </svg>
 </template>
 
 <script>
 export default {
-  name: "BaseAddIcon",
+  name: "BaseAwardIcon",
 };
 </script>
 

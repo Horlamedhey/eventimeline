@@ -67,9 +67,9 @@
 <script>
 import BaseInput from "~/components/atoms/BaseInput.vue";
 import BaseButton from "~/components/atoms/BaseButton.vue";
-import BaseChevronDownIcon from "~/components/atoms/BaseChevronDownIcon.vue";
-import BaseAddIcon from "~/components/atoms/BaseAddIcon.vue";
-import BaseSearchIcon from "~/components/atoms/BaseSearchIcon.vue";
+import BaseChevronDownIcon from "~/components/atoms/icons//BaseChevronDownIcon.vue";
+import BaseAddIcon from "~/components/atoms/icons/BaseAddIcon.vue";
+import BaseSearchIcon from "~/components/atoms/icons/BaseSearchIcon.vue";
 import BaseNavItem from "~/components/atoms/BaseNavItem.vue";
 export default {
   name: "BaseHeader",
