@@ -1,13 +1,15 @@
 <template>
   <div class="footer">
     <div
-      class="flex flex-wrap justify-center sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
+      class="flex flex-wrap justify-between px-6 mt-10 sm:px-0 sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
     >
+      <!-- <div
+      class="flex flex-wrap justify-center px-2 mt-10 sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
+    > -->
       <div
         v-for="(footerLinksList, i) in footerLinksLists"
         :key="`footerLinksList-${i}`"
-        class="m-4"
-        style="width: fit-content"
+        class=""
       >
         <h2 class="text-lg font-bold">
           {{ footerLinksList.heading }}
@@ -15,12 +17,10 @@
         <BaseNavList
           :items="footerLinksList.links"
           contentClass="text-base block mt-2 font-hairline"
-          class="mt-5"
-          style="width: fit-content"
         ></BaseNavList>
       </div>
     </div>
-    <div class="relative z-30 z-40 flex justify-around pb-2">
+    <div class="relative z-30 z-40 flex justify-center pb-2">
       <p class="text-xs">
         {{ `© ${new Date().getFullYear()} Eventimeline` }}
       </p>
