@@ -1,5 +1,5 @@
 <template>
-  <div class="m-4">
+  <div>
     <h2 class="text-black-700 text-tinier font-inter">
       Categories
     </h2>

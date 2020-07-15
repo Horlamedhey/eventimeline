@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="h-full">
+    <div>
       <BaseHeader></BaseHeader>
       <transition name="fade" appear>
         <main>

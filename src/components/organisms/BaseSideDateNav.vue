@@ -1,11 +1,11 @@
 <template>
-  <div class="m-4 mt-10">
+  <div class="mt-10">
     <h2 class="text-black-700 text-tinier font-inter">
       Timeline
     </h2>
     <BaseNavList
       :items="categories"
-      contentContainerClass="flex items-center group content-container-class mt-4 hover:shadow bg-gray-variant1 hover:bg-white  transition duration-300 ease-in overflow-x-hidden"
+      contentContainerClass="flex items-center group content-container-class mt-4 hover:shadow bg-gray-variant1 hover:bg-white  transition duration-300 ease-in overflow-x-hidden rounded"
       contentClass="text-base font-josefinsans font-normal text-gray-variant flex transition duration-300 ease-in group-hover:bg-white group-hover:text-black-600 rounded py-2 px-16 pr-full whitespace-no-wrap"
       activeClass="important-white-bg-text transition duration-300 ease-in"
       activeAddonClass="text-black-600 transition duration-300 ease-in"
