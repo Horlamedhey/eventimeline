@@ -3,7 +3,7 @@
     <BaseLandingSection></BaseLandingSection>
     <div
       ref="mainContainer"
-      class="relative flex mt-48 divide-x"
+      class="relative flex mt-48 divide-x sm:mt-32"
       :style="{ minHeight: sideMenuHeight }"
     >
       <!-- sidebar -->
