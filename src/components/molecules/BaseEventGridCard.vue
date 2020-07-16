@@ -4,7 +4,7 @@
       class="relative flex justify-center overflow-hidden"
       style="border-radius: 1.25rem;"
     >
-      <g-image :src="event.image" />
+      <g-image :src="event.image" style="width:100%" />
       <BaseButton>
         <BaseHeartIcon
           class="absolute text-white right-4 top-3"

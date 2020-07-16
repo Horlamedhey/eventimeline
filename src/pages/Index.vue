@@ -1,46 +1,6 @@
 <template>
   <Layout>
-    <div class="container justify-center mx-auto mt-8 sm:flex">
-      <div class="relative sm:mt-12 celebrate-div">
-        <g-image
-          src="@/assets/svg/celebrate.svg"
-          alt=""
-          class="ml-auto sm:ml-0"
-        ></g-image>
-        <div class="absolute ml-4 sm:-ml-16 top-6">
-          <h1 class="font-bold font-josefinsans text-4-5xl">
-            Ready
-            <br />
-            to turn-up
-            <span class="italic">!</span>
-          </h1>
-          <!-- // padding-left: 1rem; // padding-right: 1rem; // padding-top:
-            0.3rem; // padding-bottom: 0.3rem; // margin-top: 0.8rem; -->
-          <BaseButton
-            to="/events"
-            class="px-5 py-2 mt-3 md:mt-5 event-buttons bg-secondary-dark focus:outline-none hover:bg-opacity-75"
-          >
-            Find events
-          </BaseButton>
-          <BaseButton
-            to="/create-event"
-            class="px-5 py-2 mt-3 md:mt-5 event-buttons bg-accent focus:outline-none hover:bg-opacity-75"
-          >
-            Organise event and ticketing
-          </BaseButton>
-        </div>
-      </div>
-      <!--  -->
-      <div class="relative selfie-div">
-        <g-image src="@/assets/svg/selfie.svg" alt="" class="ml-auto"></g-image>
-        <p
-          class="absolute flex justify-end px-5 py-4 ml-0 text-base font-medium font-inter intro-text sm:block sm:ml-8"
-          style="color: rgba(77,49,191,0.4)"
-        >
-          Find and organise events close to you & everything in-between
-        </p>
-      </div>
-    </div>
+    <BaseLandingSection></BaseLandingSection>
     <div
       ref="mainContainer"
       class="relative flex mt-48 divide-x"
@@ -69,51 +29,15 @@
         </div>
       </div>
       <!-- Main content -->
-      <div
-        ref="mainContent"
-        class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-6/12 lg:translate-x-4/12 lg:w-9/12"
-        :class="
-          sidebarOpen
-            ? ['translate-x-10/12', 'sm:translate-x-6/12', 'ease-out']
-            : 'translate-x-0 ease-in'
-        "
-      >
-        <div class="flex items-center">
-          <BaseButton
-            class="mr-4 md:hidden focus:outline-none"
-            @click="sidebarOpen = !sidebarOpen"
-          >
-            <BaseSideBarIcon
-              :class="sidebarOpen ? 'text-secondary' : 'text-gray-variant'"
-            ></BaseSideBarIcon>
-          </BaseButton>
-          <h1
-            class="pt-1 font-semibold capitalize md:pt-0 text-1xl font-josefinsans"
-            style="color: #1b1b1b"
-          >
-            Popular
-            <span
-              v-if="$route.query.timeline"
-              class="text-base font-normal font-quicksand"
-              style="color: rgba(27, 27, 27, 0.6);"
-            >
-              {{ $route.query.timeline.split("-").join(" ") }}
-            </span>
-          </h1>
-        </div>
-        <div
-          class="flex flex-wrap items-center justify-center mt-12 events-container"
-        >
-          <!-- <div class="grid items-center grid-cols-1 mt-16 sm:grid-cols-2 "> -->
-          <BaseEventGridCard
-            v-for="event in $page.events.edges"
-            :key="event.node.id"
-            :event="event.node"
-            class="mx-3 mb-10"
-          ></BaseEventGridCard>
-        </div>
-      </div>
+      <BaseEventCardsSection
+        :events="$page.events.edges"
+        :sidebarOpen="sidebarOpen"
+        :toggleSideBarOpen="() => (sidebarOpen = !sidebarOpen)"
+      ></BaseEventCardsSection>
     </div>
+
+    <BaseAnnounceDecor></BaseAnnounceDecor>
+    <BasePartners></BasePartners>
 
     <BaseLoader :loading="loading" class="z-50"></BaseLoader>
   </Layout>
@@ -137,23 +61,27 @@ query{
 <script>
 import BaseButton from "~/components/atoms/BaseButton.vue";
 import BaseLoader from "~/components/atoms/BaseLoader.vue";
-import BaseSideBarIcon from "~/components/atoms/icons/BaseSideBarIcon.vue";
 import BaseSideCatNav from "~/components/organisms/BaseSideCatNav.vue";
 import BaseSideDateNav from "~/components/organisms/BaseSideDateNav.vue";
 import BaseInput from "~/components/atoms/BaseInput.vue";
-import BaseEventGridCard from "~/components/molecules/BaseEventGridCard.vue";
+import BaseAnnounceDecor from "~/components/organisms/BaseAnnounceDecor.vue";
+import BaseLandingSection from "~/components/organisms/BaseLandingSection.vue";
+import BaseEventCardsSection from "~/components/organisms/BaseEventCardsSection.vue";
+import BasePartners from "~/components/organisms/BasePartners.vue";
 export default {
   metaInfo: {
     title: "Home",
   },
   components: {
+    BaseLandingSection,
     BaseButton,
     BaseLoader,
-    BaseSideBarIcon,
     BaseSideCatNav,
     BaseSideDateNav,
     BaseInput,
-    BaseEventGridCard,
+    BaseAnnounceDecor,
+    BaseEventCardsSection,
+    BasePartners,
   },
   data() {
     return {
@@ -208,13 +136,11 @@ export default {
     z-index: -1;
   }
 }
-@media (min-width: 421px) {
-  .events-container {
-    justify-content: flex-start;
-  }
-}
 .event-buttons {
+  @apply block rounded transition-all duration-500 ease-in-out cursor-pointer;
+}
+.top-event-buttons {
   width: fit-content;
-  @apply block rounded font-inter font-semibold text-base text-white transition-all duration-500 ease-in-out;
+  @apply font-inter font-semibold text-base text-white;
 }
 </style>
