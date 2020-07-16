@@ -1,7 +1,12 @@
 <template>
-  <div class="footer">
+  <div
+    class="absolute bottom-0 w-full overflow-hidden text-white font-quicksand footer"
+  >
+    <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+      <polygon points="0,20 100,20 100,0" />
+    </svg>
     <div
-      class="flex flex-wrap justify-between px-6 mt-10 sm:px-0 sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
+      class="relative flex flex-wrap justify-between w-full px-6 pt-32 pb-24 bg-black sm:px-0 sm:justify-evenly"
     >
       <!-- <div
       class="flex flex-wrap justify-center px-2 mt-10 sm:justify-evenly pb-36 pt-full sm:pt-1/3 content-wrapper"
@@ -20,7 +25,7 @@
         ></BaseNavList>
       </div>
     </div>
-    <div class="relative z-30 z-40 flex justify-center pb-2">
+    <div class="relative z-30 z-40 flex justify-center pb-2 bg-black">
       <p class="text-xs">
         {{ `© ${new Date().getFullYear()} Eventimeline` }}
       </p>
@@ -37,6 +42,7 @@ export default {
   },
   data() {
     return {
+      computedPadding: "unset",
       footerLinksLists: [
         {
           heading: "Use Eventimeline",
@@ -76,40 +82,45 @@ export default {
       ],
     };
   },
+  computed: {},
 };
 </script>
 
 <style lang="scss" scoped>
-.footer {
-  @apply overflow-hidden z-10 w-full bg-transparent text-white relative font-quicksand;
+svg {
+  width: 100%;
+  fill: white;
+  max-height: 100px;
+  position: absolute;
+  top: 0;
+  transform: rotateX(180deg);
+  z-index: 1;
+  margin-top: -1px;
 }
-.content-wrapper {
-  @apply w-full relative z-30;
-}
-.footer::after {
-  content: "";
-  top: 32%;
-  height: 200%;
-  @apply absolute w-full block transform skew-y-6 bg-black z-20;
-}
-@media (min-width: 600px) {
-  .footer::after {
-    top: 36%;
-  }
-}
-@media (min-width: 960px) {
-  .footer::after {
-    top: 42%;
-  }
-}
-@media (min-width: 1264px) {
-  .footer::after {
-    top: 50%;
-  }
-}
-@media (min-width: 1904px) {
-  .footer::after {
-    top: 60%;
-  }
-}
+// .footer::after {
+//   content: "";
+//   top: 32%;
+//   height: 200%;
+//   @apply absolute w-full block transform skew-y-6 bg-black z-20;
+// }
+// @media (min-width: 600px) {
+//   .footer::after {
+//     top: 36%;
+//   }
+// }
+// @media (min-width: 960px) {
+//   .footer::after {
+//     top: 42%;
+//   }
+// }
+// @media (min-width: 1264px) {
+//   .footer::after {
+//     top: 50%;
+//   }
+// }
+// @media (min-width: 1904px) {
+//   .footer::after {
+//     top: 60%;
+//   }
+// }
 </style>

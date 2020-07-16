@@ -30,7 +30,6 @@
       </div>
       <!-- Main content -->
       <BaseEventCardsSection
-        :events="$page.events.edges"
         :sidebarOpen="sidebarOpen"
         :toggleSideBarOpen="() => (sidebarOpen = !sidebarOpen)"
       ></BaseEventCardsSection>

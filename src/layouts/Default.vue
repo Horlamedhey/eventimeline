@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>
+  <div class="relative min-h-full">
+    <div class="body-content">
       <BaseHeader></BaseHeader>
       <transition name="fade" appear>
         <main>
@@ -31,7 +31,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  computed: {},
   methods: {},
 };
 </script>
@@ -45,5 +45,18 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
+}
+.body-content {
+  padding-bottom: 45rem;
+}
+@media (min-width: 600px) {
+  .body-content {
+    padding-bottom: 40rem;
+  }
+}
+@media (min-width: 960px) {
+  .body-content {
+    padding-bottom: 35rem;
+  }
 }
 </style>
