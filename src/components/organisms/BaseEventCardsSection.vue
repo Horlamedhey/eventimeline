@@ -39,7 +39,7 @@
         v-for="event in events"
         :key="event.node.id"
         :event="event.node"
-        class="w-9/12 px-2 mb-10 sm:w-4/12 lg:w-3/12 xl:w-2/12"
+        class="w-8/12 px-2 mb-10 sm:px-3 lg:px-5 sm:w-4/12 lg:w-3/12 xl:w-2/12"
       ></BaseEventGridCard>
     </div>
 
