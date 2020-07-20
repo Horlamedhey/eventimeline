@@ -1,10 +1,21 @@
 <template>
   <div class="relative min-h-full">
-    <div class="body-content">
-      <BaseHeader></BaseHeader>
+    <div
+      ref="content"
+      :class="
+        shouldPadBottom
+          ? [$route.path === '/' ? 'body-content-home' : 'body-content']
+          : []
+      "
+    >
+      <BaseHeader class="bg-white"></BaseHeader>
       <transition name="fade" appear>
         <main>
-          <slot />
+          <slot
+            :loading="loading"
+            :sidebarOpen="sidebarOpen"
+            :toggleSideBar="() => (sidebarOpen = !sidebarOpen)"
+          />
         </main>
       </transition>
     </div>
@@ -23,16 +34,53 @@ query {
 <script>
 import BaseHeader from "~/components/organisms/BaseHeader.vue";
 import BaseFooter from "~/components/organisms/BaseFooter.vue";
+import { mapState, mapMutations } from "vuex";
 export default {
   components: {
     BaseHeader,
     BaseFooter,
   },
   data() {
-    return {};
+    return {
+      loading: true,
+      sidebarOpen: false,
+      windowHeight: null,
+      shouldPadBottom: false,
+    };
   },
-  computed: {},
-  methods: {},
+  mounted() {
+    this.loading = false;
+
+    this.setWindowHeight(window.innerHeight);
+    window.addEventListener("resize", () => {
+      this.setWindowHeight(window.innerHeight);
+      setTimeout(() => {
+        this.shouldPadBottom =
+          this.$refs.content.clientHeight >
+          this.windowHeight - this.footerHeight;
+      }, 300);
+      if (window.innerWidth >= 960) {
+        this.sidebarOpen = false;
+      }
+    });
+    this.setHydrated(true);
+    this.shouldPadBottom =
+      this.$refs.content.clientHeight > this.windowHeight - this.footerHeight;
+  },
+  computed: {
+    ...mapState(["footerHeight"]),
+    // shouldPadBottom() {
+    //   return (
+    //     this.$refs.content.clientHeight > this.windowHeight - this.footerHeight
+    //   );
+    // },
+  },
+  methods: {
+    ...mapMutations(["setHydrated"]),
+    setWindowHeight(val) {
+      this.windowHeight = val;
+    },
+  },
 };
 </script>
 <style>
@@ -47,15 +95,16 @@ body {
   line-height: 1.5;
 }
 .body-content {
+  padding-bottom: 38rem;
+}
+.body-content-home {
   padding-bottom: 45rem;
 }
 @media (min-width: 600px) {
   .body-content {
-    padding-bottom: 40rem;
+    padding-bottom: 27rem;
   }
-}
-@media (min-width: 960px) {
-  .body-content {
+  .body-content-home {
     padding-bottom: 35rem;
   }
 }

@@ -8,7 +8,7 @@
         :items="categories"
         indicator
         contentContainerClass="flex items-center group"
-        contentClass="text-base font-josefinsans font-normal block text-gray-variant flex sm:px-16 px-10 transition duration-300 ease-in group-hover:text-gray-variant3"
+        contentClass="text-base font-josefinsans font-normal text-gray-variant flex sm:px-16 px-10 transition duration-300 ease-in group-hover:text-gray-variant3"
         activeClass="text-gray-variant3"
         activeAddonClass="text-secondary-dark transition duration-300 ease-in"
         addOnClass="group-hover:text-secondary-dark transition duration-300 ease-in"
@@ -64,12 +64,12 @@ export default {
           to: {
             path: "/",
             query: {
-              category: "matriculation",
+              category: "matriculations",
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: "category",
-          pointerValue: "matriculation",
+          pointerValue: "matriculations",
         },
         {
           label: "Birthdays",
@@ -77,12 +77,25 @@ export default {
           to: {
             path: "/",
             query: {
-              category: "birthday",
+              category: "birthdays",
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: "category",
-          pointerValue: "birthday",
+          pointerValue: "birthdays",
+        },
+        {
+          label: "Launch Parties",
+          icon: BaseUsersIcon,
+          to: {
+            path: "/",
+            query: {
+              category: "launch-parties",
+              timeline: this.$route.query.timeline,
+            },
+          },
+          pointerKey: "category",
+          pointerValue: "launch-parties",
         },
         {
           label: "Hangouts",
@@ -90,12 +103,12 @@ export default {
           to: {
             path: "/",
             query: {
-              category: "hangout",
+              category: "hangouts",
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: "category",
-          pointerValue: "hangout",
+          pointerValue: "hangouts",
         },
         {
           label: "Meetups",
@@ -103,12 +116,12 @@ export default {
           to: {
             path: "/",
             query: {
-              category: "meetup",
+              category: "meetups",
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: "category",
-          pointerValue: "meetup",
+          pointerValue: "meetups",
         },
       ];
     },

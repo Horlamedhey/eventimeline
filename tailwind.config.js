@@ -53,6 +53,9 @@ module.exports = {
         quicksand: ["Quicksand"],
         josefinsans: ["JosefinSans"],
       },
+      borderWidth: {
+        "3": "3px",
+      },
     },
   },
   variants: {},

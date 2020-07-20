@@ -14,7 +14,7 @@
     :target="computedTarget"
     :type="type"
     :disabled="disabled"
-    @click="handleClick"
+    @click.stop="handleClick"
   >
     <!-- @slot Main slot used for text -->
     <slot></slot>

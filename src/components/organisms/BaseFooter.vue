@@ -1,8 +1,13 @@
 <template>
   <div
+    ref="footer"
     class="absolute bottom-0 w-full overflow-hidden text-white font-quicksand footer"
   >
-    <svg viewBox="0 0 100 20" preserveAspectRatio="none">
+    <svg
+      v-if="this.$route.path === '/'"
+      viewBox="0 0 100 20"
+      preserveAspectRatio="none"
+    >
       <polygon points="0,20 100,20 100,0" />
     </svg>
     <div
@@ -35,6 +40,7 @@
 
 <script>
 import BaseNavList from "~/components/molecules/BaseNavList.vue";
+import { mapMutations } from "vuex";
 export default {
   name: "BaseFooter",
   components: {
@@ -57,10 +63,11 @@ export default {
           heading: "Find Events",
 
           links: [
-            { label: "Birthdays", to: "/?category=birthdays" },
-            { label: "Launch Parties", to: "/?category=launch_parties" },
-            { label: "Hangouts", to: "/?category=hangouts" },
-            { label: "Meetups", to: "/?category=meetups" },
+            { label: "Matriculations", to: "/events?category=matriculations" },
+            { label: "Birthdays", to: "/events?category=birthdays" },
+            { label: "Launch Parties", to: "/events?category=launch-parties" },
+            { label: "Hangouts", to: "/events?category=hangouts" },
+            { label: "Meetups", to: "/events?category=meetups" },
           ],
         },
         {
@@ -82,45 +89,28 @@ export default {
       ],
     };
   },
+  mounted() {
+    this.setFooterHeight(this.$refs.footer.clientHeight);
+    window.addEventListener("resize", () => {
+      this.setFooterHeight(this.$refs.footer.clientHeight);
+    });
+  },
   computed: {},
+  methods: {
+    ...mapMutations(["setFooterHeight"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 svg {
   width: 100%;
-  fill: white;
   max-height: 100px;
   position: absolute;
   top: 0;
+  fill: white;
   transform: rotateX(180deg);
   z-index: 1;
   margin-top: -1px;
 }
-// .footer::after {
-//   content: "";
-//   top: 32%;
-//   height: 200%;
-//   @apply absolute w-full block transform skew-y-6 bg-black z-20;
-// }
-// @media (min-width: 600px) {
-//   .footer::after {
-//     top: 36%;
-//   }
-// }
-// @media (min-width: 960px) {
-//   .footer::after {
-//     top: 42%;
-//   }
-// }
-// @media (min-width: 1264px) {
-//   .footer::after {
-//     top: 50%;
-//   }
-// }
-// @media (min-width: 1904px) {
-//   .footer::after {
-//     top: 60%;
-//   }
-// }
 </style>

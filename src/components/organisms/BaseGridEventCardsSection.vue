@@ -57,7 +57,7 @@ import BaseButton from "~/components/atoms/BaseButton.vue";
 import BaseSideBarIcon from "~/components/atoms/icons/BaseSideBarIcon.vue";
 import BaseEventGridCard from "~/components/molecules/BaseEventGridCard.vue";
 export default {
-  name: "BaseEventCardsSection",
+  name: "BaseGridEventCardsSection",
   props: {
     events: {
       type: Array,

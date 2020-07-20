@@ -13,8 +13,17 @@
       class="w-1 h-10 transition duration-500 ease-in group-hover:bg-gray-variant2"
     ></div>
     <a v-if="href" :href="href" target="_blank" :class="contentClass">
-      <component v-if="icon" :is="icon" class="w-5 h-5 mr-4"></component>
+      <component
+        v-if="icon && !addOnAfter"
+        :is="icon"
+        class="w-5 h-5 mr-4"
+      ></component>
       <slot></slot>
+      <component
+        v-if="icon && addOnAfter"
+        :is="icon"
+        class="w-5 h-5"
+      ></component>
     </a>
     <g-link
       v-else-if="to"
@@ -24,17 +33,37 @@
       :exact-active-class="activeClass"
     >
       <component
-        v-if="icon"
+        v-if="icon && !addOnAfter"
         :is="icon"
         class="w-5 h-5 mr-4"
         :class="[isCurrentRoute ? activeAddonClass : null, addOnClass]"
       ></component>
       <!-- ( -->
       <slot></slot>
+      <component
+        v-if="icon && addOnAfter"
+        :is="icon"
+        class="w-5 h-5"
+        :class="[isCurrentRoute ? activeAddonClass : null, addOnClass]"
+      ></component>
     </g-link>
-    <BaseButton v-else :class="contentClass">
-      <component v-if="icon" :is="icon" class="w-5 h-5 mr-4"></component>
+    <BaseButton
+      v-else
+      :class="[active ? activeContentClass : null, contentClass]"
+      @click="handleClick"
+    >
+      <component
+        v-if="icon && !addOnAfter"
+        :is="icon"
+        class="w-5 h-5 mr-4"
+      ></component>
       <slot></slot>
+      <component
+        v-if="icon && addOnAfter"
+        :is="icon"
+        class="w-5 h-5"
+        :class="[active ? activeAddonClass : null, addOnClass]"
+      ></component>
     </BaseButton>
   </li>
 </template>
@@ -59,14 +88,20 @@ export default {
     pointerValue: String,
     // additional icon component
     icon: Object,
+    // if is active button
+    active: Boolean,
     // class(es) of the content of the list item(the main component - a/g-link/button)
     contentClass: [String, Array],
+    // class(es) of the content of the list item(the main component - a/g-link/button) when active
+    activeContentClass: [String, Array],
     // class(es) of the list item
     contentContainerClass: [String, Array],
     // class(es) of the active link
     activeClass: [String, Array],
     // class(es) of the container of the active link
     activeContentContainerClass: [String, Array],
+    // if icon should come after
+    addOnAfter: Boolean,
     // class(es) of the additional icon of the active link
     activeAddonClass: [String, Array],
     // class(es) of the additional icon of each link
@@ -81,6 +116,11 @@ export default {
           Object.values(this.$route.query).includes(this.pointerValue)) ||
         (this.pointerValue === "all" && !this.$route.query[this.pointerKey])
       );
+    },
+  },
+  methods: {
+    handleClick(event) {
+      this.$emit("click", event);
     },
   },
 };

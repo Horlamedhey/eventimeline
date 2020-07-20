@@ -1,9 +1,9 @@
 <template>
-  <Layout>
+  <Layout v-slot:default="{ loading, sidebarOpen, toggleSideBar }">
     <BaseLandingSection></BaseLandingSection>
     <div
       ref="mainContainer"
-      class="relative flex mt-48 divide-x sm:mt-32"
+      class="relative flex mt-48 overflow-hidden divide-x sm:mt-32"
       :style="{ minHeight: sideMenuHeight }"
     >
       <!-- sidebar -->
@@ -12,7 +12,7 @@
         :class="
           sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'
         "
-        class="absolute w-10/12 p-4 transition duration-300 transform sm:w-6/12 md:w-4/12 lg:w-3/12 md:translate-x-0"
+        class="absolute p-4 transition duration-300 transform md:relativew-10/12 sm:w-6/12 md:w-4/12 lg:w-3/12 md:translate-x-0"
       >
         <BaseSideCatNav></BaseSideCatNav>
         <BaseSideDateNav></BaseSideDateNav>
@@ -29,10 +29,10 @@
         </div>
       </div>
       <!-- Main content -->
-      <BaseEventCardsSection
+      <BaseGridEventCardsSection
         :sidebarOpen="sidebarOpen"
-        :toggleSideBarOpen="() => (sidebarOpen = !sidebarOpen)"
-      ></BaseEventCardsSection>
+        :toggleSideBarOpen="toggleSideBar"
+      ></BaseGridEventCardsSection>
     </div>
 
     <BaseAnnounceDecor></BaseAnnounceDecor>
@@ -58,6 +58,7 @@ query{
 }
 </page-query>
 <script>
+// components
 import BaseButton from "~/components/atoms/BaseButton.vue";
 import BaseLoader from "~/components/atoms/BaseLoader.vue";
 import BaseSideCatNav from "~/components/organisms/BaseSideCatNav.vue";
@@ -65,12 +66,16 @@ import BaseSideDateNav from "~/components/organisms/BaseSideDateNav.vue";
 import BaseInput from "~/components/atoms/BaseInput.vue";
 import BaseAnnounceDecor from "~/components/organisms/BaseAnnounceDecor.vue";
 import BaseLandingSection from "~/components/organisms/BaseLandingSection.vue";
-import BaseEventCardsSection from "~/components/organisms/BaseEventCardsSection.vue";
+import BaseGridEventCardsSection from "~/components/organisms/BaseGridEventCardsSection.vue";
 import BasePartners from "~/components/organisms/BasePartners.vue";
+//
+// mixins
+import basicMixins from "~/mixins/pagesBasicMixins.js";
 export default {
   metaInfo: {
     title: "Home",
   },
+  mixins: [basicMixins],
   components: {
     BaseLandingSection,
     BaseButton,
@@ -79,34 +84,13 @@ export default {
     BaseSideDateNav,
     BaseInput,
     BaseAnnounceDecor,
-    BaseEventCardsSection,
+    BaseGridEventCardsSection,
     BasePartners,
   },
   data() {
-    return {
-      hydrated: false,
-      loading: true,
-      sidebarOpen: false,
-    };
+    return {};
   },
-  computed: {
-    sideMenuHeight() {
-      if (this.hydrated) {
-        return this.$refs.sideMenu.clientHeight + 50 + "px";
-      } else {
-        return "unset";
-      }
-    },
-  },
-  mounted() {
-    this.loading = false;
-    window.addEventListener("resize", function() {
-      if (window.innerWidth >= 1264) {
-        this.sidebarOpen = false;
-      }
-    });
-    this.hydrated = true;
-  },
+  computed: {},
 };
 </script>
 

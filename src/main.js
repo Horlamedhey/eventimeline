@@ -2,8 +2,15 @@
 // The Client API can be used here. Learn more: gridsome.org/docs/client-api
 import "~/assets/styles.scss";
 import DefaultLayout from "~/layouts/Default.vue";
+import store from "~/store/index";
 
-export default function(Vue, { router, head, isClient }) {
+export default function(Vue, { router, head, isClient, appOptions }) {
+  appOptions.store = store;
+  router.beforeEach((to, from, next) => {
+    // Do stuff before next page load
+    store.commit("setHydrated", false);
+    next();
+  });
   // Set default layout as a global component
   Vue.component("Layout", DefaultLayout);
 }
