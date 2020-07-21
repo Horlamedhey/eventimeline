@@ -2,11 +2,7 @@
   <div class="relative min-h-full">
     <div
       ref="content"
-      :class="
-        shouldPadBottom
-          ? [$route.path === '/' ? 'body-content-home' : 'body-content']
-          : []
-      "
+      :class="[$route.path === '/' ? 'body-content-home' : 'body-content']"
     >
       <BaseHeader class="bg-white"></BaseHeader>
       <transition name="fade" appear>

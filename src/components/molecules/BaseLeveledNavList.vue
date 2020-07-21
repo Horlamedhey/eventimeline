@@ -16,26 +16,24 @@
         :activeContentContainerClass="activeContentContainerClass"
         :activeClass="activeClass"
         :addOnAfter="addOnAfter"
-        :activeAddonClass="activeAddonClass"
-        :addOnClass="addOnClass"
+        :activeAddonClass="[activeAddonClass, item.isOpen ? 'unrotate' : '']"
+        :addOnClass="[addOnClass, item.isOpen ? '' : '-rotate-90']"
         @click="handleClick"
       >
         {{ item.label }}
       </BaseNavItem>
       <BaseNavList
-        v-if="item.active"
+        v-if="item.isOpen"
         :key="`${item.label}-subItems`"
         :items="item.subItems"
-        class="rounded bg-primary"
-        style="background-color: rgba(196, 196, 196, 0.25"
+        :classes="[subListClasses]"
         addOnAfter
-        contentContainerClass="flex group mt-6"
-        contentClass="text-xl font-quicksand font-medium flex transition duration-300 ease-in group-hover:text-gray-variant3 w-full px-3 justify-between items-center categories focus:outline-none py-2"
-        activeClass="text-gray-variant3"
-        activeContentClass="border-l-3 border-primary shadow-lg"
-        activeAddonClass="transition duration-100 ease-in unrotate"
-        addOnClass="group-hover:text-gray-variant3 transition duration-100 ease-in transform -rotate-90"
-        @click="handleClick"
+        :contentContainerClass="subListContentContainerClasses"
+        :contentClass="subListContentClasses"
+        :activeClass="subListActiveClasses"
+        :activeContentClass="subListActiveContentClasses"
+        :activeAddonClass="subListActiveAddonClasses"
+        :addOnClass="subListAddOnClasses"
       ></BaseNavList>
     </template>
   </ul>
@@ -71,6 +69,20 @@ export default {
     addOnClass: [String, Array],
     // If indicator should be shown on active list item
     indicator: Boolean,
+    // class(es) of the sublist
+    subListClasses: [String, Array],
+    // class(es) of the sublist
+    subListContentContainerClasses: [String, Array],
+    // class(es) of the sublist
+    subListContentClasses: [String, Array],
+    // class(es) of the sublist
+    subListActiveClasses: [String, Array],
+    // class(es) of the sublist
+    subListActiveContentClasses: [String, Array],
+    // class(es) of the sublist
+    subListActiveAddonClasses: [String, Array],
+    // class(es) of the sublist
+    subListAddOnClasses: [String, Array],
   },
   methods: {
     handleClick(event) {
@@ -80,4 +92,8 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.unrotate {
+  transform: none !important;
+}
+</style>

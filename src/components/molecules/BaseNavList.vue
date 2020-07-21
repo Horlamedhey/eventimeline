@@ -1,5 +1,5 @@
 <template>
-  <ul v-if="items.length">
+  <ul v-if="items.length" :class="[classes]">
     <BaseNavItem
       v-for="item in items"
       :to="item.to"
@@ -34,6 +34,8 @@ export default {
   props: {
     /** An array of nav item objects. List format: { label: String, to: [String, Array], href: String } */
     items: Array,
+    // class(es) of the sublist
+    classes: [String, Array],
     // class(es) of the content of the list item(the main component - a/g-link/button)
     contentClass: [String, Array],
     // class(es) of the content of the list item(the main component - a/g-link/button) when active

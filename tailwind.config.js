@@ -36,7 +36,7 @@ module.exports = {
           "800": "rgba(0, 0, 0, 0.8)",
           "900": "rgba(0, 0, 0, 0.9)",
         },
-        accent: "#ea218d",
+        accent: { default: "#ea218d", light: "#FB0977" },
         accent2: "#5ee2b3",
         error: "#ff5252",
         info: "#2196f3",

@@ -1,23 +1,16 @@
 <template>
-  <div
-    ref="mainContent"
-    class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-6/12 lg:translate-x-4/12 lg:w-9/12"
-    :class="
-      sidebarOpen
-        ? ['translate-x-10/12', 'sm:translate-x-6/12', 'ease-out']
-        : 'translate-x-0 ease-in'
-    "
-  >
+  <div>
     <div class="flex items-center">
       <BaseButton
         class="mr-4 md:hidden focus:outline-none"
         @click="toggleSideBarOpen"
       >
         <BaseSideBarIcon
-          :class="sidebarOpen ? 'text-secondary' : 'text-gray-variant'"
+          :class="sidebarOpen ? 'text-accent' : 'text-primary'"
         ></BaseSideBarIcon>
       </BaseButton>
       <h1
+        v-if="$route.path === '/'"
         class="pt-1 font-semibold capitalize md:pt-0 text-1xl font-josefinsans"
         style="color: #1b1b1b"
       >
@@ -44,6 +37,7 @@
     </div>
 
     <BaseButton
+      v-if="$route.path === '/'"
       to="/events"
       class="w-64 px-5 py-2 mx-auto mt-12 text-sm text-center text-white event-buttons bg-accent font-josefinsans focus:outline-none hover:bg-opacity-75"
     >

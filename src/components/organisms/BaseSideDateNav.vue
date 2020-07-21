@@ -4,7 +4,7 @@
       Timeline
     </h2>
     <BaseNavList
-      :items="categories"
+      :items="dates"
       contentContainerClass="flex items-center group content-container-class mt-4 hover:shadow bg-gray-variant1 hover:bg-white  transition duration-300 ease-in overflow-x-hidden rounded"
       contentClass="text-base font-josefinsans font-normal text-gray-variant flex transition duration-300 ease-in group-hover:bg-white group-hover:text-black-600 rounded py-2 px-16 pr-full whitespace-no-wrap"
       activeClass="important-white-bg-text transition duration-300 ease-in"
@@ -16,7 +16,7 @@
       class="block px-4 py-2 m-auto mt-3 transition duration-300 ease-in-out rounded cursor-pointer focus:outline-none active:bg-gray-100 hover:bg-gray-200"
     >
       <p class="text-center font-inter font-regular text-xxs text-black-500">
-        Set calendar
+        Select date
       </p>
     </BaseButton>
   </div>
@@ -31,13 +31,37 @@ export default {
   components: {
     BaseButton,
     BaseNavList,
+    BaseCalendarIcon,
   },
   data() {
-    return {};
-  },
-  computed: {
-    categories() {
-      return [
+    return {
+      dates: [
+        {
+          label: "Today",
+          icon: BaseCalendarIcon,
+          to: {
+            path: "/",
+            query: {
+              category: this.$route.query.category || "all",
+              timeline: "today",
+            },
+          },
+          pointerKey: "timeline",
+          pointerValue: "today",
+        },
+        {
+          label: "Tomorrow",
+          icon: BaseCalendarIcon,
+          to: {
+            path: "/",
+            query: {
+              category: this.$route.query.category || "all",
+              timeline: "tomorrow",
+            },
+          },
+          pointerKey: "timeline",
+          pointerValue: "tomorrow",
+        },
         {
           label: "This week",
           icon: BaseCalendarIcon,
@@ -52,17 +76,17 @@ export default {
           pointerValue: "this-week",
         },
         {
-          label: "Last week",
+          label: "Next week",
           icon: BaseCalendarIcon,
           to: {
             path: "/",
             query: {
               category: this.$route.query.category || "all",
-              timeline: "last-week",
+              timeline: "next-week",
             },
           },
           pointerKey: "timeline",
-          pointerValue: "last-week",
+          pointerValue: "next-week",
         },
         {
           label: "This month",
@@ -77,9 +101,23 @@ export default {
           pointerKey: "timeline",
           pointerValue: "this-month",
         },
-      ];
-    },
+        {
+          label: "Next month",
+          icon: BaseCalendarIcon,
+          to: {
+            path: "/",
+            query: {
+              category: this.$route.query.category || "all",
+              timeline: "next-month",
+            },
+          },
+          pointerKey: "timeline",
+          pointerValue: "next-month",
+        },
+      ],
+    };
   },
+  computed: {},
 };
 </script>
 

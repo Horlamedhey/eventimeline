@@ -6,34 +6,27 @@
         @click="toggleSideBarOpen"
       >
         <BaseSideBarIcon
-          :class="sidebarOpen ? 'text-secondary' : 'text-gray-variant'"
+          :class="sidebarOpen ? 'text-accent' : 'text-primary'"
         ></BaseSideBarIcon>
       </BaseButton>
     </div>
     <div
-      class="flex flex-wrap items-center justify-center mt-12 sm:justify-start events-container"
+      class="flex flex-wrap items-center justify-center mt-12 events-container"
     >
-      <BaseEventGridCard
-        v-for="event in $page.events.edges"
+      <BaseEventListCard
+        v-for="event in $page.listEvents.edges"
         :key="event.node.id"
         :event="event.node"
-        class="w-8/12 px-2 mb-10 sm:px-3 lg:px-5 sm:w-4/12 lg:w-3/12 xl:w-2/12"
-      ></BaseEventGridCard>
+        class="w-full px-2 mb-10 lg:w-6/12"
+      ></BaseEventListCard>
     </div>
-
-    <BaseButton
-      to="/events"
-      class="w-64 px-5 py-2 mx-auto mt-12 text-sm text-center text-white event-buttons bg-accent font-josefinsans focus:outline-none hover:bg-opacity-75"
-    >
-      See all events
-    </BaseButton>
   </div>
 </template>
 
 <script>
 import BaseButton from "~/components/atoms/BaseButton.vue";
 import BaseSideBarIcon from "~/components/atoms/icons/BaseSideBarIcon.vue";
-import BaseEventGridCard from "~/components/molecules/BaseEventGridCard.vue";
+import BaseEventListCard from "~/components/molecules/BaseEventListCard.vue";
 export default {
   name: "BaseListEventCardsSection",
   props: {
@@ -53,7 +46,7 @@ export default {
   },
   components: {
     BaseButton,
-    BaseEventGridCard,
+    BaseEventListCard,
     BaseSideBarIcon,
   },
 };

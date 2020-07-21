@@ -103,13 +103,105 @@ const events = [
   },
 ];
 
+const listEvents = [
+  {
+    title: "DJ Kentucky Nightlife Party",
+    image: require.resolve("./src/assets/images/party.png"),
+    price: "Free",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-1",
+  },
+  {
+    title: "Pineapple Mask & Costume Party",
+    image: require.resolve("./src/assets/images/party1.png"),
+    price: "N3,000",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-2",
+  },
+  {
+    title: "Bra, Cocktail, Disco Bash. Couple’s",
+    image: require.resolve("./src/assets/images/party2.png"),
+    price: "N1,500",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-3",
+  },
+  {
+    title: "Ilorin Twitter Hangout",
+    image: require.resolve("./src/assets/images/party3.png"),
+    price: "N2,000",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-4",
+  },
+  {
+    title: "Smiley Face Mask Party, Vol. 6",
+    image: require.resolve("./src/assets/images/party4.png"),
+    price: "Mixed",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-5",
+  },
+  {
+    title: "Sounbar Relauncg Street Jamz",
+    image: require.resolve("./src/assets/images/party5.png"),
+    price: "Mixed",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-6",
+  },
+  {
+    title: "Bra, Cocktail, Disco Bash. Couple’s",
+    image: require.resolve("./src/assets/images/party2.png"),
+    price: "N1,500",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-7",
+  },
+  {
+    title: "Ilorin Twitter Hangout",
+    image: require.resolve("./src/assets/images/party3.png"),
+    price: "N2,000",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-8",
+  },
+  {
+    title: "Smiley Face Mask Party, Vol. 6",
+    image: require.resolve("./src/assets/images/party4.png"),
+    price: "Mixed",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-9",
+  },
+  {
+    title: "Sounbar Relauncg Street Jamz",
+    image: require.resolve("./src/assets/images/party5.png"),
+    price: "Mixed",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-10",
+  },
+  {
+    title: "DJ Kentucky Nightlife Party",
+    image: require.resolve("./src/assets/images/party.png"),
+    price: "Free",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-11",
+  },
+  {
+    title: "Pineapple Mask & Costume Party",
+    image: require.resolve("./src/assets/images/party1.png"),
+    price: "N3,000",
+    date: "Fri, June 19, 2020 9:30 PM",
+    id: "evt-12",
+  },
+];
+
 module.exports = function(api) {
   api.loadSource(({ addCollection }) => {
     // Use the Data Store API here: https://gridsome.org/docs/data-store-api/
     const eventsCollection = addCollection("Events");
+    const listEventsCollection = addCollection("ListEvents");
     for (let i = 0; i < events.length; i++) {
       const event = events[i];
       eventsCollection.addNode(event);
+    }
+    for (let i = 0; i < listEvents.length; i++) {
+      const listEvent = listEvents[i];
+      listEventsCollection.addNode(listEvent);
     }
   });
 

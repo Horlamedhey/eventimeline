@@ -28,8 +28,14 @@
     <g-link
       v-else-if="to"
       :to="to"
-      :exact="false"
-      :class="contentClass"
+      :exact="true"
+      :class="[
+        contentClass,
+        Object.keys($route.query).includes(pointerKey) &&
+        Object.values($route.query).includes(pointerValue)
+          ? activeClass
+          : '',
+      ]"
       :exact-active-class="activeClass"
     >
       <component
