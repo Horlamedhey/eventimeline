@@ -12,7 +12,7 @@
         :class="
           sidebarOpen ? 'translate-x-0 ease-out' : '-translate-x-full ease-in'
         "
-        class="absolute w-9/12 transition duration-300 transform bg-white md:relative sm:w-4/12 md:w-3/12 lg:w-3/12 xl:w-2/12"
+        class="absolute p-4 transition duration-300 transform md:relativew-10/12 sm:w-6/12 md:w-4/12 lg:w-3/12 md:translate-x-0"
       >
         <BaseSideCatNav></BaseSideCatNav>
         <BaseSideDateNav></BaseSideDateNav>
@@ -31,10 +31,10 @@
       <!-- Main content -->
       <div
         ref="mainContent"
-        class="w-full transition duration-300 transform md:w-8/12 lg:w-8/12 md:mx-0 xl:w-9/12"
+        class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-6/12 lg:translate-x-4/12 lg:w-9/12"
         :class="
           sidebarOpen
-            ? ['translate-x-10/12', 'sm:translate-x-5/12', 'ease-out']
+            ? ['translate-x-10/12', 'sm:translate-x-6/12', 'ease-out']
             : 'translate-x-0 ease-in'
         "
       >
