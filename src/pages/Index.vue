@@ -31,7 +31,7 @@
       <!-- Main content -->
       <div
         ref="mainContent"
-        class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-6/12 lg:translate-x-4/12 lg:w-9/12"
+        class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-0 lg:w-9/12"
         :class="
           sidebarOpen
             ? ['translate-x-10/12', 'sm:translate-x-6/12', 'ease-out']
@@ -121,11 +121,6 @@ export default {
 @media (max-width: 330px) {
   .selfie-div {
     margin-top: -0.85rem;
-  }
-}
-@media (max-width: 600px) {
-  .celebrate-div {
-    z-index: -1;
   }
 }
 .event-buttons {

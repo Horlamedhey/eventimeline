@@ -16,9 +16,11 @@
             ? 'translate-x-0 sm:translate-x-1/12 ease-out'
             : '-translate-x-full ease-in md:translate-x-0'
         "
-        class="absolute w-9/12 transition duration-300 transform bg-white md:relative sm:w-4/12 md:w-3/12 lg:w-2/12 side-menu"
+        class="absolute w-9/12 overflow-y-hidden transition duration-300 transform bg-white md:relative sm:w-4/12 md:w-3/12 lg:w-2/12 side-menu-container"
       >
-        <BaseFilterNav></BaseFilterNav>
+        <div class="side-menu">
+          <BaseFilterNav></BaseFilterNav>
+        </div>
       </div>
       <!-- Main content -->
       <div
@@ -31,8 +33,8 @@
         "
       >
         <div
-          style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2); max-height: 600px; "
-          class="py-2 overflow-y-auto bg-gray-200"
+          style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2); "
+          class="py-2 overflow-y-auto bg-gray-200 main-content"
         >
           <BaseListEventCardsSection
             :sidebarOpen="sidebarOpen"
@@ -43,7 +45,7 @@
           <BaseGridEventCardsSection
             :sidebarOpen="sidebarOpen"
             :toggleSideBarOpen="toggleSideBar"
-            class="sm:hidden"
+            class="px-4 sm:hidden"
           ></BaseGridEventCardsSection>
         </div>
         <div
@@ -129,8 +131,19 @@ export default {
 
 <style lang="scss">
 @media (max-width: 960px) {
-  .side-menu {
-    height: calc(100% - 80px);
+  .side-menu-container {
+    height: calc(100vh - 9.4rem);
   }
+}
+.side-menu {
+  height: 95%;
+  margin-top: 3%;
+  overflow-y: auto;
+}
+.main-content {
+  max-height: calc(100vh - 14rem);
+}
+.side-menu-container {
+  max-height: calc(100vh - 9.4rem);
 }
 </style>

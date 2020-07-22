@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex items-center">
+    <div class="flex items-center px-3">
       <BaseButton
         class="mr-4 md:hidden focus:outline-none"
         @click="toggleSideBarOpen"
