@@ -5,10 +5,9 @@
       :class="[$route.path === '/' ? 'body-content-home' : 'body-content']"
     >
       <BaseHeader class="bg-white"></BaseHeader>
-      <transition name="fade" appear>
+      <transition name="slide" appear>
         <main>
           <slot
-            :loading="loading"
             :sidebarOpen="sidebarOpen"
             :toggleSideBar="() => (sidebarOpen = !sidebarOpen)"
           />
@@ -38,15 +37,12 @@ export default {
   },
   data() {
     return {
-      loading: true,
       sidebarOpen: false,
       windowHeight: null,
       shouldPadBottom: false,
     };
   },
   mounted() {
-    this.loading = false;
-
     this.setWindowHeight(window.innerHeight);
     window.addEventListener("resize", () => {
       this.setWindowHeight(window.innerHeight);
@@ -103,5 +99,12 @@ body {
   .body-content-home {
     padding-bottom: 35rem;
   }
+}
+.slide-enter-active {
+  transition: transform 1s;
+}
+
+.slide-enter {
+  transform: translateX(-100%);
 }
 </style>

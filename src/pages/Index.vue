@@ -1,5 +1,5 @@
 <template>
-  <Layout v-slot:default="{ loading, sidebarOpen, toggleSideBar }">
+  <Layout v-slot:default="{ sidebarOpen, toggleSideBar }">
     <BaseLandingSection></BaseLandingSection>
     <div
       ref="mainContainer"
@@ -46,8 +46,6 @@
     </div>
     <BaseAnnounceDecor></BaseAnnounceDecor>
     <BasePartners></BasePartners>
-
-    <BaseLoader :loading="loading" class="z-50"></BaseLoader>
   </Layout>
 </template>
 <page-query>
@@ -69,7 +67,6 @@ query{
 <script>
 // components
 import BaseButton from "~/components/atoms/BaseButton.vue";
-import BaseLoader from "~/components/atoms/BaseLoader.vue";
 import BaseSideCatNav from "~/components/organisms/BaseSideCatNav.vue";
 import BaseSideDateNav from "~/components/organisms/BaseSideDateNav.vue";
 import BaseInput from "~/components/atoms/BaseInput.vue";
@@ -88,7 +85,6 @@ export default {
   components: {
     BaseLandingSection,
     BaseButton,
-    BaseLoader,
     BaseSideCatNav,
     BaseSideDateNav,
     BaseInput,

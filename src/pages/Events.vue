@@ -1,6 +1,6 @@
 <template>
   <Layout
-    v-slot:default="{ loading, sidebarOpen, toggleSideBar }"
+    v-slot:default="{ sidebarOpen, toggleSideBar }"
     style="background-color: #f4f4f4"
   >
     <div
