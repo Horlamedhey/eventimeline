@@ -8,6 +8,7 @@
       <transition name="slide" appear>
         <main>
           <slot
+            :loading="loading"
             :sidebarOpen="sidebarOpen"
             :toggleSideBar="() => (sidebarOpen = !sidebarOpen)"
           />
@@ -37,12 +38,15 @@ export default {
   },
   data() {
     return {
+      loading: true,
       sidebarOpen: false,
       windowHeight: null,
       shouldPadBottom: false,
     };
   },
   mounted() {
+    this.loading = false;
+
     this.setWindowHeight(window.innerHeight);
     window.addEventListener("resize", () => {
       this.setWindowHeight(window.innerHeight);

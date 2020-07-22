@@ -56,8 +56,13 @@ module.exports = {
       borderWidth: {
         "3": "3px",
       },
+      boxShadow: {
+        outline: "0 0 0 0.5px rgba(0, 0, 0, 0.2)",
+      },
     },
   },
-  variants: {},
+  variants: {
+    boxShadow: ["responsive", "hover", "focus", "active", "group-hover"],
+  },
   plugins: [require("tailwindcss-plugin-fancy")],
 };
