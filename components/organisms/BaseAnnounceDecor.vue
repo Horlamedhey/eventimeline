@@ -20,7 +20,7 @@
           </h1>
           <BaseButton
             to="/create-event"
-            class="w-11/12 px-5 py-2 mx-auto mt-12 text-xl text-center event-buttons bg-secondary font-josefinsans focus:outline-none hover:bg-opacity-75"
+            class="w-11/12 px-5 py-2 mx-auto mt-12 text-xl text-center event-buttons bg-secondary text-white font-josefinsans focus:outline-none hover:bg-opacity-75"
           >
             Create Event
           </BaseButton>
