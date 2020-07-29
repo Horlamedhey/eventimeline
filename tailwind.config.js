@@ -27,9 +27,8 @@ module.exports = {
         '4-5xl': '2.5rem',
       },
       colors: {
-        primary: { default: '#005246', light: '#33756b', lighter: '#4d867e' },
-        secondary: { default: '#4C8077', dark: '#3d665f' },
-        accent: { default: '#FC7A16', light: '#fc872d' },
+        primary: { default: '#4d31bf', light: '#6B4FDD', lighter: '#715ACC' },
+        secondary: { default: '#ffc510', dark: '#FFC100' },
         black: {
           default: '#000000',
           '100': 'rgba(0, 0, 0, 0.1)',
@@ -54,6 +53,7 @@ module.exports = {
           '800': 'rgba(18, 18, 18, 0.8)',
           '900': 'rgba(18, 18, 18, 0.9)',
         },
+        accent: { default: '#ea218d', light: '#FB0977' },
         accent2: '#5ee2b3',
         error: '#ff5252',
         info: '#2196f3',

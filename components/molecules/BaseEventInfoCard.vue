@@ -20,7 +20,7 @@
         >
           <span>{{ event.date }}</span>
           <BaseButton class="bg-transparent focus:outline-none">
-            <BaseHeartIcon class="text-white" fill="#FC7A16"></BaseHeartIcon>
+            <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>
           </BaseButton>
         </p>
         <p class="mt-2 text-xl font-semibold font-josefinsans text-black-700">
