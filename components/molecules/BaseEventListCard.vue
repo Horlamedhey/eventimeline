@@ -29,7 +29,7 @@
         </div>
         <div class="flex-col flex justify-between">
           <BaseButton>
-            <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>
+            <BaseHeartIcon class="text-white" fill="#FC7A16"></BaseHeartIcon>
           </BaseButton>
 
           <BaseCheckIcon
