@@ -89,7 +89,7 @@ export default {
     // attribute for url query value
     pointerValue: String,
     // additional icon component
-    icon: Function,
+    icon: [Object, Function],
     // if is active button
     active: Boolean,
     // class(es) of the content of the list item(the main component - a/n-link/button)
