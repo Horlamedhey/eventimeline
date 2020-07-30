@@ -2,18 +2,23 @@
   <transition name="fade">
     <div
       v-if="loading"
-      class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-fixed bg-contain bg-primary"
+      class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-fixed bg-contain bg-secondary-dark"
       :style="{
-        backgroundImage: `url(/svg/confetti-49.gif)`,
+        backgroundImage: `url(https://res.cloudinary.com/befittinglife/image/upload/v1596032520/events/confetti-49.gif)`,
+        backgroundColor: '#352286',
       }"
     >
-      <img
-        src="/svg/bg-logo.svg"
-        alt="logo"
-        immediate
-        quality="100"
-        class="loading-logo"
-      />
+      <client-only>
+        <cld-image
+          public-id="events/logo-small.png"
+          alt="logo"
+          fetch-format="auto"
+          quality="auto"
+          client-hints="true"
+          class="loading-logo"
+        >
+        </cld-image>
+      </client-only>
     </div>
   </transition>
 </template>

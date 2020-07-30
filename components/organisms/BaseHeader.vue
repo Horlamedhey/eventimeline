@@ -5,12 +5,38 @@
     <div class="w-auto">
       <div class="hidden md:block">
         <n-link to="/">
-          <img src="/images/logo.png" alt="logo" class="" />
+          <client-only>
+            <cld-image
+              public-id="events/logo.png"
+              alt="logo"
+              fetch-format="auto"
+              quality="auto"
+              client-hints="true"
+              loading="lazy"
+              width="200"
+              style="max-width: 200px;"
+            >
+              <cld-placeholder type="blur"> </cld-placeholder>
+            </cld-image>
+          </client-only>
         </n-link>
       </div>
       <div class="md:hidden">
         <n-link to="/">
-          <img src="/images/logo-small.png" alt="logo" class="" />
+          <client-only>
+            <cld-image
+              public-id="events/logo-small.png"
+              alt="logo"
+              fetch-format="auto"
+              quality="auto"
+              client-hints="true"
+              loading="lazy"
+              width="40"
+              style="max-width: 40px;"
+            >
+              <cld-placeholder type="blur"> </cld-placeholder>
+            </cld-image>
+          </client-only>
         </n-link>
       </div>
     </div>
@@ -32,7 +58,7 @@
 
           <BaseNavItem
             class="ml-1 text-xs sm:text-sm font-inter"
-            content-class=" text-gray-500 hover:text-black px-2 py-1 flex items-center  hover:bg-gray-200 rounded transition-colors duration-500 ease-in-out focus:outline-none active:bg-gray-400"
+            content-class="flex items-center px-2 py-1 text-gray-500 transition-colors duration-500 ease-in-out rounded hover:text-black hover:bg-gray-200 focus:outline-none active:bg-gray-400"
           >
             <span>
               Help
@@ -45,7 +71,7 @@
           <BaseNavItem
             to="/create-event"
             class="text-xs sm:text-sm font-inter text-primary"
-            content-class="px-2 py-1 flex items-center  hover:bg-primary hover:text-white rounded transition-colors duration-500 ease-in-out whitespace-no-wrap"
+            content-class="flex items-center px-2 py-1 whitespace-no-wrap transition-colors duration-500 ease-in-out rounded hover:bg-primary hover:text-white"
           >
             <span class="font-semibold">Create Event</span>
 

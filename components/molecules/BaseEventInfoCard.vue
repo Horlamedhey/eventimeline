@@ -1,15 +1,27 @@
 <template>
   <div
     style="top: 58.3%; height: 83.33%;"
-    class="absolute flex flex-wrap w-11/12 lg:w-9/12 lg:left-1-5/12 left-0-5/12 overflow-hidden rounded-lg shadow"
+    class="absolute flex flex-wrap w-11/12 overflow-hidden rounded-lg shadow lg:w-9/12 lg:left-1-5/12 left-0-5/12"
   >
     <div
       class="flex items-center justify-center hidden h-full overflow-hidden sm:w-4/12 md:w-3/12 xl:w-2-5/12 sm:block"
     >
-      <img
-        :src="`/images/${event.image}`"
-        class="flex-shrink min-w-full min-h-full"
-      />
+      <client-only>
+        <cld-image
+          :public-id="event.image"
+          :alt="event.title"
+          fetch-format="auto"
+          quality="auto"
+          client-hints="true"
+          crop="scale"
+          loading="lazy"
+          width="300"
+          height="400"
+          class="flex-shrink min-w-full min-h-full"
+        >
+          <cld-placeholder type="blur"> </cld-placeholder>
+        </cld-image>
+      </client-only>
     </div>
     <div
       class="flex flex-col justify-between w-full h-full p-4 bg-white sm:w-8/12 md:w-9/12 xl:w-9-5/12"

@@ -1,8 +1,23 @@
 <template>
   <div class="container justify-center mx-auto mt-8 sm:flex">
     <div class="relative sm:mt-12 celebrate-div">
-      <img src="/svg/celebrate.svg" alt="" class="ml-auto sm:ml-0" />
-      <div class="absolute ml-4 sm:-ml-16 top-0">
+      <client-only>
+        <cld-image
+          public-id="events/celebrate.svg"
+          alt="celebrate"
+          fetch-format="auto"
+          quality="auto"
+          client-hints="true"
+          crop="scale"
+          loading="lazy"
+          width="250"
+          height="300"
+          class="ml-auto sm:ml-0"
+        >
+          <cld-placeholder type="blur"> </cld-placeholder>
+        </cld-image>
+      </client-only>
+      <div class="absolute top-0 ml-4 sm:-ml-16">
         <h1 class="font-bold font-josefinsans text-4-5xl">
           Ready
           <br />
@@ -27,7 +42,22 @@
     </div>
     <!--  -->
     <div class="relative selfie-div">
-      <img src="/svg/selfie.svg" alt="" class="ml-auto" />
+      <client-only>
+        <cld-image
+          public-id="events/selfie.svg"
+          alt="selfie"
+          fetch-format="auto"
+          quality="auto"
+          client-hints="true"
+          crop="scale"
+          loading="lazy"
+          width="250"
+          height="300"
+          class="ml-autos"
+        >
+          <cld-placeholder type="blur"> </cld-placeholder>
+        </cld-image>
+      </client-only>
       <p
         class="absolute flex justify-end px-5 py-4 ml-0 text-base font-medium font-inter intro-text sm:block sm:ml-8"
         style="color: rgba(77, 49, 191, 0.4);"

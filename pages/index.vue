@@ -34,7 +34,7 @@
         class="w-full p-4 pt-0 transition duration-300 transform bg-transparent md:w-8/12 md:translate-x-0 lg:w-9/12"
         :class="
           sidebarOpen
-            ? ['translate-x-10/12', 'sm:translate-x-6/12', 'ease-out']
+            ? ['translate-x-10/12', 'sm:translate-x-1/2', 'ease-out']
             : 'translate-x-0 ease-in'
         "
       >

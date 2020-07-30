@@ -2,7 +2,7 @@
   <div class="m-auto mt-40 bg-primary lg:w-10/12 xl:w-8/12">
     <div
       :style="{
-        background: `url(/images/confetti.png)`,
+        background: `url(https://res.cloudinary.com/befittinglife/image/upload/v1596032401/events/confetti.png)`,
       }"
       class="w-full"
     >
@@ -25,7 +25,21 @@
             Create Event
           </BaseButton>
         </div>
-        <img src="/images/hiring.png" class="pt-5" />
+
+        <client-only>
+          <cld-image
+            public-id="events/hiring.png"
+            alt="create-event"
+            fetch-format="auto"
+            quality="auto"
+            client-hints="true"
+            loading="lazy"
+            width="auto"
+            class="pt-5"
+          >
+            <cld-placeholder type="blur"> </cld-placeholder>
+          </cld-image>
+        </client-only>
       </div>
     </div>
   </div>

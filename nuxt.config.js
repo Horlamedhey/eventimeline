@@ -27,7 +27,14 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href:
+          'https://res.cloudinary.com/befittinglife/image/upload/v1596039200/events/favicon.ico',
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -37,7 +44,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['plugins/preview.client.js'],
+  plugins: ['plugins/preview.client.js', 'plugins/cloudinary'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

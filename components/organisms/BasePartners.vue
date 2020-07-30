@@ -7,12 +7,22 @@
       Our Partners
     </h2>
     <div class="flex flex-wrap mt-10 justify-evenly">
-      <img
-        v-for="i in 5"
-        :key="`partner-${i}`"
-        :src="`/images/partner${i}.png`"
-        class="m-3"
-      />
+      <client-only>
+        <cld-image
+          v-for="i in 5"
+          :key="`partner-${i}`"
+          :public-id="`events/partner${i}.png`"
+          alt="partner"
+          fetch-format="auto"
+          quality="auto"
+          client-hints="true"
+          loading="lazy"
+          width="auto"
+          class="m-3"
+        >
+          <cld-placeholder type="blur"> </cld-placeholder>
+        </cld-image>
+      </client-only>
     </div>
   </div>
 </template>

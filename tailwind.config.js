@@ -97,10 +97,15 @@ module.exports = {
       boxShadow: {
         outline: '0 0 0 0.5px rgba(0, 0, 0, 0.2)',
       },
+      translate: {
+        '10/12': '83.333333%',
+        '5/12': '41.666667%',
+      },
     },
   },
   variants: {
     boxShadow: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    padding: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
   plugins: [],
   purge: {

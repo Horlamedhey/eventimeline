@@ -2,11 +2,27 @@
   <n-link :to="`/event/${event.id}`">
     <div class="flex space-x-8 group">
       <div class="relative w-3/12 h-2/12 sm:w-40">
-        <img
+        <!-- <img
           :src="`/images/${event.image}`"
           style="width: 100%;"
-          class="object-cover h-48 rounded-lg grid-image lg:h-40 xl:h-56"
-        />
+          class="object-cover h-48 rounded-lg lg:h-40 xl:h-56"
+        /> -->
+        <client-only>
+          <cld-image
+            :public-id="event.image"
+            :alt="event.title"
+            fetch-format="auto"
+            quality="auto"
+            client-hints="true"
+            crop="scale"
+            loading="lazy"
+            width="250"
+            height="300"
+            class="h-48 overflow-hidden rounded-lg xl:h-56 lg:h-40"
+          >
+            <cld-placeholder type="blur"> </cld-placeholder>
+          </cld-image>
+        </client-only>
         <BaseEventStatus
           class="top-0 mt-6 event-status lg:px-3"
         ></BaseEventStatus>
@@ -27,7 +43,7 @@
             {{ event.price }}
           </p>
         </div>
-        <div class="flex-col flex justify-between">
+        <div class="flex flex-col justify-between">
           <BaseButton>
             <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>
           </BaseButton>
