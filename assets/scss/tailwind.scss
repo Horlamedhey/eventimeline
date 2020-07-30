@@ -133,6 +133,10 @@
   font-display: fallback;
 }
 
+#__nuxt {
+  overflow-x: hidden;
+}
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.5s;
