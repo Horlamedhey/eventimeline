@@ -18,7 +18,7 @@
             loading="lazy"
             width="250"
             height="300"
-            class="h-48 overflow-hidden rounded-lg xl:h-56 lg:h-40"
+            class="h-48 overflow-hidden rounded-lg lg:h-48"
           >
             <cld-placeholder type="blur"> </cld-placeholder>
           </cld-image>

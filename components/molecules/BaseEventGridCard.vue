@@ -15,7 +15,7 @@
             loading="lazy"
             width="250"
             height="300"
-            class="overflow-hidden transition duration-500 h-60 lg:h-70 sm:h-64 rounded-xl"
+            class="overflow-hidden transition duration-500 h-60 sm:h-64 rounded-xl"
           >
             <cld-placeholder type="blur"> </cld-placeholder>
           </cld-image>

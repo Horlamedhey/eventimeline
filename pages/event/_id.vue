@@ -2,7 +2,7 @@
   <div v-if="event" class="relative w-full h-full pb-16">
     <div
       :style="{
-        backgroundImage: `url(https://res.cloudinary.com/befittinglife/image/upload/w_2000,h_1400,c_scale/v1596032411/${event.image})`,
+        backgroundImage: `url(https://res.cloudinary.com/befittinglife/image/upload/q_auto,c_scale/v1596032411/${event.image})`,
         height: '40vh',
         maxHeight: '300px',
       }"

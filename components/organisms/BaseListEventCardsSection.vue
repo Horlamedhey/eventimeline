@@ -17,7 +17,7 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
-        class="w-full px-2 mb-10 lg:w-6/12"
+        class="w-full px-2 mb-10 lg:w-10/12 xl:w-6/12 xl:px-8"
       ></BaseEventListCard>
     </div>
   </div>
