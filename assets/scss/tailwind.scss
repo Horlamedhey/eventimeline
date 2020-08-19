@@ -133,7 +133,8 @@
   font-display: fallback;
 }
 
-body {
+body,
+#__nuxt {
   overflow-x: hidden;
 }
 
@@ -145,6 +146,16 @@ body {
 .page-leave-to {
   transform: translateX(100%);
   opacity: 0;
+}
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+textarea {
+  resize: none;
 }
 .cld-image {
   img {

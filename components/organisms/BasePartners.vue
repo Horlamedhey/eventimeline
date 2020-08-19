@@ -17,7 +17,8 @@
           quality="auto"
           client-hints="true"
           loading="lazy"
-          width="auto"
+          crop="scale"
+          width="200"
           class="m-3"
         >
           <cld-placeholder type="blur"> </cld-placeholder>

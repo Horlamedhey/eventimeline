@@ -5,34 +5,10 @@
         v-if="label"
         :html-for="`#${id}`"
         :error="error"
-        :class-list="[labelClassList, 'mb-2']"
-        class="relative text-base font-medium font-quicksand"
-        :style="
-          incremental ? { paddingTop: '1px', marginBottom: '0.4rem' } : {}
-        "
+        :class-list="[labelClassList, incremental ? 'mb-1' : 'mb-2']"
+        class="text-base font-medium font-quicksand"
       >
         <template v-if="required">* </template>{{ label }}
-        <BaseButton
-          type="button"
-          class="relative inline-flex"
-          :class="{ 'overflow-hidden': !showExtraInfo }"
-          @click="showExtraInfo = !showExtraInfo"
-        >
-          <BaseInfoIcon
-            v-if="extraInfo !== undefined"
-            class="w-5 h-5 ml-2 text-white"
-          ></BaseInfoIcon>
-          <div
-            v-if="extraInfo !== undefined"
-            :class="[
-              showExtraInfo ? 'opacity-100 z-10' : 'opacity-0 z-0',
-              extraInfoClassList,
-            ]"
-            class="absolute top-0 left-0 px-4 py-2 text-sm font-medium text-left text-white transition-opacity duration-300 bg-black rounded shadow-md sm:text-base extra-info"
-          >
-            {{ extraInfo }}
-          </div>
-        </BaseButton>
       </BaseLabel>
     </div>
 
@@ -45,13 +21,11 @@
         :disabled="disabled"
         :autocomplete="autocomplete"
         :incremental="incremental"
-        :added="added"
         :value="value"
         :name="name"
         :inputmode="inputmode"
         :pattern="pattern"
         :input-class-list="inputClassList"
-        :add-on-class-list="error ? 'text-error' : ''"
         @input="(value) => $emit('input', value)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
@@ -74,7 +48,6 @@ export default {
     /** Label text for the field */
     inputClassList: [String, Array],
     labelClassList: [String, Array],
-    extraInfoClassList: [String, Array],
     /** Type of the text input. Options ['text', 'email', 'url', 'tel', 'search', 'password'] */
     type: {
       type: String,
@@ -101,10 +74,6 @@ export default {
       type: Boolean,
       default: false,
     },
-    extraInfo: {
-      type: String,
-      default: undefined,
-    },
     /** Pattern attribute for input (used for mobile keypad) */
     pattern: {
       type: String,
@@ -127,40 +96,15 @@ export default {
       type: Boolean,
       default: false,
     },
-    //  Incremental input
     incremental: {
       type: Boolean,
       default: false,
     },
-    //  Filled incremental input
-    added: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  data() {
-    return {
-      showExtraInfo: false,
-    }
   },
   computed: {
     id() {
       return '_' + Math.random().toString(36).substr(2, 9)
     },
-  },
-  mounted() {
-    document.addEventListener('click', (evt) => {
-      const infoElement = document.querySelector('.extra-info.opacity-100')
-      let targetElement = evt.target // clicked element
-      do {
-        if (targetElement !== infoElement) {
-          targetElement = targetElement.parentNode
-        }
-        // Go up the DOM
-      } while (targetElement)
-
-      this.showExtraInfo = false
-    })
   },
 }
 </script>

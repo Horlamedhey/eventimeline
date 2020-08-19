@@ -6,6 +6,10 @@
  */
 module.exports = {
   theme: {
+    ripple: (theme) => ({
+      colors: theme('colors'),
+      darken: 0.1,
+    }),
     screens: {
       sm: { min: '600px' },
       md: { min: '960px' },
@@ -28,7 +32,11 @@ module.exports = {
       },
       colors: {
         primary: { default: '#4d31bf', light: '#6B4FDD', lighter: '#715ACC' },
-        secondary: { default: '#ffc510', dark: '#FFC100' },
+        secondary: {
+          default: '#ffc510',
+          dark: '#FFC100',
+          light: 'rgba(255, 193, 0, 0.6)',
+        },
         black: {
           default: '#000000',
           '100': 'rgba(0, 0, 0, 0.1)',
@@ -55,16 +63,27 @@ module.exports = {
         },
         accent: { default: '#ea218d', light: '#FB0977' },
         accent2: '#5ee2b3',
-        error: '#ff5252',
+        accent3: '#1930AD',
+        accent4: '#2C35FF',
+        error: '#E53E3E',
         info: '#2196f3',
         success: '#4caf50',
         'success-variant': '#5EE2B3',
+        'success-variant1': '#3BD79F',
         warning: '#ffc107',
         'gray-variant': '#c4c4c4',
         'gray-variant1': '#f0f0f0',
         'gray-variant2': '#b5b5b5',
         'gray-variant3': '#8b8b8b',
         'gray-variant4': '#f4f4f4',
+        'gray-variant5': '#909090',
+        'gray-variant6': '#fafafa',
+        Photographers: '#9FEFD2',
+        'Catering-Service': '#FFDC70',
+        DJs: '#FC6CAD',
+        Bouncers: '#9483D9',
+        MCs: '#707070',
+        Rentals: '#D180D8',
         // ...
       },
       fontFamily: {
@@ -81,11 +100,18 @@ module.exports = {
       height: {
         '70': '20rem',
       },
+      margin: {
+        '7': '1.8rem',
+      },
       width: {
         '1-5/12': '12.5%',
         '2-5/12': '20.835%',
+        '5-5/12': '45.835%',
         '7-5/12': '61%',
         '9-5/12': '79.165%',
+        '72': '18rem',
+        '76': '19rem',
+        '96': '24rem',
       },
       inset: {
         '0-5/12': '4.165%',
@@ -104,10 +130,15 @@ module.exports = {
     },
   },
   variants: {
+    borderWidth: ['responsive', 'hover', 'focus'],
     boxShadow: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
     padding: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    animation: ['responsive', 'hover', 'focus', 'active'],
+    transitionProperty: ['responsive', 'hover', 'focus', 'group-hover'],
+    transitionDuration: ['responsive', 'hover', 'focus', 'group-hover'],
+    textColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
-  plugins: [],
+  plugins: [require('tailwindcss-ripple')()],
   purge: {
     // Learn more on https://tailwindcss.com/docs/controlling-file-size/#removing-unused-css
     enabled: process.env.NODE_ENV === 'production',

@@ -14,6 +14,7 @@
     :target="computedTarget"
     :type="type"
     :disabled="disabled"
+    class="focus:outline-none"
     @click.stop="handleClick"
   >
     <!-- @slot Main slot used for text -->

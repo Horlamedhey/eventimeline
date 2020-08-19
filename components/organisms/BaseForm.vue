@@ -1,11 +1,16 @@
 <template>
-  <form @submit="handleSubmit">
+  <form
+    class="flex flex-wrap items-center justify-between"
+    @submit="handleSubmit"
+  >
     <div
       v-for="field in visibleFields"
       :key="field.name"
+      class=""
       :class="[
+        field.classList,
         `${
-          formData[field.name] && formData[field.name].$error
+          $v.formData[field.name] && $v.formData[field.name].$error
             ? 'form-error-section'
             : ''
         }`,
@@ -13,48 +18,74 @@
     >
       <component
         :is="field.component"
+        :id="field.fieldId"
         :type="field.type"
         :label="field.label"
+        :extra-info="field.extraInfo"
+        :extra-info-class-list="field.extraInfoClassList"
         :name="field.name.toLowerCase()"
         :options="field.options"
         :disabled="field.disabled"
         :checked="field.checked"
         :placeholder="field.placeholder"
         :autocomplete="field.autocomplete"
+        :incremental="field.incremental"
+        :added="field.added"
         :value="formData[field.name]"
-        :error="formData[field.name] ? formData[field.name].$error : false"
+        :error="
+          $v.formData[field.name] ? $v.formData[field.name].$error : false
+        "
         :error-messages="
           field.errorMessage ||
-          $getErrorMessages(field.name, field.visibleValidation)
+          $getErrorMessages(
+            field.name,
+            field.visibleValidation,
+            field.multiName
+          )
         "
         :validations="validations || null"
-        :class-list="field.classList"
+        :input-class-list="[
+          field.inputClassList,
+          { 'border-error': $v.formData[field.name].$error },
+        ]"
+        :label-class-list="[
+          field.labelClassList,
+          { 'text-error': $v.formData[field.name].$error },
+        ]"
         @input="(value) => handleInput(field.name, value)"
         @change="(value) => handleInput(field.name, value)"
-        @blur="formData[field.name] ? formData[field.name].$touch() : () => {}"
+        @blur="
+          $v.formData[field.name] ? $v.formData[field.name].$touch() : () => {}
+        "
       />
     </div>
-
-    <BaseButton type="submit">Login</BaseButton>
   </form>
 </template>
 
 <script>
 import validationErrorMessages from '@/mixins/validationErrorMessages'
-import scrollTo from '@/mixins/scrollTo'
+import { validationMixin } from 'vuelidate'
+// import scrollTo from '@/mixins/scrollTo'
 
 export default {
   name: 'BaseForm',
   components: {
     /* eslint-disable vue/no-unused-components */
     BaseFormText: () => import('@/components/molecules/BaseFormText'),
+    BaseFormSelect: () => import('@/components/molecules/BaseFormSelect'),
+    BaseFormTextArea: () => import('@/components/molecules/BaseFormTextArea'),
+    BaseFormDate: () => import('@/components/molecules/BaseFormDate'),
+    BaseFormTime: () => import('@/components/molecules/BaseFormTime'),
+    BaseFormFileUpload: () =>
+      import('@/components/molecules/BaseFormFileUpload'),
+
     // VFormRadio: () => import("molecules/VFormRadio"),
     // VFormSelect: () => import("molecules/VFormSelect"),
     // VFormCheckbox: () => import("molecules/VFormCheckbox"),
     // VFormTel: () => import("molecules/VFormTel"),
     // VFormPayment: () => import("organisms/VFormPayment"),
   },
-  mixins: [validationErrorMessages, scrollTo],
+  mixins: [validationErrorMessages, validationMixin],
   props: {
     /** An array objects. Each object represent a form field for example VFormText. */
     fields: {

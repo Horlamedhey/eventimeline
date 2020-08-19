@@ -2,7 +2,10 @@
   <div class="relative min-h-screen">
     <div
       ref="content"
-      :class="[$route.path === '/' ? 'body-content-home' : 'body-content']"
+      :class="[
+        $route.path === '/' ? 'body-content-home' : 'body-content',
+        { 'bg-gray-variant6': $route.path === '/create-event' },
+      ]"
     >
       <BaseHeader class="bg-white"></BaseHeader>
       <transition name="slide" appear>

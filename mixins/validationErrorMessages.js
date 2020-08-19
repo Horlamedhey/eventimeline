@@ -1,61 +1,61 @@
-import errorMessages from "./errorMessages";
+import errorMessages from './errorMessages'
 
 export default {
   methods: {
-    $getErrorMessages(field, isVisible = false) {
-      let messageList = [];
-      const validations = this.$v;
-      let currentValidation;
+    $getErrorMessages(field, isVisible = false, multiName) {
+      const messageList = []
+      const validations = this.$v
+      let currentValidation
 
       if (validations) {
-        for (let key in validations) {
-          if (key.charAt(0) === "$") continue;
+        for (const key in validations) {
+          if (key.charAt(0) === '$') continue
 
           if (key === field) {
-            currentValidation = validations[key];
-            break;
+            currentValidation = validations[key]
+            break
           } else {
-            for (var key2 in validations[key]) {
+            for (const key2 in validations[key]) {
               if (key2 === field) {
-                currentValidation = validations[key][key2];
+                currentValidation = validations[key][key2]
               }
             }
           }
         }
 
-        if (!currentValidation) return;
+        if (!currentValidation) return
 
         if (!isVisible) {
-          for (let key in currentValidation) {
+          for (const key in currentValidation) {
             if (
-              errorMessages[field] &&
+              errorMessages[multiName || field] &&
               !currentValidation[key] &&
-              key.indexOf("$") === -1
+              !key.includes('$')
             ) {
-              messageList.push(errorMessages[field][key]);
+              messageList.push(errorMessages[multiName || field][key])
             }
           }
         } else {
-          for (let key in errorMessages[field]) {
-            let state;
+          for (const key in errorMessages[multiName || field]) {
+            let state
 
             if (currentValidation[key]) {
-              state = "success";
+              state = 'success'
             } else if (!currentValidation[key] && currentValidation.$dirty) {
-              state = "error";
+              state = 'error'
             }
 
             if (currentValidation[key] !== undefined) {
               messageList.push({
                 state,
-                text: errorMessages[field][key],
-              });
+                text: errorMessages[multiName || field][key],
+              })
             }
           }
         }
       }
 
-      return messageList;
+      return messageList
     },
   },
-};
+}

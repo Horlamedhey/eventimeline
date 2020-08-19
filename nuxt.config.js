@@ -37,6 +37,10 @@ export default {
     ],
   },
   /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#4d31bf' },
+  /*
    ** Global CSS
    */
   css: [],
@@ -44,7 +48,11 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['plugins/preview.client.js', 'plugins/cloudinary'],
+  plugins: [
+    'plugins/preview.client.js',
+    'plugins/cloudinary',
+    { src: 'plugins/v-tailwind-picker', mode: 'client' },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components

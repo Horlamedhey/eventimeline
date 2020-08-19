@@ -31,7 +31,7 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
-        class="w-8/12 px-2 mb-10 sm:px-3 lg:px-5 xl:px-8 sm:w-4/12 lg:w-3/12 xl:w-2/12"
+        class="w-8/12 mx-2 mb-10 sm:mx-7 md:mx-6 lg:mx-12 sm:w-3/12 lg:w-2/12 xl:w-2/12 xl:mx-10"
       ></BaseEventGridCard>
     </div>
 
