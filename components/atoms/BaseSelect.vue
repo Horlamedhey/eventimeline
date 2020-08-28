@@ -3,11 +3,15 @@
     :class="[classList, { flex: incremental }]"
     class="relative items-center rounded"
   >
+    <BaseLoading
+      v-if="loading"
+      class="absolute top-0 bottom-0 left-0 mt-1 ml-2"
+    ></BaseLoading>
     <select
       :id="id"
       v-model="localValue"
       class="w-full leading-none bg-transparent outline-none"
-      :class="[inputClassList]"
+      :class="[inputClassList, { 'pl-10': loading }]"
       :name="name"
       :disabled="disabled"
       @change="$emit('change', $event.target.value)"
@@ -69,6 +73,7 @@ export default {
     id: String,
     /** name attribute for select */
     name: String,
+    loading: Boolean,
     /** The value of empty (default) label */
     emptyValueLabel: {
       type: String,

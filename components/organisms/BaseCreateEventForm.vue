@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BaseEventDetails></BaseEventDetails>
+    <BaseEventDetails :upload="$parent.openCloudinaryWidget"></BaseEventDetails>
     <BaseEventOrganiserDetails></BaseEventOrganiserDetails>
     <BaseEventPaymentDetails></BaseEventPaymentDetails>
     <BaseEventThirdPartyArtisans></BaseEventThirdPartyArtisans>

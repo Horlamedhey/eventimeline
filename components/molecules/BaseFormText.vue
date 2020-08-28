@@ -50,12 +50,16 @@
         :name="name"
         :inputmode="inputmode"
         :pattern="pattern"
+        :prefix="prefix"
+        :loading="loading"
         :input-class-list="inputClassList"
         :add-on-class-list="error ? 'text-error' : ''"
         @input="(value) => $emit('input', value)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @keypress="$emit('keypress', $event)"
+        @increment="$emit('increment')"
+        @decrement="$emit('decrement')"
       />
     </div>
 
@@ -101,12 +105,20 @@ export default {
       type: Boolean,
       default: false,
     },
+    loading: {
+      type: Boolean,
+      default: false,
+    },
     extraInfo: {
       type: String,
       default: undefined,
     },
     /** Pattern attribute for input (used for mobile keypad) */
     pattern: {
+      type: String,
+      default: null,
+    },
+    prefix: {
       type: String,
       default: null,
     },

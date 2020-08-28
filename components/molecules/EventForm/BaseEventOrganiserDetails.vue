@@ -5,11 +5,7 @@
     </h3>
     <div class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline">
-        <BaseForm
-          :fields="fields"
-          :value="values"
-          :validations="validations"
-        ></BaseForm>
+        <BaseForm :fields="fields"></BaseForm>
       </div>
     </div>
 
@@ -39,14 +35,6 @@
 </template>
 
 <script>
-import {
-  required,
-  minLength,
-  email,
-  not,
-  alpha,
-} from 'vuelidate/lib/validators'
-const isPhone = (value) => /^1(3|4|5|7|8)\d{9}$/.test(value) // phone valid
 export default {
   name: 'BaseEventOrganiserDetails',
   data() {
@@ -61,6 +49,11 @@ export default {
           classList: 'w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [
+            { component: 'required' },
+            { component: 'minLength', param: 2 },
+          ],
+          value: '',
         },
         {
           component: 'BaseFormText',
@@ -71,6 +64,8 @@ export default {
           classList: 'mt-8 w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'required' }, { component: 'email' }],
+          value: '',
         },
         {
           component: 'BaseFormText',
@@ -81,6 +76,10 @@ export default {
           classList: 'mt-8 w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [
+            // { component: 'isPhone' },
+          ],
+          value: '',
         },
         {
           component: 'BaseFormText',
@@ -94,20 +93,13 @@ export default {
           extraInfoClassList: 'sm:w-56 w-48 sm:ml-8 -ml-4 sm:mt-0 mt-5',
           extraInfo:
             'This is a secret password to access the event admin page.',
+          validators: [
+            // { component: 'required' },
+            // { component: 'minLength', param: 8 },
+          ],
+          value: '',
         },
       ],
-      values: {
-        organiserName: '',
-        email: '',
-        phone: '',
-        adminPass: '',
-      },
-      validations: {
-        organiserName: { required, minLength: minLength(2) },
-        email: { required, email },
-        phone: { required, notAlpha: not(alpha), isPhone },
-        adminPass: { required },
-      },
     }
   },
 }

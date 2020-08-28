@@ -14,47 +14,60 @@ export default {
   eventDate: {
     required: 'Please select event date',
   },
+  organiserName: {
+    required: 'Please enter your name',
+    minLength: 'Event provision needs to be at least 2 characters long',
+  },
   email: {
     required: 'Please enter your email',
     email: 'Your email is not in the correct format',
   },
-  phoneNumber: {
-    valid: 'Please enter a valid phone number',
+  phone: {
+    required: 'Please enter your phone number',
+    isPhone: 'Please enter a valid phone number',
   },
-  countryOfResidence: {
-    required: 'Please select your country of residence',
-  },
-  password: {
+  adminPass: {
     required: 'Please enter a password',
     minLength: 'Password needs to be at least 8 character long',
-    containsUpperCase:
+    containsUppercase:
       'Password needs to contain at least one upper case character',
-    containsLowerCase:
+    containsLowercase:
       'Password needs to contain at least one lower case character',
     containsNumber: 'Password needs to contain at least one number',
-    containsSpecialCharacter:
+    containsSpecial:
       'Password needs to contain at least one special character. !@#$%&*()',
   },
-  securityQuestion: {
-    required: 'Please select a security question',
+  ticketType: {
+    required: 'Please enter a ticket type',
+    minLength: 'Ticket type needs to be at least 3 characters long',
   },
-  securityAnswer: {
-    required: 'Please enter a security answer',
+  maxAvailable: {
+    required: 'Please enter the number of available tickets',
+    integer: 'Please input a valid number',
+    minValue: 'Minimum value is 5',
   },
-  cardHolder: {
-    required: 'Please enter the name on your card',
-    minLength: "Card holder's name needs to be at least 3 characters",
+  ticketPrice: {
+    required: 'Please enter ticket price',
+    validPrice: 'Please input a valid price',
   },
-  creditCard: {
-    valid: 'Please enter a valid card number',
-    required: 'Please enter your card number',
+  accountName: {
+    required: 'Please check your account number or selected bank',
+    alpha: 'Account name can only contain alphabets',
+    minLength: 'Event provision needs to be at least 2 characters long',
   },
-  securityCode: {
-    required: 'Please enter the security code on your card',
+  accountNumber: {
+    required: 'Please enter your bank account number',
+    numeric: 'Account number can only contain numbers',
+    minLength: 'Account number needs to be 10 characters long',
+    maxLength: 'Account number needs to be 10 characters long',
   },
-  expiry: {
-    required: 'Please enter the expiry date on your card',
-    isFuture: 'Expiry date can not be set in past',
-    valid: 'Please enter a valid expiry date',
+  bankName: {
+    required: 'Please select your bank',
+  },
+  bvn: {
+    required: 'Please enter your bank verification number',
+    numeric: 'Bank Verification number can only contain numbers',
+    minLength: 'Bank Verification number needs to be 11 characters long',
+    maxLength: 'Bank Verification number needs to be 11 characters long',
   },
 }

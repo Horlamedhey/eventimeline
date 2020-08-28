@@ -7,8 +7,9 @@
       <div class="px-6 py-10 rounded shadow-outline">
         <BaseForm
           :fields="fields"
-          :value="values"
-          :validations="validations"
+          @increment="incrementField"
+          @decrement="decrementField"
+          @upload="upload"
         ></BaseForm>
       </div>
     </div>
@@ -32,9 +33,14 @@
 </template>
 
 <script>
-import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'BaseEventDetails',
+  props: {
+    upload: {
+      type: Function,
+      default: () => {},
+    },
+  },
   data() {
     return {
       fields: [
@@ -47,6 +53,11 @@ export default {
           classList: 'w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [
+            { component: 'required' },
+            { component: 'minLength', param: 3 },
+          ],
+          value: '',
         },
         {
           component: 'BaseFormTextArea',
@@ -55,28 +66,24 @@ export default {
           classList: 'mt-8 w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 px-2 rounded w-full py-4 text-lg',
+          validators: [
+            { component: 'required' },
+            { component: 'minLength', param: 20 },
+          ],
+          value: '',
         },
         {
           component: 'BaseFormText',
           multiName: 'eventProvisions',
-          name: 'eventProvision1',
+          name: 'eventProvisions1',
           type: 'text',
           label: 'PROVISIONS e.g. Security...',
-          incremental: false,
-          added: true,
-          classList: 'mt-8 w-full',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-        },
-        {
-          component: 'BaseFormText',
-          multiName: 'eventProvisions',
-          name: 'eventProvision2',
-          type: 'text',
           incremental: true,
           classList: 'mt-8 w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'minLength', param: 2 }],
+          value: '',
         },
         {
           component: 'BaseFormDate',
@@ -86,6 +93,8 @@ export default {
           classList: 'sm:w-5-5/12 w-full mt-8',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'required' }],
+          value: new Date().toLocaleDateString(),
         },
         {
           component: 'BaseFormTime',
@@ -95,6 +104,8 @@ export default {
           classList: 'sm:w-5-5/12 w-full mt-8',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'required' }],
+          value: `01:00AM`,
         },
         {
           component: 'BaseFormFileUpload',
@@ -102,27 +113,74 @@ export default {
           name: 'eventImage',
           type: 'file',
           classList: 'w-full mt-8',
+          validators: [{ component: 'required' }],
+          value: null,
         },
       ],
-      values: {
-        eventTitle: '',
-        eventDescription: '',
-        eventProvision1: '',
-        eventProvision2: '',
-        eventDate: new Date().toLocaleDateString(),
-        eventTime: '01:00AM',
-        eventImage: null,
-      },
-      validations: {
-        eventTitle: { required, minLength: minLength(3) },
-        eventDescription: { required, minLength: minLength(20) },
-        eventProvision1: { required, minLength: minLength(2) },
-        eventProvision2: { minLength: minLength(2) },
-        eventDate: { required },
-        eventTime: { required },
-        eventImage: { required },
-      },
     }
+  },
+  methods: {
+    async incrementField(fieldMultiName) {
+      const myFields = JSON.parse(JSON.stringify(this.fields))
+      const fields = myFields.filter((v) => v.multiName === fieldMultiName)
+
+      let inputIndex
+      const fieldMultiValidators = JSON.parse(
+        JSON.stringify(fields[0].validators)
+      )
+      const fieldMultiValue = JSON.parse(JSON.stringify(fields[0].value))
+      await new Promise((resolve) => {
+        for (let i = 0; i < fields.length; i++) {
+          const field = fields[i]
+          if (i === 0) {
+            inputIndex = myFields.indexOf(field)
+          }
+          if (field.incremental) {
+            field.incremental = false
+            field.added = true
+            field.validators = [
+              { component: 'required' },
+              ...fieldMultiValidators,
+            ]
+          }
+        }
+        const numberOfLastFieldName = parseInt(
+          fields[fields.length - 1].name[
+            fields[fields.length - 1].name.length - 1
+          ]
+        )
+        fields.push({
+          component: fields[0].component,
+          multiName: fieldMultiName,
+          name: `${fieldMultiName}${numberOfLastFieldName + 1}`,
+          type: fields[0].type,
+          incremental: true,
+          classList: fields[0].classList,
+          inputClassList: fields[0].inputClassList,
+          validators: fieldMultiValidators,
+          value: fieldMultiValue,
+        })
+        resolve()
+      })
+
+      myFields.splice(inputIndex, fields.length - 1, ...fields)
+      this.fields = myFields
+    },
+    decrementField(fieldName) {
+      const indexToRemove = this.fields.indexOf(
+        this.fields.find((v) => v.name === fieldName)
+      )
+      let label = false
+
+      if (this.fields[indexToRemove].label) {
+        label = this.fields[indexToRemove].label
+      }
+
+      this.fields.splice(indexToRemove, 1)
+      if (label) {
+        this.fields[indexToRemove].label = label
+      }
+    },
   },
 }
 </script>

@@ -3,12 +3,22 @@
     :class="[classList, { 'flex space-x-1': incremental || added }]"
     class="relative items-center rounded"
   >
+    <BaseLoading
+      v-if="loading"
+      class="absolute top-0 bottom-0 left-0 mt-1 ml-2"
+    ></BaseLoading>
     <div :class="{ 'w-10/12 sm:w-11/12': incremental || added }">
       <div
         v-if="type === 'search'"
         class="absolute top-0 bottom-0 flex items-center w-8 h-8 m-auto ml-3 group"
       >
         <BaseSearchIcon class="w-5 h-5"></BaseSearchIcon>
+      </div>
+      <div
+        v-if="prefix && !/[A-Za-z]/.test(value) && value.length > 0"
+        class="absolute top-0 bottom-0 flex items-center w-8 h-8 m-auto ml-3 group"
+      >
+        {{ prefix }}
       </div>
       <client-only v-if="name === 'eventdate'">
         <VueTailWindPicker
@@ -71,6 +81,9 @@
           inputClassList,
           {
             'pl-12': inputType === 'search',
+            'pl-10': loading,
+            'pl-6':
+              prefix !== null && !/[A-Za-z]/.test(value) && value.length > 0,
           },
         ]"
         @input="$emit('input', $event.target.value)"
@@ -126,7 +139,7 @@
         type="button"
         style="padding-top: 2px;"
         class="px-4 bg-transparent ripple-bg-success-variant1 group"
-        @click="handleIconClick"
+        @click="$emit('increment')"
       >
         <BaseAddCircleIcon
           class="w-4 h-4 m-auto text-success-variant1"
@@ -141,13 +154,12 @@
     <div v-if="added" class="w-auto text-center">
       <BaseButton
         type="button"
-        disabled
-        style="padding-top: 2px;"
-        class="px-4 bg-transparent cursor-default"
+        class="px-4 py-3 bg-transparent ripple-bg-error group"
+        @click="$emit('decrement')"
       >
-        <BaseCheckIcon
-          class="w-4 h-4 m-auto text-success-variant1"
-        ></BaseCheckIcon>
+        <BaseRemoveIcon
+          class="w-4 h-4 m-auto transition-colors duration-500 text-error group-hover:text-white"
+        ></BaseRemoveIcon>
       </BaseButton>
     </div>
   </div>
@@ -206,6 +218,8 @@ export default {
     name: String,
     /** pattern attribute for input (used for mobile keypad) */
     pattern: String,
+    prefix: { type: String, default: null },
+    loading: Boolean,
     /** inputmode attribute for input (used for mobile keypad) */
     inputmode: String,
   },

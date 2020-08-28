@@ -41,9 +41,10 @@
         :options="options"
         :autocomplete="autocomplete"
         :name="name"
+        :loading="loading"
         :input-class-list="inputClassList"
         :add-on-class-list="error ? 'text-error' : ''"
-        @change="(value) => $emit('input', value)"
+        @change="(value) => $emit('change', value)"
         @focus="$emit('focus')"
         @blur="$emit('blur')"
       />
@@ -80,6 +81,10 @@ export default {
     },
     /** Disabled attribute for the select */
     disabled: {
+      type: Boolean,
+      default: false,
+    },
+    loading: {
       type: Boolean,
       default: false,
     },

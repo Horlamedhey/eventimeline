@@ -2,7 +2,7 @@
   <div class="flex flex-wrap sm:flex-no-wrap" :class="classList">
     <input
       :id="id"
-      type="file"
+      type="text"
       :value="value"
       :name="name"
       class="absolute invisible"
@@ -15,7 +15,7 @@
     <BaseButton
       class="w-10/12 px-20 py-16 m-auto border-2 border-dashed rounded border-black-300 ripple-bg-gray-variant6 sm:w-auto"
       type="button"
-      @click="pickImage"
+      @click="$emit('upload')"
     >
       <BaseCameraIcon class="w-8 h-8 m-auto text-black-300"></BaseCameraIcon>
     </BaseButton>
@@ -47,10 +47,6 @@ export default {
     /** name attribute for the input */
     name: String,
   },
-  methods: {
-    pickImage() {
-      document.getElementById(this.id).click()
-    },
-  },
+  methods: {},
 }
 </script>
