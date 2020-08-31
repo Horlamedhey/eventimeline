@@ -63,52 +63,58 @@ export default {
       currValues: {},
       fields: [
         {
-          component: 'BaseFormText',
-          name: 'ticketType',
-          type: 'text',
-          label: 'TICKET TYPE',
-          autocomplete: 'on',
-          classList: 'w-full mt-8  md:w-4/12 sm:pr-4',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [
-            { component: 'required' },
-            { component: 'minLength', param: 3 },
+          group: 'ticket',
+          classList: 'w-full',
+          fields: [
+            {
+              component: 'BaseFormText',
+              name: 'ticketType',
+              type: 'text',
+              label: 'TICKET TYPE',
+              autocomplete: 'on',
+              classList: 'w-full md:mt-0 mt-8  md:w-4/12 sm:pr-4',
+              inputClassList:
+                'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+              validators: [
+                { component: 'required' },
+                { component: 'minLength', param: 3 },
+              ],
+              value: '',
+            },
+            {
+              component: 'BaseFormText',
+              name: 'maxAvailable',
+              type: 'text',
+              label: 'MAX. AVAILABLE',
+              autocomplete: 'on',
+              classList: 'md:mt-0 mt-8  w-full md:w-4/12 sm:pr-4',
+              inputClassList:
+                'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+              validators: [
+                { component: 'required' },
+                { component: 'integer' },
+                { component: 'minValue', param: 5 },
+              ],
+              value: null,
+            },
+            {
+              component: 'BaseFormText',
+              name: 'ticketPrice',
+              type: 'text',
+              label: 'TICKET PRICE',
+              prefix: '#',
+              autocomplete: 'on',
+              incremental: true,
+              classList: 'md:mt-0 mt-8  w-full md:w-4/12',
+              inputClassList:
+                'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+              extraInfoClassList: ' w-48 -ml-4 mt-5',
+              extraInfo:
+                'A valid price could be "free" or any valid amount of at least #100.',
+              validators: [],
+              value: '',
+            },
           ],
-          value: '',
-        },
-        {
-          component: 'BaseFormText',
-          name: 'maxAvailable',
-          type: 'text',
-          label: 'MAX. AVAILABLE',
-          autocomplete: 'on',
-          classList: 'mt-8  w-full md:w-4/12 sm:pr-4',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [
-            { component: 'required' },
-            { component: 'integer' },
-            { component: 'minValue', param: 5 },
-          ],
-          value: null,
-        },
-        {
-          component: 'BaseFormText',
-          name: 'ticketPrice',
-          type: 'text',
-          label: 'TICKET PRICE',
-          prefix: '#',
-          autocomplete: 'on',
-          incremental: true,
-          classList: 'mt-8  w-full md:w-4/12',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          extraInfoClassList: ' w-48 -ml-4 mt-5',
-          extraInfo:
-            'A valid price could be "free" or any valid amount of at least #100.',
-          validators: [],
-          value: '',
         },
         {
           component: 'BaseFormSelect',

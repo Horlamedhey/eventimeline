@@ -37,18 +37,20 @@ export default {
     containsSpecial:
       'Password needs to contain at least one special character. !@#$%&*()',
   },
-  ticketType: {
-    required: 'Please enter a ticket type',
-    minLength: 'Ticket type needs to be at least 3 characters long',
-  },
-  maxAvailable: {
-    required: 'Please enter the number of available tickets',
-    integer: 'Please input a valid number',
-    minValue: 'Minimum value is 5',
-  },
-  ticketPrice: {
-    required: 'Please enter ticket price',
-    validPrice: 'Please input a valid price',
+  ticket: {
+    ticketType: {
+      required: 'Please enter a ticket type',
+      minLength: 'Ticket type needs to be at least 3 characters long',
+    },
+    maxAvailable: {
+      required: 'Please enter the number of available tickets',
+      integer: 'Please input a valid number',
+      minValue: 'Minimum value is 5',
+    },
+    ticketPrice: {
+      required: 'Please enter ticket price',
+      validPrice: 'Please input a valid price',
+    },
   },
   accountName: {
     required: 'Please check your account number or selected bank',

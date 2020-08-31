@@ -37,7 +37,6 @@ export default {
           cloudName: 'befittinglife',
           uploadPreset: 'eventimeline',
           apiKey: '169241722441159',
-          timestamp: Math.round(new Date().getTime() / 1000),
           multiple: false,
           // maxFiles: 1,
           // cropping: true,

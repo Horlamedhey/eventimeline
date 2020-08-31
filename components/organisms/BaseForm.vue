@@ -1,79 +1,171 @@
 <template>
-  <form class="flex flex-wrap justify-between" @submit="handleSubmit">
+  <form class="flex flex-wrap" @submit="handleSubmit">
     <div
       v-for="field in visibleFields"
-      :key="field.name"
-      class=""
-      :class="[
-        field.classList,
-        `${
-          $v.formData[field.name] && $v.formData[field.name].$error
-            ? 'form-error-section'
-            : ''
-        }`,
-      ]"
+      :key="field.group || field.name"
+      :class="field.classList"
     >
-      <component
-        :is="field.component"
-        :id="field.fieldId"
-        :type="field.type"
-        :label="field.label"
-        :prefix="field.prefix"
-        :loading="field.loading"
-        :extra-info="field.extraInfo"
-        :extra-info-class-list="field.extraInfoClassList"
-        :name="field.name.toLowerCase()"
-        :options="field.options"
-        :disabled="field.disabled"
-        :checked="field.checked"
-        :placeholder="field.placeholder"
-        :autocomplete="field.autocomplete"
-        :incremental="field.incremental"
-        :added="field.added"
-        :value="formData[field.name]"
-        :error="
-          field.error ||
-          ($v.formData[field.name] ? $v.formData[field.name].$error : false)
-        "
-        :error-messages="
-          field.errorMessage ||
-          $getErrorMessages(
-            field.name,
-            field.visibleValidation,
-            field.multiName
-          )
-        "
-        :input-class-list="[
-          field.inputClassList,
-          { 'border-error': $v.formData[field.name].$error },
+      <div v-if="field.group" class="flex flex-wrap justify-between">
+        <div
+          v-for="nestedField in field.fields"
+          :key="nestedField.name"
+          :class="[
+            nestedField.classList,
+            `${
+              $v.formData[field.group][nestedField.name] &&
+              $v.formData[field.group][nestedField.name].$error
+                ? 'form-error-section'
+                : ''
+            }`,
+          ]"
+        >
+          <component
+            :is="nestedField.component"
+            :id="nestedField.fieldId"
+            :type="nestedField.type"
+            :label="nestedField.label"
+            :prefix="nestedField.prefix"
+            :loading="nestedField.loading"
+            :extra-info="nestedField.extraInfo"
+            :extra-info-class-list="nestedField.extraInfoClassList"
+            :name="nestedField.name.toLowerCase()"
+            :options="nestedField.options"
+            :disabled="nestedField.disabled"
+            :checked="nestedField.checked"
+            :placeholder="nestedField.placeholder"
+            :autocomplete="nestedField.autocomplete"
+            :incremental="nestedField.incremental"
+            :added="nestedField.added"
+            :value="formData[field.group][nestedField.name]"
+            :error="
+              nestedField.error ||
+              ($v.formData[field.group][nestedField.name]
+                ? $v.formData[field.group][nestedField.name].$error
+                : false)
+            "
+            :error-messages="
+              nestedField.errorMessage ||
+              $getErrorMessages(
+                nestedField.name,
+                nestedField.visibleValidation,
+                nestedField.multiName,
+                field.group
+              )
+            "
+            :input-class-list="[
+              nestedField.inputClassList,
+              {
+                'border-error':
+                  $v.formData[field.group][nestedField.name].$error,
+              },
+            ]"
+            :label-class-list="[
+              nestedField.labelClassList,
+              {
+                'text-error': $v.formData[field.group][nestedField.name].$error,
+              },
+            ]"
+            @input="
+              (value) => handleInput(nestedField.name, value, field.group)
+            "
+            @change="
+              (value) => {
+                handleInput(nestedField.name, value, field.group)
+                if (nestedField.changeEvent) {
+                  handleChangeEvent(field)
+                }
+              }
+            "
+            @blur="
+              () => {
+                $v.formData[field.group][nestedField.name]
+                  ? $v.formData[field.group][nestedField.name].$touch()
+                  : () => {}
+                if (field.blurEvent) {
+                  handleBlurEvent(field)
+                }
+              }
+            "
+            @increment="
+              validateAndIncrementGroup(nestedField.name, field.group)
+            "
+            @decrement="$emit('decrement', nestedField.name)"
+            @upload="$emit('upload')"
+          />
+        </div>
+      </div>
+      <div
+        v-else
+        :class="[
+          `${
+            $v.formData[field.name] && $v.formData[field.name].$error
+              ? 'form-error-section'
+              : ''
+          }`,
         ]"
-        :label-class-list="[
-          field.labelClassList,
-          { 'text-error': $v.formData[field.name].$error },
-        ]"
-        @input="(value) => handleInput(field.name, value)"
-        @change="
-          (value) => {
-            handleInput(field.name, value)
-            if (field.changeEvent) {
-              handleChangeEvent(field)
+      >
+        <component
+          :is="field.component"
+          :id="field.fieldId"
+          :type="field.type"
+          :label="field.label"
+          :prefix="field.prefix"
+          :loading="field.loading"
+          :extra-info="field.extraInfo"
+          :extra-info-class-list="field.extraInfoClassList"
+          :name="field.name.toLowerCase()"
+          :options="field.options"
+          :disabled="field.disabled"
+          :checked="field.checked"
+          :placeholder="field.placeholder"
+          :autocomplete="field.autocomplete"
+          :incremental="field.incremental"
+          :added="field.added"
+          :value="formData[field.name]"
+          :error="
+            field.error ||
+            ($v.formData[field.name] ? $v.formData[field.name].$error : false)
+          "
+          :error-messages="
+            field.errorMessage ||
+            $getErrorMessages(
+              field.name,
+              field.visibleValidation,
+              field.multiName
+            )
+          "
+          :input-class-list="[
+            field.inputClassList,
+            { 'border-error': $v.formData[field.name].$error },
+          ]"
+          :label-class-list="[
+            field.labelClassList,
+            { 'text-error': $v.formData[field.name].$error },
+          ]"
+          @input="(value) => handleInput(field.name, value)"
+          @change="
+            (value) => {
+              handleInput(field.name, value)
+              if (field.changeEvent) {
+                handleChangeEvent(field)
+              }
             }
-          }
-        "
-        @blur="
-          () => {
-            $v.formData[field.name]
-              ? $v.formData[field.name].$touch()
-              : () => {}
-            if (field.blurEvent) {
-              handleBlurEvent(field)
+          "
+          @blur="
+            () => {
+              $v.formData[field.name]
+                ? $v.formData[field.name].$touch()
+                : () => {}
+              if (field.blurEvent) {
+                handleBlurEvent(field)
+              }
             }
-          }
-        "
-        @increment="validateAndIncrement(field.name, field.multiName)"
-        @decrement="$emit('decrement', field.name)"
-        @upload="$emit('upload')"
-      />
+          "
+          @increment="validateAndIncrement(field.name, field.multiName)"
+          @decrement="$emit('decrement', field.name)"
+          @upload="$emit('upload')"
+        />
+      </div>
     </div>
   </form>
 </template>
@@ -126,13 +218,27 @@ export default {
   },
   data() {
     return {
-      formData: this.fields.reduce(
-        (prevFields, inputField) => ({
-          ...prevFields,
-          [inputField.name]: inputField.value,
-        }),
-        {}
-      ),
+      formData: this.fields.reduce((prevFields, inputField) => {
+        if (inputField.group) {
+          return {
+            ...prevFields,
+            [inputField.group]: inputField.fields.reduce(
+              (prevFields, inputField) => {
+                return {
+                  ...prevFields,
+                  [inputField.name]: inputField.value,
+                }
+              },
+              {}
+            ),
+          }
+        } else {
+          return {
+            ...prevFields,
+            [inputField.name]: inputField.value,
+          }
+        }
+      }, {}),
     }
   },
   computed: {
@@ -158,13 +264,29 @@ export default {
       })
     },
     fieldRules() {
-      return this.fields.reduce(
-        (prevFields, inputField) => ({
-          ...prevFields,
-          [inputField.name]: this.generateFieldRules(inputField.validators),
-        }),
-        {}
-      )
+      return this.fields.reduce((prevFields, inputField) => {
+        if (inputField.group) {
+          return {
+            ...prevFields,
+            [inputField.group]: inputField.fields.reduce(
+              (prevFields, inputField) => {
+                return {
+                  ...prevFields,
+                  [inputField.name]: this.generateFieldRules(
+                    inputField.validators
+                  ),
+                }
+              },
+              {}
+            ),
+          }
+        } else {
+          return {
+            ...prevFields,
+            [inputField.name]: this.generateFieldRules(inputField.validators),
+          }
+        }
+      }, {})
     },
   },
   mounted() {
@@ -182,8 +304,12 @@ export default {
         {}
       )
     },
-    handleInput(name, value) {
-      this.$set(this.formData, name, value)
+    handleInput(name, value, groupName) {
+      if (groupName) {
+        this.$set(this.formData[groupName], name, value)
+      } else {
+        this.$set(this.formData, name, value)
+      }
       this.$emit('input', this.formData)
     },
     handleSubmit(e) {
@@ -200,6 +326,12 @@ export default {
       this.$v.formData.$touch()
       if (this.formData[fieldName].length >= 2) {
         this.$emit('increment', fieldMultiName)
+      }
+    },
+    validateAndIncrementGroup(fieldName, fieldGroupName) {
+      this.$v.formData.$touch()
+      if (this.formData[fieldName].length >= 2) {
+        this.$emit('increment', fieldGroupName)
       }
     },
     handleBlurEvent(field) {
@@ -233,12 +365,15 @@ export default {
           containsNumber: helpers.regex('containsUppercase', /[0-9]/),
           containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
         },
-        ticketPrice: {
-          required: validators.required,
-          validPrice: validators.or(
-            helpers.regex('isFree', /free/i),
-            validators.integer && validators.minValue(100)
-          ),
+        ticket: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
         },
       },
     }
