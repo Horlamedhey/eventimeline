@@ -154,7 +154,7 @@
     <div v-if="added" class="w-auto text-center">
       <BaseButton
         type="button"
-        class="px-4 py-3 bg-transparent ripple-bg-error group"
+        class="px-4 py-3 bg-transparent ripple-bg-error-light group"
         @click="$emit('decrement')"
       >
         <BaseRemoveIcon

@@ -9,7 +9,6 @@
           :fields="fields"
           @increment="incrementField"
           @decrement="decrementField"
-          @upload="upload"
         ></BaseForm>
       </div>
     </div>
@@ -35,12 +34,6 @@
 <script>
 export default {
   name: 'BaseEventDetails',
-  props: {
-    upload: {
-      type: Function,
-      default: () => {},
-    },
-  },
   data() {
     return {
       fields: [
@@ -111,10 +104,10 @@ export default {
           component: 'BaseFormFileUpload',
           fieldId: 'imageInput',
           name: 'eventImage',
-          type: 'file',
+          type: 'text',
           classList: 'w-full mt-8',
-          validators: [{ component: 'required' }],
-          value: null,
+          validators: [],
+          value: '',
         },
       ],
     }

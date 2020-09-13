@@ -1,9 +1,17 @@
 <template>
   <div>
-    <BaseEventDetails :upload="$parent.openCloudinaryWidget"></BaseEventDetails>
-    <BaseEventOrganiserDetails></BaseEventOrganiserDetails>
-    <BaseEventPaymentDetails></BaseEventPaymentDetails>
-    <BaseEventThirdPartyArtisans></BaseEventThirdPartyArtisans>
+    <div class="flex px-1 space-x-20 overflow-auto">
+      <BaseEventDetails class="w-full min-w-full"></BaseEventDetails>
+      <BaseEventOrganiserDetails
+        class="w-full min-w-full"
+      ></BaseEventOrganiserDetails>
+      <BaseEventPaymentDetails
+        class="w-full min-w-full"
+      ></BaseEventPaymentDetails>
+      <BaseEventThirdPartyArtisans
+        class="w-full min-w-full"
+      ></BaseEventThirdPartyArtisans>
+    </div>
   </div>
 </template>
 

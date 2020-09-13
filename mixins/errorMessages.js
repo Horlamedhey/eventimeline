@@ -1,3 +1,18 @@
+const ticketErrorSchema = {
+  ticketType: {
+    required: 'Please enter a ticket type',
+    minLength: 'Ticket type needs to be at least 3 characters long',
+  },
+  maxAvailable: {
+    required: 'Please enter the number of available tickets',
+    integer: 'Please input a valid number',
+    minValue: 'Minimum value is 5',
+  },
+  ticketPrice: {
+    required: 'Please enter ticket price',
+    validPrice: 'Please input a valid price',
+  },
+}
 export default {
   eventTitle: {
     required: 'Please enter event title',
@@ -13,6 +28,10 @@ export default {
   },
   eventDate: {
     required: 'Please select event date',
+  },
+  eventImage: {
+    required: 'Please select an event poster that best describes your event',
+    isValidSize: 'File size exceeds maximum allowed (1 MB)',
   },
   organiserName: {
     required: 'Please enter your name',
@@ -37,21 +56,12 @@ export default {
     containsSpecial:
       'Password needs to contain at least one special character. !@#$%&*()',
   },
-  ticket: {
-    ticketType: {
-      required: 'Please enter a ticket type',
-      minLength: 'Ticket type needs to be at least 3 characters long',
-    },
-    maxAvailable: {
-      required: 'Please enter the number of available tickets',
-      integer: 'Please input a valid number',
-      minValue: 'Minimum value is 5',
-    },
-    ticketPrice: {
-      required: 'Please enter ticket price',
-      validPrice: 'Please input a valid price',
-    },
-  },
+  ticket: { ...ticketErrorSchema },
+  ticket_1: { ...ticketErrorSchema },
+  ticket_2: { ...ticketErrorSchema },
+  ticket_3: { ...ticketErrorSchema },
+  ticket_4: { ...ticketErrorSchema },
+  ticket_5: { ...ticketErrorSchema },
   accountName: {
     required: 'Please check your account number or selected bank',
     alpha: 'Account name can only contain alphabets',

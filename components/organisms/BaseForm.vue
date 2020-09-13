@@ -4,11 +4,12 @@
       v-for="field in visibleFields"
       :key="field.group || field.name"
       :class="field.classList"
+      class="first:mt-0"
     >
       <div v-if="field.group" class="flex flex-wrap justify-between">
         <div
           v-for="nestedField in field.fields"
-          :key="nestedField.name"
+          :key="`${field.group}-${nestedField.name}`"
           :class="[
             nestedField.classList,
             `${
@@ -32,7 +33,7 @@
             :options="nestedField.options"
             :disabled="nestedField.disabled"
             :checked="nestedField.checked"
-            :placeholder="nestedField.placeholder"
+            :placeholder="nestedField.name"
             :autocomplete="nestedField.autocomplete"
             :incremental="nestedField.incremental"
             :added="nestedField.added"
@@ -48,7 +49,7 @@
               $getErrorMessages(
                 nestedField.name,
                 nestedField.visibleValidation,
-                nestedField.multiName,
+                undefined,
                 field.group
               )
             "
@@ -86,11 +87,11 @@
                 }
               }
             "
-            @increment="
-              validateAndIncrementGroup(nestedField.name, field.group)
+            @increment="validateAndIncrementGroup(field.group)"
+            @decrement="decrementGroup(field.group)"
+            @upload="
+              (value) => handleUpload(nestedField.name, value, field.group)
             "
-            @decrement="$emit('decrement', nestedField.name)"
-            @upload="$emit('upload')"
           />
         </div>
       </div>
@@ -163,7 +164,7 @@
           "
           @increment="validateAndIncrement(field.name, field.multiName)"
           @decrement="$emit('decrement', field.name)"
-          @upload="$emit('upload')"
+          @upload="(value) => handleUpload(field.name, value)"
         />
       </div>
     </div>
@@ -243,25 +244,27 @@ export default {
   },
   computed: {
     visibleFields() {
-      return this.fields.filter((formField) => {
-        if (formField && formField.conditionalRendering) {
-          const { $v } = this
-          const { field, operator, value } = formField.conditionalRendering
-          const validationField = $v.formData[field]
+      return this.fields
+        .filter((v) => v.visible === undefined || v.visible)
+        .filter((formField) => {
+          if (formField && formField.conditionalRendering) {
+            const { $v } = this
+            const { field, operator, value } = formField.conditionalRendering
+            const validationField = $v.formData[field]
 
-          if (operator === '==') {
-            return validationField.$model === value
+            if (operator === '==') {
+              return validationField.$model === value
+            }
+
+            if (operator === '!=') {
+              return validationField.$model !== value
+            }
+
+            return false
           }
 
-          if (operator === '!=') {
-            return validationField.$model !== value
-          }
-
-          return false
-        }
-
-        return true
-      })
+          return true
+        })
     },
     fieldRules() {
       return this.fields.reduce((prevFields, inputField) => {
@@ -289,6 +292,40 @@ export default {
       }, {})
     },
   },
+  watch: {
+    fields(curr) {
+      const processedCurr = curr.reduce((prevFields, inputField) => {
+        if (inputField.group) {
+          return {
+            ...prevFields,
+            [inputField.group]: inputField.fields.reduce(
+              (prevFields, inputField) => {
+                return {
+                  ...prevFields,
+                  [inputField.name]: inputField.value,
+                }
+              },
+              {}
+            ),
+          }
+        } else {
+          return {
+            ...prevFields,
+            [inputField.name]: inputField.value,
+          }
+        }
+      }, {})
+      for (const key in processedCurr) {
+        if (
+          Object.hasOwnProperty.call(processedCurr, key) &&
+          !Object.hasOwnProperty.call(this.formData, key)
+        ) {
+          this.formData[key] = processedCurr[key]
+          // console.log(key, processedCurr[key])
+        }
+      }
+    },
+  },
   mounted() {
     this.$emit('input', this.formData)
   },
@@ -312,6 +349,7 @@ export default {
       }
       this.$emit('input', this.formData)
     },
+
     handleSubmit(e) {
       e.preventDefault()
       this.$v.formData.$touch()
@@ -328,11 +366,33 @@ export default {
         this.$emit('increment', fieldMultiName)
       }
     },
-    validateAndIncrementGroup(fieldName, fieldGroupName) {
-      this.$v.formData.$touch()
-      if (this.formData[fieldName].length >= 2) {
-        this.$emit('increment', fieldGroupName)
+    async validateAndIncrementGroup(fieldGroupName) {
+      const checkError = await new Promise((resolve) => {
+        const errors = []
+        for (const fieldName in this.$v.formData[fieldGroupName]) {
+          if (fieldName.charAt(0) === '$') continue
+          if (
+            Object.hasOwnProperty.call(
+              this.$v.formData[fieldGroupName],
+              fieldName
+            )
+          ) {
+            const element = this.$v.formData[fieldGroupName][fieldName]
+            element.$touch()
+            errors.push(element.$error)
+          }
+        }
+        resolve(errors)
+      })
+      if (!checkError.includes(true)) {
+        this.$emit('incrementGroup', fieldGroupName)
       }
+    },
+    decrementGroup(fieldGroupName) {
+      this.$set(this.formData[fieldGroupName], 'ticketType', '')
+      this.$set(this.formData[fieldGroupName], 'maxAvailable', '')
+      this.$set(this.formData[fieldGroupName], 'ticketPrice', '')
+      this.$emit('decrementGroup', fieldGroupName)
     },
     handleBlurEvent(field) {
       this.$parent[field.blurEvent](this.formData[field.name]).then((res) => {
@@ -353,6 +413,10 @@ export default {
     return {
       formData: {
         ...this.fieldRules,
+        eventImage: {
+          required: validators.required,
+          isValidSize: helpers.regex('isValidSize', /^((?!exceed)[\s\S])*$/),
+        },
         phone: {
           required: validators.required,
           isPhone,
@@ -366,6 +430,56 @@ export default {
           containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
         },
         ticket: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
+        },
+        ticket_1: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
+        },
+        ticket_2: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
+        },
+        ticket_3: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
+        },
+        ticket_4: {
+          ...this.fieldRules.ticket,
+          ticketPrice: {
+            required: validators.required,
+            validPrice: validators.or(
+              helpers.regex('isFree', /free/i),
+              validators.integer && validators.minValue(100)
+            ),
+          },
+        },
+        ticket_5: {
           ...this.fieldRules.ticket,
           ticketPrice: {
             required: validators.required,

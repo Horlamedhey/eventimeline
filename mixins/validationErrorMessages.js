@@ -35,6 +35,7 @@ export default {
         if (!currentValidation) return
 
         if (groupName) {
+          // console.log(currentValidation)
           if (!isVisible) {
             for (const key in currentValidation) {
               if (
