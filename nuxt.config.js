@@ -49,8 +49,8 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
-    'plugins/preview.client.js',
     'plugins/cloudinary',
+    'plugins/gsap.client.js',
     { src: 'plugins/v-tailwind-picker', mode: 'client' },
   ],
   /*

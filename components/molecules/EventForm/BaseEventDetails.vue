@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h3 class="font-medium text-1xl sm:text-2-5xl">
+  <div ref="formContainer">
+    <h3 ref="header" class="font-medium text-1xl sm:text-2-5xl">
       Step 1:<br />Event Details
     </h3>
-    <div class="mt-10 shadow-md">
+    <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline">
         <BaseForm
           :fields="fields"
@@ -13,10 +13,11 @@
       </div>
     </div>
 
-    <div class="mt-20">
+    <div ref="actionBtn" class="flex items-center justify-center mt-20">
       <BaseButton
         type="button"
         class="flex items-center justify-center w-56 py-3 m-auto font-medium rounded-full bg-secondary-light ripple-bg-secondary-light group"
+        @click="setCurrentForm(position + 1)"
       >
         <span
           class="next-button-content group-hover:transition group-hover:text-white"
@@ -32,8 +33,10 @@
 </template>
 
 <script>
+import formsAnimationMixin from '~/mixins/formsAnimationMixin'
 export default {
   name: 'BaseEventDetails',
+  mixins: [formsAnimationMixin],
   data() {
     return {
       fields: [

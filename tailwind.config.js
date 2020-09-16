@@ -104,6 +104,10 @@ module.exports = {
       height: {
         '70': '20rem',
       },
+      minHeight: {
+        '260': '65rem',
+        '220': '55rem',
+      },
       margin: {
         '7': '1.8rem',
       },

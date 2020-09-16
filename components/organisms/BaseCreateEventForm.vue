@@ -1,23 +1,56 @@
 <template>
-  <div>
-    <div class="flex px-1 space-x-20 overflow-auto">
-      <BaseEventDetails class="w-full min-w-full"></BaseEventDetails>
-      <BaseEventOrganiserDetails
-        class="w-full min-w-full"
-      ></BaseEventOrganiserDetails>
-      <BaseEventPaymentDetails
-        class="w-full min-w-full"
-      ></BaseEventPaymentDetails>
-      <BaseEventThirdPartyArtisans
-        class="w-full min-w-full"
-      ></BaseEventThirdPartyArtisans>
-    </div>
+  <div class="relative min-h-260 sm:min-h-220">
+    <BaseEventDetails
+      :position="1"
+      :current-form="currentForm"
+      :set-current-form="setCurrentForm"
+      class="absolute top-0 z-0 opacity-0"
+    ></BaseEventDetails>
+    <BaseEventOrganiserDetails
+      :position="2"
+      :current-form="currentForm"
+      :set-current-form="setCurrentForm"
+      class="absolute top-0 z-0 opacity-0"
+    ></BaseEventOrganiserDetails>
+    <BaseEventPaymentDetails
+      :position="3"
+      :current-form="currentForm"
+      :set-current-form="setCurrentForm"
+      class="absolute top-0 z-0 opacity-0"
+    ></BaseEventPaymentDetails>
+    <BaseEventThirdPartyArtisans
+      :position="4"
+      :current-form="currentForm"
+      :set-current-form="setCurrentForm"
+      class="absolute top-0 z-0 opacity-0"
+    ></BaseEventThirdPartyArtisans>
+    <BaseEventCreateFinish
+      :position="5"
+      :current-form="currentForm"
+      :set-current-form="setCurrentForm"
+      class="absolute top-0 z-0 opacity-0"
+    ></BaseEventCreateFinish>
   </div>
 </template>
 
 <script>
 export default {
   name: 'BaseCreateEventForm',
+  data() {
+    return {
+      currentForm: 0,
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.currentForm = 1
+    }, 1500)
+  },
+  methods: {
+    setCurrentForm(val) {
+      this.currentForm = val
+    },
+  },
 }
 </script>
 
