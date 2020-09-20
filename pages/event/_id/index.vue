@@ -12,7 +12,7 @@
       <BaseEventStatus class="event-status md:py-4 md:px-8"></BaseEventStatus>
       <BaseEventInfoCard :event="event"></BaseEventInfoCard>
     </div>
-    <div style="height: 20vh; max-height: 220px;"></div>
+    <div style="height: 20vh; max-height: 220px"></div>
     <article
       class="w-11/12 px-3 pb-16 m-auto bg-white shadow-outline lg:w-9/12 xl:w-7-5/12 font-quicksand"
     >
@@ -42,7 +42,7 @@
           :key="provision"
           class="flex mt-2 space-x-5 text-base sm:text-lg"
         >
-          <div class="w-auto" style="padding: 0.4rem 0;">
+          <div class="w-auto" style="padding: 0.4rem 0">
             <BaseCheckIcon class="w-4 h-4 text-success-variant"></BaseCheckIcon>
           </div>
           <span class="w-10/12">

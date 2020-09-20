@@ -30,7 +30,7 @@
         ></BaseNavList>
       </div>
     </div>
-    <div class="relative z-30 z-40 flex justify-center pb-2 bg-black">
+    <div class="relative z-30 flex justify-center pb-2 bg-black">
       <p class="text-xs">
         {{ `© ${new Date().getFullYear()} Eventimeline` }}
       </p>

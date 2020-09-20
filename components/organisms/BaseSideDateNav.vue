@@ -1,16 +1,14 @@
 <template>
   <div class="mt-10">
-    <h2 class="text-black-700 text-tinier font-inter">
-      Timeline
-    </h2>
+    <h2 class="text-black-700 text-tinier font-inter">Timeline</h2>
     <BaseNavList
       :items="dates"
-      content-container-class="flex items-center group content-container-class mt-4 hover:shadow bg-gray-variant1 hover:bg-white  transition duration-300 ease-in overflow-x-hidden rounded"
-      content-class="text-base font-josefinsans font-normal text-gray-variant flex transition duration-300 ease-in group-hover:bg-white group-hover:text-black-600 rounded py-2 px-16 pr-full whitespace-no-wrap"
-      active-class="important-white-bg-text transition duration-300 ease-in"
-      active-addon-class="text-black-600 transition duration-300 ease-in"
-      active-content-container-class="shadow important-white-bg-text transition duration-300 ease-in"
-      add-on-class="group-hover:text-black-600 transition duration-300 ease-in"
+      content-container-class="flex items-center mt-4 overflow-x-hidden transition duration-300 ease-in rounded group content-container-class hover:shadow bg-gray-variant1 hover:bg-white"
+      content-class="flex px-16 py-2 text-base font-normal whitespace-no-wrap transition duration-300 ease-in rounded font-josefinsans text-gray-variant group-hover:bg-white group-hover:text-black-600 pr-full"
+      active-class="transition duration-300 ease-in important-white-bg-text"
+      active-addon-class="transition duration-300 ease-in text-black-600"
+      active-content-container-class="transition duration-300 ease-in shadow important-white-bg-text"
+      add-on-class="transition duration-300 ease-in group-hover:text-black-600 w-5 h-5 mr-4"
     ></BaseNavList>
     <BaseButton
       class="block px-4 py-2 m-auto mt-3 transition duration-300 ease-in-out rounded cursor-pointer focus:outline-none active:bg-gray-100 hover:bg-gray-200"

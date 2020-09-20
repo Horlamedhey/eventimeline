@@ -165,3 +165,11 @@ textarea {
 }
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer utilities {
+  @variants hover, focus {
+    .active-class {
+      @apply bg-opacity-25  bg-gradient-to-br from-primary-variant1 to-primary-variant2;
+    }
+  }
+}

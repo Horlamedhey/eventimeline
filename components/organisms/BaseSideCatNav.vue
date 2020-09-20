@@ -1,17 +1,15 @@
 <template>
   <div>
-    <h2 class="text-black-700 text-tinier font-inter">
-      Categories
-    </h2>
+    <h2 class="text-black-700 text-tinier font-inter">Categories</h2>
     <div class="py-5 mt-5 rounded bg-gray-variant1">
       <BaseNavList
         :items="categories"
         indicator
         content-container-class="flex items-center group"
-        content-class="text-base font-josefinsans font-normal text-gray-variant flex sm:px-16 px-10 transition duration-300 ease-in group-hover:text-gray-variant3"
+        content-class="flex px-10 text-base font-normal transition duration-300 ease-in font-josefinsans text-gray-variant sm:px-16 group-hover:text-gray-variant3"
         active-class="text-gray-variant3"
-        active-addon-class="text-secondary-dark transition duration-300 ease-in"
-        add-on-class="group-hover:text-secondary-dark transition duration-300 ease-in"
+        active-addon-class="transition duration-300 ease-in text-secondary-dark"
+        add-on-class="w-5 h-5 mr-4 transition duration-300 ease-in group-hover:text-secondary-dark"
       ></BaseNavList>
     </div>
     <BaseButton
@@ -26,11 +24,6 @@
 </template>
 
 <script>
-import BaseAllIcon from '~/components/atoms/icons/BaseAllIcon.vue'
-import BaseAwardIcon from '~/components/atoms/icons/BaseAwardIcon.vue'
-import BaseGiftIcon from '~/components/atoms/icons/BaseGiftIcon.vue'
-import BaseUsersIcon from '~/components/atoms/icons/BaseUsersIcon.vue'
-import BaseBookmarkIcon from '~/components/atoms/icons/BaseBookmarkIcon.vue'
 export default {
   name: 'BaseSideCatNav',
   data() {
