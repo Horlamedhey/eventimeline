@@ -36,8 +36,10 @@ module.exports = {
           light: '#6B4FDD',
           lighter: '#715ACC',
           variant: '#775FDA',
+          'variant-light': '#E0D9FF',
           variant1: 'rgba(225, 222, 239, 0.4)',
           variant2: 'rgba(225, 222, 239, 0)',
+          variant3: '#6B52D2',
         },
         secondary: {
           default: '#ffc510',
@@ -68,7 +70,12 @@ module.exports = {
           800: 'rgba(18, 18, 18, 0.8)',
           900: 'rgba(18, 18, 18, 0.9)',
         },
-        accent: { default: '#ea218d', light: '#FB0977' },
+        accent: {
+          default: '#ea218d',
+          light: '#FB0977',
+          variant: '#ef2492',
+          'variant-light': '#FFDBEE',
+        },
         accent2: '#5ee2b3',
         accent3: '#1930AD',
         accent4: '#2C35FF',
@@ -76,6 +83,7 @@ module.exports = {
           default: '#E53E3E',
           light: 'rgba(229, 62, 62, 0.5)',
           lighter: 'rgba(229, 62, 62, 0.2)',
+          variant: '#FF6F6F',
         },
         info: '#2196f3',
         success: '#4caf50',
@@ -97,12 +105,16 @@ module.exports = {
         MCs: '#707070',
         Rentals: '#D180D8',
         'dashboard-accent': '#DBFFF2',
+        'dashboard-accent-variant': '#22BAB1',
         // ...
       },
       fontFamily: {
         inter: ['Inter'],
         quicksand: ['Quicksand'],
         josefinsans: ['JosefinSans'],
+      },
+      zIndex: {
+        '-1': '-1',
       },
       borderWidth: {
         3: '3px',
@@ -128,6 +140,7 @@ module.exports = {
         '9-5/12': '79.165%',
         72: '18rem',
         76: '19rem',
+        80: '20rem',
         96: '24rem',
       },
       minWidth: { 76: '19rem' },

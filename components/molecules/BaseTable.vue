@@ -1,27 +1,53 @@
 <template>
-  <div
-    :class="['v-m-table', stickyHeader ? 'v-m-table--sticky-header' : '']"
-    :style="maxHeight ? `max-height: ${maxHeight}px` : null"
-  >
-    <div class="v-m-table__inner">
-      <table class="v-m-table__main">
-        <caption class="v-m-table__caption">
-          <slot name="caption"></slot>
-        </caption>
-
-        <thead class="v-m-table__head">
-          <slot name="head"></slot>
+  <div class="p-5 bg-white rounded-lg shadow-outline">
+    <h4
+      v-if="tableBody.length === 0 || noData"
+      class="text-lg font-medium text-center"
+    >
+      {{ noDataText }}
+    </h4>
+    <template v-else>
+      <h4>{{ title }}</h4>
+      <table class="w-full mt-3">
+        <thead
+          class="font-bold text-1xl bg-primary-variant-light text-primary-variant"
+        >
+          <tr>
+            <td
+              v-for="(tableHead, i) in tableHeads"
+              :key="`tableHead-${i}`"
+              class="table-head"
+            >
+              {{ tableHead }}
+            </td>
+          </tr>
         </thead>
-
-        <tbody class="v-m-table__body">
-          <slot name="body"></slot>
+        <tbody>
+          <tr>
+            <td class="h-5"></td>
+          </tr>
         </tbody>
-
-        <tfoot class="v-m-table__foot">
-          <slot name="foot"></slot>
-        </tfoot>
+        <tbody class="rounded shadow-outline">
+          <tr v-for="(tableRow, i) in tableBody" :key="`tableRow-${i}`">
+            <td
+              v-for="tableRowItem in tableRow"
+              :key="tableRowItem"
+              class="table-body"
+            >
+              {{ tableRowItem }}
+            </td>
+            <td v-if="rowHasAction">
+              <BaseButton
+                class="px-2 py-1 font-medium rounded text-primary-variant ripple-bg-primary-variant-light"
+                @click="takeAction(i)"
+              >
+                {{ actionText }}
+              </BaseButton>
+            </td>
+          </tr>
+        </tbody>
       </table>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -29,58 +55,63 @@
 export default {
   name: 'BaseTable',
   props: {
-    /** Enable/Dsiable sticky header for the table */
-    stickyHeader: {
-      type: Boolean,
-      default: false,
+    title: {
+      type: String,
+      default: '',
     },
-    /** max-height of table */
-    maxHeight: Number,
+    noDataText: {
+      type: String,
+      default: '',
+    },
+    noData: {
+      type: Boolean,
+      default: true,
+    },
+    tableHeads: {
+      type: Array,
+      default: () => [],
+    },
+    tableBody: {
+      type: Array,
+      default: () => [],
+    },
+    rowHasAction: {
+      type: Boolean,
+      default: true,
+    },
+    actionText: {
+      type: String,
+      default: '',
+    },
+    takeAction: {
+      type: Function,
+      default: () => {},
+    },
   },
 }
 </script>
 
 <style lang="scss">
-.v-m-table {
-  $this: &;
-
-  max-width: 100%;
-  display: inline-flex;
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    -webkit-appearance: none;
-    width: 0.7rem;
-    height: 0.7rem;
+.table-head {
+  &:first-child {
+    border-radius: 5px 0 0 5px;
+    @apply pl-5;
   }
 
-  &::-webkit-scrollbar-thumb {
-    border-radius: 0.4rem;
-    background-color: rgba(0, 0, 0, 0.5);
+  &:last-child {
+    border-radius: 0 5px 5px 0;
+    @apply pr-5;
+  }
+  @apply py-2;
+}
+.table-body {
+  &:first-child {
+    @apply pl-5;
   }
 
-  &__main {
-    border-collapse: collapse;
+  &:last-child {
+    @apply pr-5;
   }
-
-  &--sticky-header {
-    #{$this}__head .v-a-table-cell {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      max-height: 200px;
-
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        width: 100%;
-        top: -1px;
-        height: calc(100% + 2px);
-        // border-bottom: .1rem solid $grey-light;
-        // border-top: .1rem solid $grey-light;
-      }
-    }
-  }
+  @apply py-2 font-medium text-lg;
 }
 </style>

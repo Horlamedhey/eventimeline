@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 *,
 *::before,
 *::after {
@@ -97,19 +97,5 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.5;
-}
-.body-content {
-  padding-bottom: 38rem;
-}
-.body-content-home {
-  padding-bottom: 45rem;
-}
-@media (min-width: 600px) {
-  .body-content {
-    padding-bottom: 27rem;
-  }
-  .body-content-home {
-    padding-bottom: 35rem;
-  }
 }
 </style>

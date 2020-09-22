@@ -22,7 +22,8 @@
         >
           <component
             :is="nestedField.component"
-            :id="nestedField.fieldId"
+            :field-id="nestedField.fieldId"
+            :append-inner="nestedField.appendInner"
             :type="nestedField.type"
             :label="nestedField.label"
             :prefix="nestedField.prefix"
@@ -92,6 +93,9 @@
             @upload="
               (value) => handleUpload(nestedField.name, value, field.group)
             "
+            @appendInnerAction="
+              $parent[nestedField.appendInnerAction](nestedField.fieldId)
+            "
           />
         </div>
       </div>
@@ -107,7 +111,8 @@
       >
         <component
           :is="field.component"
-          :id="field.fieldId"
+          :field-id="field.fieldId"
+          :append-inner="field.appendInner"
           :type="field.type"
           :label="field.label"
           :prefix="field.prefix"
@@ -165,6 +170,7 @@
           @increment="validateAndIncrement(field.name, field.multiName)"
           @decrement="$emit('decrement', field.name)"
           @upload="(value) => handleUpload(field.name, value)"
+          @appendInnerAction="$parent[field.appendInnerAction](field.fieldId)"
         />
       </div>
     </div>
@@ -178,7 +184,7 @@ import * as validators from 'vuelidate/lib/validators'
 import { helpers } from 'vuelidate/lib/validators'
 const isPhone = helpers.regex(
   'isPhone',
-  /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/g
+  /((?:\+|00)[17](?: |-)?|(?:\+|00)[1-9]\d{0,2}(?: |-)?|(?:\+|00)1-\d{3}(?: |-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |-)[0-9]{3}(?: |-)[0-9]{4})|([0-9]{7}))/g
 )
 // import scrollTo from '@/mixins/scrollTo'
 

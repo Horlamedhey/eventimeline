@@ -14,6 +14,7 @@ const ticketErrorSchema = {
   },
 }
 export default {
+  // Create Event
   eventTitle: {
     required: 'Please enter event title',
     minLength: 'Event title needs to be at least 3 characters long',
@@ -81,5 +82,13 @@ export default {
     numeric: 'Bank Verification number can only contain numbers',
     minLength: 'Bank Verification number needs to be 11 characters long',
     maxLength: 'Bank Verification number needs to be 11 characters long',
+  },
+  // Dashboard
+  agentName: {
+    required: "Please enter agent's name",
+    minLength: "Agent's name needs to be at least, 3 characters long",
+  },
+  agentId: {
+    required: "Please enter agent's ID",
   },
 }

@@ -30,7 +30,7 @@
         "
       >
         <div
-          style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);"
+          style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2)"
           class="py-2 overflow-y-auto bg-gray-200 main-content"
         >
           <BaseListEventCardsSection

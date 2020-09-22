@@ -38,7 +38,8 @@
 
     <div>
       <BaseInput
-        :id="id"
+        :field-id="fieldId"
+        :append-inner="appendInner"
         :error="error"
         :type="type"
         :placeholder="placeholder"
@@ -54,6 +55,7 @@
         :loading="loading"
         :input-class-list="inputClassList"
         :add-on-class-list="error ? 'text-error' : ''"
+        @appendInnerAction="$emit('appendInnerAction')"
         @input="(value) => $emit('input', value)"
         @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
@@ -74,6 +76,7 @@ export default {
   name: 'BaseFormText',
   props: {
     /** Label text for the field */
+    fieldId: { type: String, default: '' },
     label: String,
     /** Label text for the field */
     inputClassList: [String, Array],
@@ -148,6 +151,10 @@ export default {
     added: {
       type: Boolean,
       default: false,
+    },
+    appendInner: {
+      type: Function,
+      default: () => {},
     },
   },
   data() {
