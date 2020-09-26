@@ -103,10 +103,13 @@
           <BaseVisibleIcon v-else></BaseVisibleIcon>
         </template>
 
-        <BaseButton type="button" @click="$emit('appendInnerAction')">
+        <BaseButton
+          v-if="appendInner !== null"
+          type="button"
+          @click="$emit('appendInnerAction')"
+        >
           <component
             :is="appendInner"
-            v-if="appendInner !== null"
             class="cursor-pointer text-black-400"
           ></component>
         </BaseButton>
@@ -200,7 +203,7 @@ export default {
     inputmode: String,
     appendInner: {
       type: Function,
-      default: () => {},
+      default: null,
     },
   },
   data() {

@@ -60,7 +60,7 @@
       </client-only>
       <p
         class="absolute flex justify-end px-5 py-4 ml-0 text-base font-medium font-inter intro-text sm:block sm:ml-8"
-        style="color: rgba(77, 49, 191, 0.4);"
+        style="color: rgba(77, 49, 191, 0.4)"
       >
         Find and organise events close to you & everything in-between
       </p>

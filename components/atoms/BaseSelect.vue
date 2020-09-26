@@ -23,8 +23,9 @@
         :value="option.value"
         :selected="option.selected"
         :disabled="disabled ? disabled : option.disabled"
-        >{{ option.label }}</option
       >
+        {{ option.label }}
+      </option>
     </select>
 
     <!-- <svg

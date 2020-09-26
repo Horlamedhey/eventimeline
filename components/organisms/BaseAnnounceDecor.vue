@@ -9,7 +9,7 @@
       <div
         class="flex flex-wrap-reverse items-center justify-center py-20 sm:space-x-16 md:space-x-40"
       >
-        <div class="p-12 bg-white rounded" style="height: fit-content;">
+        <div class="p-12 bg-white rounded" style="height: fit-content">
           <p class="text-sm text-center font-inter">
             Give your next event the kind of <br />publicity it deserves.
           </p>

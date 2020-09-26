@@ -2,9 +2,7 @@
   <div ref="formContainer">
     <h3 ref="header" class="font-medium text-1xl sm:text-2-5xl">
       Step 3:<br />Payment Details
-      <p class="text-base font-normal">
-        (This is where remit ticket sales to)
-      </p>
+      <p class="text-base font-normal">(This is where remit ticket sales to)</p>
     </h3>
     <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline">

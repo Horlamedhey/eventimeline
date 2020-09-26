@@ -14,7 +14,7 @@
               client-hints="true"
               loading="lazy"
               width="200"
-              style="max-width: 200px;"
+              style="max-width: 200px"
             >
               <cld-placeholder type="blur"> </cld-placeholder>
             </cld-image>
@@ -32,7 +32,7 @@
               client-hints="true"
               loading="lazy"
               width="40"
-              style="max-width: 40px;"
+              style="max-width: 40px"
             >
               <cld-placeholder type="blur"> </cld-placeholder>
             </cld-image>
@@ -42,7 +42,7 @@
     </div>
     <div class="flex items-center justify-end w-9/12">
       <BaseInput
-        id="search-input"
+        field-id="search-input"
         name="search"
         type="search"
         placeholder="Search for events near you..."
@@ -60,9 +60,7 @@
             class="ml-1 text-xs sm:text-sm font-inter"
             content-class="flex items-center px-2 py-1 text-gray-500 transition-colors duration-500 ease-in-out rounded hover:text-black hover:bg-gray-200 focus:outline-none active:bg-gray-400"
           >
-            <span>
-              Help
-            </span>
+            <span> Help </span>
 
             <BaseChevronDownIcon
               class="inline-block w-4 h-4"

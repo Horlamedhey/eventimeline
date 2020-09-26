@@ -154,7 +154,7 @@ export default {
     },
     appendInner: {
       type: Function,
-      default: () => {},
+      default: null,
     },
   },
   data() {

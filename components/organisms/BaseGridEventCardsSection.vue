@@ -12,13 +12,13 @@
       <h1
         v-if="$route.path === '/'"
         class="pt-1 font-semibold capitalize md:pt-0 text-1xl font-josefinsans"
-        style="color: #1b1b1b;"
+        style="color: #1b1b1b"
       >
         Popular
         <span
           v-if="$route.query.timeline"
           class="text-base font-normal font-quicksand"
-          style="color: rgba(27, 27, 27, 0.6);"
+          style="color: rgba(27, 27, 27, 0.6)"
         >
           {{ $route.query.timeline.split('-').join(' ') }}
         </span>

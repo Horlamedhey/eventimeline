@@ -2,7 +2,7 @@
   <div class="container justify-center mx-auto mt-32 lg:w-10/12 xl:w-8/12">
     <h2
       class="text-2xl font-semibold text-center font-josefinsans"
-      style="color: #444357;"
+      style="color: #444357"
     >
       Our Partners
     </h2>
