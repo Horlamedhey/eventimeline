@@ -10,6 +10,7 @@
       <h4>{{ title }}</h4>
       <table class="w-full mt-3">
         <thead
+          v-if="tableHeads.length > 0"
           class="font-bold text-1xl bg-primary-variant-light text-primary-variant"
         >
           <tr>
@@ -22,26 +23,45 @@
             </td>
           </tr>
         </thead>
-        <tbody>
+        <tbody v-if="tableHeads.length > 0">
           <tr>
             <td class="h-5"></td>
           </tr>
         </tbody>
-        <tbody class="rounded shadow-outline">
+        <tbody
+          :class="tableHeads.length > 0 ? ['rounded', 'shadow-outline'] : []"
+        >
           <tr v-for="(tableRow, i) in tableBody" :key="`tableRow-${i}`">
             <td
               v-for="tableRowItem in tableRow"
               :key="tableRowItem"
               class="table-body"
+              :style="
+                tableHeads.length === 0
+                  ? { paddingLeft: '0', paddingRight: '0' }
+                  : {}
+              "
             >
               {{ tableRowItem }}
             </td>
             <td v-if="rowHasAction">
               <BaseButton
-                class="px-2 py-1 font-medium rounded text-primary-variant ripple-bg-primary-variant-light"
-                @click="takeAction(i)"
+                class="font-medium"
+                :class="[
+                  actionClass,
+                  icon !== null ? 'rounded-full p-1' : 'px-2 py-1 rounded',
+                  { ' cursor-default': takeAction === null },
+                ]"
+                @click="takeAction !== null ? takeAction(i) : takeAction"
               >
-                {{ actionText }}
+                <component
+                  :is="icon"
+                  v-if="icon !== null"
+                  :class="actionClass"
+                ></component>
+                <span v-else>
+                  {{ actionText }}
+                </span>
               </BaseButton>
             </td>
           </tr>
@@ -59,13 +79,21 @@ export default {
       type: String,
       default: '',
     },
+    icon: {
+      type: Function,
+      default: null,
+    },
+    actionClass: {
+      type: [String, Array],
+      default: '',
+    },
     noDataText: {
       type: String,
       default: '',
     },
     noData: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     tableHeads: {
       type: Array,
@@ -77,7 +105,7 @@ export default {
     },
     rowHasAction: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     actionText: {
       type: String,
@@ -85,7 +113,7 @@ export default {
     },
     takeAction: {
       type: Function,
-      default: () => {},
+      default: null,
     },
   },
 }

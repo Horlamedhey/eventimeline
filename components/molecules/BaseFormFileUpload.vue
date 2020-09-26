@@ -28,18 +28,13 @@
         type="button"
         @click="openCloudinaryWidget"
       >
-        <BaseChangeIcon
-          v-if="preview"
-          class="w-8 h-8 m-auto transition duration-300 group-hover:text-white"
-          :class="error ? 'text-error' : 'text-gray-500'"
-        ></BaseChangeIcon>
         <BaseCameraIcon
-          v-else
           class="w-8 h-8 m-auto transition duration-300 group-hover:text-white"
           :class="error ? 'text-error' : 'text-black-300'"
         ></BaseCameraIcon>
       </BaseButton>
       <div
+        v-if="!noDescription"
         class="flex flex-col justify-between w-10/12 py-2 m-auto mt-2 sm:ml-8 sm:mt-0 sm:w-auto"
       >
         <h3 class="text-xl font-medium">Upload Event Thumbnail</h3>
@@ -68,6 +63,10 @@ export default {
       type: String,
       default: '',
     },
+    externalPreview: {
+      type: String,
+      default: '',
+    },
     classList: [Array, String],
     // inputClassList: [Array, String],
     /** Id attribute for the input */
@@ -78,10 +77,12 @@ export default {
     errorMessages: {
       type: [String, Array],
     },
-    /** Name attribute for input */
-    name: String,
     /** Whether input value is invalid */
     error: {
+      type: Boolean,
+      default: false,
+    },
+    noDescription: {
       type: Boolean,
       default: false,
     },
@@ -91,6 +92,9 @@ export default {
       widget: null,
       preview: null,
     }
+  },
+  mounted() {
+    if (this.externalPreview !== '') this.preview = this.externalPreview
   },
   methods: {
     async generateUploadSignature(callback, paramsToSign) {

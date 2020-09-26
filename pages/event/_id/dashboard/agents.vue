@@ -24,6 +24,7 @@
       no-data-text="No agents available"
       row-has-action
       action-text="Take Action"
+      action-class="text-primary-variant ripple-bg-primary-variant-light"
       class="mt-10"
       :take-action="takeAction"
     ></BaseTable>

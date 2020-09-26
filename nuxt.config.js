@@ -3,7 +3,7 @@ export default {
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
-  target: 'ssr',
+  target: 'server',
   server: {
     port: '8080', // default: localhost
   },

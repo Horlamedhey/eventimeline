@@ -98,4 +98,13 @@ body {
   padding: 0;
   line-height: 1.5;
 }
+.dashboard-card {
+  @apply bg-white rounded-lg;
+}
+.dashboard-main-title {
+  @apply text-xl font-medium text-black-400;
+}
+.dashboard-main-subtitle {
+  @apply text-base font-medium text-black-700;
+}
 </style>
