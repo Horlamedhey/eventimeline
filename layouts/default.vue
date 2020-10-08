@@ -22,6 +22,7 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+  // middleware: 'realmAuth',
   data() {
     return {
       windowHeight: null,

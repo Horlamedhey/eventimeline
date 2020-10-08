@@ -7,7 +7,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['hydrated', 'events']),
+    ...mapState(['hydrated']),
     sideMenuHeight() {
       if (this.hydrated && this.$refs.sideMenu) {
         return this.$refs.sideMenu.clientHeight + 50 + 'px'

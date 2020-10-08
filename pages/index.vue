@@ -54,16 +54,52 @@
 
 <script>
 // mixins
+import gql from 'graphql-tag'
 import basicMixins from '~/mixins/pagesBasicMixins.js'
 export default {
+  mixins: [basicMixins],
+  // middleware: ['apollo'],
+  async asyncData({ app }) {
+    // const appToken = app.$realmApp.currentUser.accessToken
+    const apolloClient = app.apolloProvider.defaultClient
+    // const apolloHelpers = app.$apolloHelpers
+    // await apolloHelpers.onLogin(appToken)
+    const {
+      data: { events },
+    } = await apolloClient.query({
+      query: gql`
+        query {
+          events {
+            _id
+            category
+            color
+            date
+            image
+            location
+            online
+            price
+            provisions
+            textColor
+            title
+          }
+        }
+      `,
+    })
+
+    return {
+      events,
+    }
+  },
+  data() {
+    return {
+      // events: [],
+    }
+  },
   metaInfo: {
     title: 'Home',
   },
-  mixins: [basicMixins],
-  data() {
-    return {}
-  },
   computed: {},
+  mounted() {},
 }
 </script>
 

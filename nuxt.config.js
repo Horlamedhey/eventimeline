@@ -50,8 +50,10 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    'plugins/realmAuth.js',
     'plugins/cloudinary',
     'plugins/gsap.client.js',
+    'plugins/nuxt-client-init.client.js',
     'plugins/v-tailwind-picker.client.js',
   ],
   /*
@@ -80,17 +82,86 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/apollo',
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  apollo: {
+    // Sets up the apollo client endpoints
+    clientConfigs: {
+      // recommended: use a file to declare the client configuration (see below for example)
+      default: '~/plugins/apollo-config.js',
+    },
+
+    /**
+     * default 'apollo' definition
+     */
+    defaultOptions: {
+      // See 'apollo' definition
+      // For example: default query options
+      $query: {
+        loadingKey: 'loading',
+        fetchPolicy: 'cache-and-network',
+      },
+    },
+
+    // setup a global query loader observer (see below for example)
+    watchLoading: '~/plugins/apollo-watch-loading-handler.js',
+
+    // setup a global error handler (see below for example)
+    errorHandler: '~/plugins/apollo-error-handler.js',
+
+    // Sets the authentication type for any authorized request.
+    authenticationType: 'Bearer',
+
+    // Token name for the cookie which will be set in case of authentication
+    tokenName: 'apollo-token',
+
+    // [deprecated] Enable the graphql-tag/loader to parse *.gql/*.graphql files
+    includeNodeModules: true,
+
+    // Cookie parameters used to store authentication token
+    cookieAttributes: {
+      /**
+       * Define when the cookie will be removed. Value can be a Number
+       * which will be interpreted as days from time of creation or a
+       * Date instance. If omitted, the cookie becomes a session cookie.
+       */
+      expires: 7,
+
+      /**
+       * Define the path where the cookie is available. Defaults to '/'
+       */
+      path: '/',
+
+      /**
+       * Define the domain where the cookie is available. Defaults to
+       * the domain of the page where the cookie was created.
+       */
+      // domain: 'example.com',
+
+      /**
+       * A Boolean indicating if the cookie transmission requires a
+       * secure protocol (https). Defaults to false.
+       */
+      secure: false,
+    },
+  },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
+    // babel: {
+    //   presets: ['@babel/preset-env'],
+    //   plugins: [
+    //     '@babel/plugin-transform-runtime',
+    //     '@babel/plugin-proposal-object-rest-spread',
+    //   ],
+    // },
     extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({

@@ -180,3 +180,14 @@ export const mutations = {
     state.footerHeight = val
   },
 }
+
+export const actions = {
+  async nuxtServerInit(_, { app }) {
+    const appToken = app.$realmApp.currentUser.accessToken
+    const apolloHelpers = app.$apolloHelpers
+    await apolloHelpers.onLogin(appToken)
+  },
+  async nuxtClientInit() {
+    // console.log(this.$realmAppUser)
+  },
+}
