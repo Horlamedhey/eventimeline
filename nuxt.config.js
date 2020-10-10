@@ -81,7 +81,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/pwa',
+    // '@nuxtjs/pwa',
     '@nuxtjs/apollo',
   ],
   /*
@@ -155,13 +155,6 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {
-    // babel: {
-    //   presets: ['@babel/preset-env'],
-    //   plugins: [
-    //     '@babel/plugin-transform-runtime',
-    //     '@babel/plugin-proposal-object-rest-spread',
-    //   ],
-    // },
     extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
         config.module.rules.push({

@@ -5,7 +5,7 @@
       <p class="text-base font-normal">(This is where remit ticket sales to)</p>
     </h3>
     <div ref="form" class="mt-10 shadow-md">
-      <div class="px-6 py-10 rounded shadow-outline">
+      <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm
           :fields="fields"
           @input="setValues"
@@ -47,6 +47,7 @@ import formsAnimationMixin from '~/mixins/formsAnimationMixin'
 export default {
   name: 'BaseEventPaymentDetails',
   mixins: [formsAnimationMixin],
+  // TODO: convert fetch to method
   fetch() {
     const bankField = this.fields.find((v) => v.name === 'bankName')
     this.$axios
@@ -409,6 +410,7 @@ export default {
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
           validators: [{ component: 'required' }],
+          emptyValueLabel: 'Choose bank',
           value: '',
           changeEvent: 'getAccountName',
         },

@@ -52,7 +52,7 @@
           @change="(value) => $emit('input', value)"
         >
           <input
-            :id="fieldId"
+            :id="fieldId || name"
             :value="value"
             :name="name"
             readonly
@@ -67,7 +67,7 @@
       </client-only>
       <input
         v-else
-        :id="fieldId"
+        :id="fieldId || name"
         :type="inputType"
         :value="value"
         :disabled="disabled"

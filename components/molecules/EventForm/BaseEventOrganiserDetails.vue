@@ -4,7 +4,7 @@
       Step 2:<br />Organiser’s Details
     </h3>
     <div ref="form" class="mt-10 shadow-md">
-      <div class="px-6 py-10 rounded shadow-outline">
+      <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm :fields="fields"></BaseForm>
       </div>
     </div>

@@ -4,7 +4,7 @@
       Step 1:<br />Event Details
     </h3>
     <div ref="form" class="mt-10 shadow-md">
-      <div class="px-6 py-10 rounded shadow-outline">
+      <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm
           :fields="fields"
           @increment="incrementField"
@@ -69,6 +69,25 @@ export default {
           value: '',
         },
         {
+          component: 'BaseFormSelect',
+          name: 'eventCategory',
+          options: [
+            { label: 'Birthday', value: 'birthday' },
+            { label: 'Conference', value: 'conference' },
+            { label: 'Hangout', value: 'hangout' },
+            { label: 'Launch Party', value: 'launch party' },
+            { label: 'Matriculation', value: 'matriculation' },
+            { label: 'Meetup', value: 'meetup' },
+          ],
+          label: 'SELECT CATEGORY',
+          classList: 'w-full mt-8',
+          inputClassList:
+            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
+          validators: [{ component: 'required' }],
+          emptyValueLabel: 'Choose category',
+          value: 'Hangout',
+        },
+        {
           component: 'BaseFormText',
           multiName: 'eventProvisions',
           name: 'eventProvisions1',
@@ -120,30 +139,29 @@ export default {
       const myFields = JSON.parse(JSON.stringify(this.fields))
       const fields = myFields.filter((v) => v.multiName === fieldMultiName)
 
-      let inputIndex
+      const inputIndex = myFields.indexOf(fields[0])
       const fieldMultiValidators = JSON.parse(
-        JSON.stringify(fields[0].validators)
+        JSON.stringify(fields[fields.length - 1].validators)
       )
       const fieldMultiValue = JSON.parse(JSON.stringify(fields[0].value))
       await new Promise((resolve) => {
-        for (let i = 0; i < fields.length; i++) {
-          const field = fields[i]
-          if (i === 0) {
-            inputIndex = myFields.indexOf(field)
-          }
-          if (field.incremental) {
-            field.incremental = false
-            field.added = true
-            field.validators = [
-              { component: 'required' },
-              ...fieldMultiValidators,
-            ]
-          }
-        }
-        const numberOfLastFieldName = parseInt(
-          fields[fields.length - 1].name[
-            fields[fields.length - 1].name.length - 1
+        const lastField = fields[fields.length - 1]
+        // for (let i = 0; i < fields.length; i++) {
+        //   const field = fields[i]
+        // if (i === 0) {
+        //   inputIndex = myFields.indexOf(field)
+        // }
+        if (lastField.incremental) {
+          lastField.incremental = false
+          lastField.added = true
+          lastField.validators = [
+            { component: 'required' },
+            ...fieldMultiValidators,
           ]
+        }
+        // }
+        const numberOfLastFieldName = parseInt(
+          lastField.name[lastField.name.length - 1]
         )
         fields.push({
           component: fields[0].component,

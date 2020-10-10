@@ -153,7 +153,7 @@ module.exports = {
         // '9-5/12': '79.165%',
       },
       boxShadow: {
-        outline: '0 0 0 0.5px rgba(0, 0, 0, 0.2)',
+        outline: '0 0 0 0.8px rgba(0, 0, 0, 0.2)',
         'outline-primary': '0 0 0 0.5px #775FDA',
         'outline-dashboard-accent': '0 0 0 0.5px #22BAB1',
       },

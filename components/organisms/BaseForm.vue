@@ -32,6 +32,7 @@
             :extra-info-class-list="nestedField.extraInfoClassList"
             :name="nestedField.name.toLowerCase()"
             :options="nestedField.options"
+            :empty-value-label="nestedField.emptyValueLabel"
             :disabled="nestedField.disabled"
             :checked="nestedField.checked"
             :placeholder="nestedField.name"
@@ -121,6 +122,7 @@
           :extra-info-class-list="field.extraInfoClassList"
           :name="field.name.toLowerCase()"
           :options="field.options"
+          :empty-value-label="field.emptyValueLabel"
           :disabled="field.disabled"
           :checked="field.checked"
           :placeholder="field.placeholder"
@@ -367,7 +369,16 @@ export default {
       }
     },
     validateAndIncrement(fieldName, fieldMultiName) {
-      this.$v.formData.$touch()
+      // for (const key in this.$v.formData) {
+      //   if (Object.hasOwnProperty.call(this.$v.formData, key)) {
+      //     if (key.includes(fieldMultiName)) {
+      //       const element = this.$v.formData[key]
+      //       // console.log(element)
+      //       element.$touch()
+      //     }
+      //   }
+      // }
+      // this.$v.formData.$touch()
       if (this.formData[fieldName].length >= 2) {
         this.$emit('increment', fieldMultiName)
       }

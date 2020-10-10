@@ -7,7 +7,7 @@
       Last Step
     </h3>
     <div ref="form" class="mt-10 shadow-md">
-      <div class="px-6 py-10 rounded shadow-outline">
+      <div class="px-6 py-10 rounded shadow-outline form-container">
         <div class="text-center">
           <h2 class="m-auto font-medium text-1xl sm:w-1/2">
             Do you need any of these for your event?

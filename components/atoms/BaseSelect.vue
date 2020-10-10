@@ -78,7 +78,7 @@ export default {
     /** The value of empty (default) label */
     emptyValueLabel: {
       type: String,
-      default: 'Choose bank',
+      default: '',
     },
   },
   data() {

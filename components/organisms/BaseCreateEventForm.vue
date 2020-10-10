@@ -58,4 +58,8 @@ export default {
 .next-button-content {
   @apply duration-500;
 }
+.form-container {
+  max-height: 85vh;
+  overflow-y: auto;
+}
 </style>
