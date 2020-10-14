@@ -7,7 +7,10 @@
     <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm
+          :form-name="formName"
           :fields="fields"
+          :completed="completed"
+          :validate="validate"
           @input="setValues"
           @incrementGroup="incrementGroup"
           @decrementGroup="decrementGroup"
@@ -27,7 +30,7 @@
       <BaseButton
         type="button"
         class="flex items-center justify-center w-56 py-3 ml-8 font-medium rounded-full bg-secondary-light ripple-bg-secondary-light group"
-        @click="setCurrentForm(position + 1)"
+        @click="validateBeforeNext"
       >
         <span
           class="next-button-content group-hover:transition group-hover:text-white"
@@ -67,12 +70,12 @@ export default {
   fetchOnServer: false,
   data() {
     return {
-      prevValues: {},
-      currValues: {},
+      formName: 'paymentDetails',
       fields: [
         {
           visible: true,
-          group: 'ticket',
+          multiName: 'tickets',
+          group: 'tickets',
           classList: 'w-full mt-8',
           fields: [
             {
@@ -126,7 +129,8 @@ export default {
           ],
         },
         {
-          group: 'ticket_1',
+          multiName: 'tickets',
+          group: 'tickets_1',
           visible: false,
           classList: 'w-full mt-8',
           fields: [
@@ -181,7 +185,8 @@ export default {
           ],
         },
         {
-          group: 'ticket_2',
+          multiName: 'tickets',
+          group: 'tickets_2',
           visible: false,
           classList: 'w-full mt-8',
           fields: [
@@ -236,7 +241,8 @@ export default {
           ],
         },
         {
-          group: 'ticket_3',
+          multiName: 'tickets',
+          group: 'tickets_3',
           visible: false,
           classList: 'w-full mt-8',
           fields: [
@@ -291,7 +297,8 @@ export default {
           ],
         },
         {
-          group: 'ticket_4',
+          multiName: 'tickets',
+          group: 'tickets_4',
           visible: false,
           classList: 'w-full mt-8',
           fields: [
@@ -346,7 +353,8 @@ export default {
           ],
         },
         {
-          group: 'ticket_5',
+          multiName: 'tickets',
+          group: 'tickets_5',
           visible: false,
           classList: 'w-full mt-8',
           fields: [
@@ -448,7 +456,6 @@ export default {
           loading: false,
           validators: [
             { component: 'required' },
-            { component: 'alpha' },
             { component: 'minLength', param: 2 },
           ],
           value: '',
@@ -477,23 +484,6 @@ export default {
     }
   },
   methods: {
-    setValues(values) {
-      this.fields.forEach((v) => {
-        v.value = values[v.name]
-      })
-      this.prevValues = { ...this.currValues }
-      this.currValues = { ...values }
-      if (
-        this.prevValues.bankName !== undefined &&
-        this.prevValues.bankName.length === 0 &&
-        this.currValues.bankName.length > 0
-      ) {
-        this.fields.find((v) => v.name === 'accountNumber').disabled = false
-        this.fields.find(
-          (v) => v.name === 'accountNumber'
-        ).placeholder = undefined
-      }
-    },
     getAccountName(accountNumber) {
       return new Promise((resolve) => {
         const accountNameField = this.fields.find(

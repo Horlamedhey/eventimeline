@@ -13,6 +13,9 @@ export default {
   server: {
     port: '8080', // default: localhost
   },
+  privateRuntimeConfig: {
+    realmApiKey: process.env.REALM_API_KEY,
+  },
   /*
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
@@ -54,7 +57,7 @@ export default {
     'plugins/cloudinary',
     'plugins/gsap.client.js',
     'plugins/nuxt-client-init.client.js',
-    'plugins/v-tailwind-picker.client.js',
+    // 'plugins/vue-tailwind-date-picker.client.js',
   ],
   /*
    ** Auto import components

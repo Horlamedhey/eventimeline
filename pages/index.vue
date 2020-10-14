@@ -64,30 +64,34 @@ export default {
     const apolloClient = app.apolloProvider.defaultClient
     // const apolloHelpers = app.$apolloHelpers
     // await apolloHelpers.onLogin(appToken)
-    const {
-      data: { events },
-    } = await apolloClient.query({
-      query: gql`
-        query {
-          events {
-            _id
-            category
-            color
-            date
-            image
-            location
-            online
-            price
-            provisions
-            textColor
-            title
+    try {
+      const {
+        data: { events },
+      } = await apolloClient.query({
+        query: gql`
+          query {
+            events {
+              _id
+              category
+              color
+              date
+              image
+              location
+              online
+              price
+              provisions
+              textColor
+              title
+            }
           }
-        }
-      `,
-    })
+        `,
+      })
 
-    return {
-      events,
+      return {
+        events,
+      }
+    } catch (error) {
+      console.log('meeeee', error)
     }
   },
   data() {

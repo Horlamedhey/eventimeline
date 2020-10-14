@@ -12,26 +12,16 @@
       </BaseLabel>
     </div>
 
-    <div>
-      <BaseInput
-        :id="id"
-        :error="error"
-        :type="type"
-        :placeholder="placeholder"
-        :disabled="disabled"
-        :autocomplete="autocomplete"
-        :incremental="incremental"
-        :value="value"
-        :name="name"
-        :inputmode="inputmode"
-        :pattern="pattern"
-        :input-class-list="inputClassList"
+    <client-only>
+      <vue-tailwind-datepicker
+        :input-field-classes="inputClassList"
+        class="w-full"
         @input="(value) => $emit('input', value)"
-        @focus="$emit('focus', $event)"
+        @fo`c`us="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @keypress="$emit('keypress', $event)"
-      />
-    </div>
+      ></vue-tailwind-datepicker>
+    </client-only>
 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
@@ -40,8 +30,10 @@
 </template>
 
 <script>
+import VueTailwindDatepicker from '@coding-wisely/vue-tailwind-datepicker'
 export default {
-  name: 'BaseFormText',
+  name: 'BaseFormDate',
+  components: { VueTailwindDatepicker },
   props: {
     /** Label text for the field */
     label: String,

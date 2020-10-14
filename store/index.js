@@ -1,6 +1,8 @@
 // import Vue from 'vue'
 // import Vuex from 'vuex'
 // Vue.use(Vuex)
+import assert from 'assert'
+import * as Realm from 'realm-web'
 
 export const state = () => ({
   hydrated: false,
@@ -182,12 +184,22 @@ export const mutations = {
 }
 
 export const actions = {
-  async nuxtServerInit(_, { app }) {
-    const appToken = app.$realmApp.currentUser.accessToken
-    const apolloHelpers = app.$apolloHelpers
-    await apolloHelpers.onLogin(appToken)
-  },
-  async nuxtClientInit() {
-    // console.log(this.$realmAppUser)
+  async nuxtClientInit(_) {
+    try {
+      // console.log(this.$realmApp)
+      if (this.$realmApp.currentUser) {
+        this.$apolloHelpers.onLogin(this.$realmApp.currentUser.accessToken)
+      } else {
+        const credentials = Realm.Credentials.anonymous()
+        const user = await this.$realmApp.logIn(credentials)
+        assert(user.id === this.$realmApp.currentUser.id)
+        this.$apolloHelpers.onLogin(user.accessToken)
+      }
+    } catch (err) {
+      console.error('Failed to log in', err)
+    }
   },
 }
+// async nuxtServerInit() {
+//   // console.log(this.$realmAppUser)
+// },

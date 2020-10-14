@@ -21,7 +21,7 @@
         v-for="option in options"
         :key="option.value"
         :value="option.value"
-        :selected="option.selected"
+        :selected="option.selected || option.value === value"
         :disabled="disabled ? disabled : option.disabled"
       >
         {{ option.label }}

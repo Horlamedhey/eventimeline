@@ -13,10 +13,36 @@
 </template>
 
 <script>
+// import gql from 'graphql-tag'
 export default {
   metaInfo: {
     title: 'Create Event',
   },
+  data() {
+    return {}
+  },
+  // apollo: {
+  //   events: {
+  //     query: gql`
+  //       query {
+  //         events {
+  //           _id
+  //           category
+  //           color
+  //           date
+  //           image
+  //           location
+  //           online
+  //           price
+  //           provisions
+  //           textColor
+  //           title
+  //         }
+  //       }
+  //     `,
+  //     fetchOnServer: false,
+  //   },
+  // },
   mounted() {},
   head() {
     return {

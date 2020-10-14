@@ -5,7 +5,13 @@
     </h3>
     <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline form-container">
-        <BaseForm :fields="fields"></BaseForm>
+        <BaseForm
+          :form-name="formName"
+          :fields="fields"
+          :completed="completed"
+          :validate="validate"
+          @input="setValues"
+        ></BaseForm>
       </div>
     </div>
 
@@ -21,7 +27,7 @@
       <BaseButton
         type="button"
         class="flex items-center justify-center w-56 py-3 ml-8 font-medium rounded-full bg-secondary-light ripple-bg-secondary-light group"
-        @click="setCurrentForm(position + 1)"
+        @click="validateBeforeNext"
       >
         <span
           class="next-button-content group-hover:transition group-hover:text-white"
@@ -43,6 +49,7 @@ export default {
   mixins: [formsAnimationMixin],
   data() {
     return {
+      formName: 'organiserDetails',
       fields: [
         {
           component: 'BaseFormText',

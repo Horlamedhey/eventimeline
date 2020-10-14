@@ -18,13 +18,16 @@ export default {
   },
   data() {
     return {
+      completed: false,
       timeline: null,
+      prevValues: {},
+      currValues: {},
     }
   },
   watch: {
     currentForm(curr, prev) {
       if (this.position === curr) {
-        console.log(curr, prev, this.position)
+        this.completed = false
       }
       switch (true) {
         case curr === this.position && prev < this.position:
@@ -54,6 +57,88 @@ export default {
     this.timeline = this.$gsap.timeline()
   },
   methods: {
+    setValues(values, unStandardForm) {
+      if (!unStandardForm) {
+        this.fields.forEach((v) => {
+          v.value = values[v.name]
+        })
+      }
+      this.prevValues = { ...this.currValues }
+      this.currValues = { ...values }
+      if (
+        this.prevValues.bankName !== undefined &&
+        this.prevValues.bankName.length === 0 &&
+        this.currValues.bankName.length > 0
+      ) {
+        this.fields.find((v) => v.name === 'accountNumber').disabled = false
+        this.fields.find(
+          (v) => v.name === 'accountNumber'
+        ).placeholder = undefined
+      }
+    },
+    validateBeforeNext() {
+      this.completed = true
+    },
+    validate(isValid) {
+      if (isValid) {
+        const multiNamedFields = this.fields.filter(
+          (v) => v.multiName !== undefined
+        )
+        const multiNames = []
+
+        const processedCurrValues = {}
+
+        for (let i = 0; i < multiNamedFields.length; i++) {
+          const multiName = multiNamedFields[i].multiName
+          if (!multiNames.includes(multiName)) {
+            multiNames.push(multiName)
+          }
+        }
+
+        for (const key in this.currValues) {
+          const element = this.currValues[key]
+          const visibility =
+            this.fields.find(
+              (v) =>
+                (v.group === key || v.name === key) &&
+                (v.visible === undefined || v.visible === true)
+            ) !== undefined
+
+          if (
+            (typeof element === 'string' && element.length > 0) ||
+            (typeof element === 'object' &&
+              element.length &&
+              element.length > 0) ||
+            (typeof element === 'object' && !element.length && visibility)
+          ) {
+            if (multiNames.length > 0) {
+              for (let i = 0; i < multiNames.length; i++) {
+                const multiName = multiNames[i]
+
+                if (key.includes(multiName)) {
+                  if (processedCurrValues[multiName]) {
+                    processedCurrValues[multiName].push(element)
+                  } else {
+                    processedCurrValues[multiName] = [element]
+                  }
+                } else {
+                  processedCurrValues[key] = element
+                }
+              }
+            } else {
+              processedCurrValues[key] = element
+            }
+          }
+        }
+        this.setCurrentForm(
+          this.position + 1,
+          processedCurrValues,
+          this.formName
+        )
+      } else {
+        this.completed = false
+      }
+    },
     // Show the current form
     showForm() {
       this.timeline.fromTo(

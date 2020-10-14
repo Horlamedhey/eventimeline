@@ -2,9 +2,15 @@ import errorMessages from './errorMessages'
 
 export default {
   methods: {
-    $getErrorMessages(field, isVisible = false, multiName, groupName) {
+    $getErrorMessages(
+      formName,
+      field,
+      isVisible = false,
+      multiName,
+      groupName
+    ) {
       const messageList = []
-      const validations = this.$v
+      const validations = this.$v.formData
       let currentValidation
 
       if (validations) {
@@ -12,21 +18,21 @@ export default {
           if (key.charAt(0) === '$') continue
 
           if (key === field) {
-            currentValidation = validations[key]
+            currentValidation = validations[key][formName]
             break
           } else if (groupName) {
-            for (const key2 in validations[key][groupName]) {
+            for (const key2 in validations[formName][groupName]) {
               if (key.charAt(0) === '$') continue
               if (key2 === field) {
-                currentValidation = validations[key][groupName][key2]
+                currentValidation = validations[formName][groupName][key2]
                 break
               }
             }
             break
           } else {
-            for (const key2 in validations[key]) {
+            for (const key2 in validations[formName]) {
               if (key2 === field) {
-                currentValidation = validations[key][key2]
+                currentValidation = validations[formName][key2]
               }
             }
           }
@@ -39,17 +45,19 @@ export default {
           if (!isVisible) {
             for (const key in currentValidation) {
               if (
-                errorMessages[groupName][multiName || field] &&
+                errorMessages[formName][groupName][multiName || field] &&
                 !currentValidation[key] &&
                 !key.includes('$')
               ) {
                 messageList.push(
-                  errorMessages[groupName][multiName || field][key]
+                  errorMessages[formName][groupName][multiName || field][key]
                 )
               }
             }
           } else {
-            for (const key in errorMessages[groupName][multiName || field]) {
+            for (const key in errorMessages[formName][groupName][
+              multiName || field
+            ]) {
               let state
 
               if (currentValidation[key]) {
@@ -61,7 +69,8 @@ export default {
               if (currentValidation[key] !== undefined) {
                 messageList.push({
                   state,
-                  text: errorMessages[groupName][multiName || field][key],
+                  text:
+                    errorMessages[formName][groupName][multiName || field][key],
                 })
               }
             }
@@ -69,11 +78,11 @@ export default {
         } else if (!isVisible) {
           for (const key in currentValidation) {
             if (
-              errorMessages[multiName || field] &&
+              errorMessages[formName][multiName || field] &&
               !currentValidation[key] &&
               !key.includes('$')
             ) {
-              messageList.push(errorMessages[multiName || field][key])
+              messageList.push(errorMessages[formName][multiName || field][key])
             }
           }
         } else {
@@ -89,7 +98,7 @@ export default {
             if (currentValidation[key] !== undefined) {
               messageList.push({
                 state,
-                text: errorMessages[multiName || field][key],
+                text: errorMessages[formName][multiName || field][key],
               })
             }
           }

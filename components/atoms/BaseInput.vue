@@ -212,6 +212,13 @@ export default {
       isVisible: false,
     }
   },
+  watch: {
+    value(newVal) {
+      if (this.name === 'accountname') {
+        this.$emit('input', newVal)
+      }
+    },
+  },
   methods: {
     handleIconClick() {
       this.isVisible = !this.isVisible

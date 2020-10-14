@@ -39,6 +39,7 @@ export default {
   data() {
     return {
       currentForm: 0,
+      finalData: {},
     }
   },
   mounted() {
@@ -47,7 +48,14 @@ export default {
     }, 1500)
   },
   methods: {
-    setCurrentForm(val) {
+    setCurrentForm(val, data, formName) {
+      if (
+        val > this.currentForm &&
+        data !== undefined &&
+        formName !== undefined
+      ) {
+        this.finalData[formName] = data
+      }
       this.currentForm = val
     },
   },

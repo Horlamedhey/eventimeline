@@ -6,7 +6,11 @@
     <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm
+          :form-name="formName"
           :fields="fields"
+          :completed="completed"
+          :validate="validate"
+          @input="setValues"
           @increment="incrementField"
           @decrement="decrementField"
         ></BaseForm>
@@ -17,7 +21,7 @@
       <BaseButton
         type="button"
         class="flex items-center justify-center w-56 py-3 m-auto font-medium rounded-full bg-secondary-light ripple-bg-secondary-light group"
-        @click="setCurrentForm(position + 1)"
+        @click="validateBeforeNext"
       >
         <span
           class="next-button-content group-hover:transition group-hover:text-white"
@@ -39,6 +43,7 @@ export default {
   mixins: [formsAnimationMixin],
   data() {
     return {
+      formName: 'eventDetails',
       fields: [
         {
           component: 'BaseFormText',
@@ -85,7 +90,7 @@ export default {
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
           validators: [{ component: 'required' }],
           emptyValueLabel: 'Choose category',
-          value: 'Hangout',
+          value: 'hangout',
         },
         {
           component: 'BaseFormText',
@@ -143,7 +148,6 @@ export default {
       const fieldMultiValidators = JSON.parse(
         JSON.stringify(fields[fields.length - 1].validators)
       )
-      const fieldMultiValue = JSON.parse(JSON.stringify(fields[0].value))
       await new Promise((resolve) => {
         const lastField = fields[fields.length - 1]
         // for (let i = 0; i < fields.length; i++) {
@@ -172,7 +176,7 @@ export default {
           classList: fields[0].classList,
           inputClassList: fields[0].inputClassList,
           validators: fieldMultiValidators,
-          value: fieldMultiValue,
+          value: '',
         })
         resolve()
       })

@@ -14,7 +14,7 @@
           </h2>
           <div class="grid gap-4 mt-12 text-lg sm:grid-cols-2 sm:grid-rows-3">
             <div
-              v-for="thirdPartyRole in thirdPartyRoles"
+              v-for="(thirdPartyRole, i) in thirdPartyRoles"
               :key="thirdPartyRole.role"
             >
               <BaseButton
@@ -23,7 +23,7 @@
                   `bg-${thirdPartyRole.role.replace(' ', '-')}`,
                   ` ripple-bg-${thirdPartyRole.role.replace(' ', '-')}`,
                 ]"
-                @click="thirdPartyRole.selected = !thirdPartyRole.selected"
+                @click="selectOption(i)"
               >
                 {{ thirdPartyRole.role }}
                 <div
@@ -53,7 +53,7 @@
         <BaseButton
           type="button"
           class="flex items-center justify-center w-56 py-3 ml-8 font-medium bg-transparent border border-black rounded-full ripple-bg-black-100 group"
-          @click="setCurrentForm(position + 1)"
+          @click="setCurrentForm(position + 1, currValues, formName)"
         >
           <span
             class="next-button-content group-hover:transition group-hover:text-white"
@@ -68,7 +68,7 @@
       <BaseButton
         type="button"
         class="flex items-center justify-center py-3 m-auto mt-4 font-medium bg-transparent border rounded-full w-76 border-primary-lighter ripple-bg-primary-lighter group"
-        @click="setCurrentForm(position + 1)"
+        @click="removeAllAndProceed"
       >
         <span
           class="next-button-content group-hover:transition group-hover:text-white"
@@ -87,6 +87,9 @@ export default {
   mixins: [formsAnimationMixin],
   data() {
     return {
+      formName: 'thirdPartyArtisans',
+      currValues: [],
+      prevValues: [],
       thirdPartyRoles: [
         { role: 'Photographers', selected: false },
         { role: 'Catering Service', selected: false },
@@ -96,6 +99,20 @@ export default {
         { role: 'Rentals', selected: false },
       ],
     }
+  },
+  methods: {
+    selectOption(index) {
+      this.thirdPartyRoles[index].selected = !this.thirdPartyRoles[index]
+        .selected
+      this.prevValues = [...this.currValues]
+      this.currValues = this.thirdPartyRoles
+        .filter((v) => v.selected)
+        .map((v) => v.role)
+    },
+    removeAllAndProceed() {
+      this.thirdPartyRoles.forEach((v) => (v.selected = false))
+      this.setCurrentForm(this.position + 1, [], this.formName)
+    },
   },
 }
 </script>

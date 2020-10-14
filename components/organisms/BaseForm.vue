@@ -13,8 +13,8 @@
           :class="[
             nestedField.classList,
             `${
-              $v.formData[field.group][nestedField.name] &&
-              $v.formData[field.group][nestedField.name].$error
+              $v.formData[formName][field.group][nestedField.name] &&
+              $v.formData[formName][field.group][nestedField.name].$error
                 ? 'form-error-section'
                 : ''
             }`,
@@ -39,16 +39,17 @@
             :autocomplete="nestedField.autocomplete"
             :incremental="nestedField.incremental"
             :added="nestedField.added"
-            :value="formData[field.group][nestedField.name]"
+            :value="formData[formName][field.group][nestedField.name]"
             :error="
               nestedField.error ||
-              ($v.formData[field.group][nestedField.name]
-                ? $v.formData[field.group][nestedField.name].$error
+              ($v.formData[formName][field.group][nestedField.name]
+                ? $v.formData[formName][field.group][nestedField.name].$error
                 : false)
             "
             :error-messages="
               nestedField.errorMessage ||
               $getErrorMessages(
+                formName,
                 nestedField.name,
                 nestedField.visibleValidation,
                 undefined,
@@ -59,13 +60,14 @@
               nestedField.inputClassList,
               {
                 'border-error':
-                  $v.formData[field.group][nestedField.name].$error,
+                  $v.formData[formName][field.group][nestedField.name].$error,
               },
             ]"
             :label-class-list="[
               nestedField.labelClassList,
               {
-                'text-error': $v.formData[field.group][nestedField.name].$error,
+                'text-error':
+                  $v.formData[formName][field.group][nestedField.name].$error,
               },
             ]"
             @input="
@@ -81,8 +83,10 @@
             "
             @blur="
               () => {
-                $v.formData[field.group][nestedField.name]
-                  ? $v.formData[field.group][nestedField.name].$touch()
+                $v.formData[formName][field.group][nestedField.name]
+                  ? $v.formData[formName][field.group][
+                      nestedField.name
+                    ].$touch()
                   : () => {}
                 if (field.blurEvent) {
                   handleBlurEvent(field)
@@ -104,7 +108,8 @@
         v-else
         :class="[
           `${
-            $v.formData[field.name] && $v.formData[field.name].$error
+            $v.formData[formName][field.name] &&
+            $v.formData[formName][field.name].$error
               ? 'form-error-section'
               : ''
           }`,
@@ -129,14 +134,17 @@
           :autocomplete="field.autocomplete"
           :incremental="field.incremental"
           :added="field.added"
-          :value="formData[field.name]"
+          :value="formData[formName][field.name]"
           :error="
             field.error ||
-            ($v.formData[field.name] ? $v.formData[field.name].$error : false)
+            ($v.formData[formName][field.name]
+              ? $v.formData[formName][field.name].$error
+              : false)
           "
           :error-messages="
             field.errorMessage ||
             $getErrorMessages(
+              formName,
               field.name,
               field.visibleValidation,
               field.multiName
@@ -144,11 +152,11 @@
           "
           :input-class-list="[
             field.inputClassList,
-            { 'border-error': $v.formData[field.name].$error },
+            { 'border-error': $v.formData[formName][field.name].$error },
           ]"
           :label-class-list="[
             field.labelClassList,
-            { 'text-error': $v.formData[field.name].$error },
+            { 'text-error': $v.formData[formName][field.name].$error },
           ]"
           @input="(value) => handleInput(field.name, value)"
           @change="
@@ -161,8 +169,8 @@
           "
           @blur="
             () => {
-              $v.formData[field.name]
-                ? $v.formData[field.name].$touch()
+              $v.formData[formName][field.name]
+                ? $v.formData[formName][field.name].$touch()
                 : () => {}
               if (field.blurEvent) {
                 handleBlurEvent(field)
@@ -211,8 +219,24 @@ export default {
   mixins: [validationErrorMessages, validationMixin],
   props: {
     /** An array objects. Each object represent a form field for example VFormText. */
+    formName: {
+      type: String,
+      required: true,
+      default: '',
+    },
     fields: {
       type: Array,
+      required: true,
+      default: () => [],
+    },
+    completed: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    validate: {
+      type: Function,
+      default: () => {},
       required: true,
     },
     /** An object including validations of the specific */
@@ -227,27 +251,29 @@ export default {
   },
   data() {
     return {
-      formData: this.fields.reduce((prevFields, inputField) => {
-        if (inputField.group) {
-          return {
-            ...prevFields,
-            [inputField.group]: inputField.fields.reduce(
-              (prevFields, inputField) => {
-                return {
-                  ...prevFields,
-                  [inputField.name]: inputField.value,
-                }
-              },
-              {}
-            ),
+      formData: {
+        [this.formName]: this.fields.reduce((prevFields, inputField) => {
+          if (inputField.group) {
+            return {
+              ...prevFields,
+              [inputField.group]: inputField.fields.reduce(
+                (prevFields, inputField) => {
+                  return {
+                    ...prevFields,
+                    [inputField.name]: inputField.value,
+                  }
+                },
+                {}
+              ),
+            }
+          } else {
+            return {
+              ...prevFields,
+              [inputField.name]: inputField.value,
+            }
           }
-        } else {
-          return {
-            ...prevFields,
-            [inputField.name]: inputField.value,
-          }
-        }
-      }, {}),
+        }, {}),
+      },
     }
   },
   computed: {
@@ -258,7 +284,7 @@ export default {
           if (formField && formField.conditionalRendering) {
             const { $v } = this
             const { field, operator, value } = formField.conditionalRendering
-            const validationField = $v.formData[field]
+            const validationField = $v.formData[this.formName][field]
 
             if (operator === '==') {
               return validationField.$model === value
@@ -301,6 +327,24 @@ export default {
     },
   },
   watch: {
+    completed(newVal) {
+      if (newVal) {
+        const form = this.$v.formData[this.formName]
+        let validity = true
+        for (const key in form) {
+          const field = this.fields.find((v) => v.group === key)
+          if (key.charAt(0) === '$') continue
+          else if (field && field.visible === false) continue
+          form[key].$touch()
+          if (form[key].$anyError) {
+            validity = false
+            break
+          }
+        }
+
+        this.validate(validity)
+      }
+    },
     fields(curr) {
       const processedCurr = curr.reduce((prevFields, inputField) => {
         if (inputField.group) {
@@ -326,16 +370,16 @@ export default {
       for (const key in processedCurr) {
         if (
           Object.hasOwnProperty.call(processedCurr, key) &&
-          !Object.hasOwnProperty.call(this.formData, key)
+          !Object.hasOwnProperty.call(this.formData[this.formName], key)
         ) {
-          this.formData[key] = processedCurr[key]
+          this.formData[this.formName][key] = processedCurr[key]
           // console.log(key, processedCurr[key])
         }
       }
     },
   },
   mounted() {
-    this.$emit('input', this.formData)
+    this.$emit('input', this.formData[this.formName])
   },
   methods: {
     generateFieldRules(fieldValidators) {
@@ -351,19 +395,19 @@ export default {
     },
     handleInput(name, value, groupName) {
       if (groupName) {
-        this.$set(this.formData[groupName], name, value)
+        this.$set(this.formData[this.formName][groupName], name, value)
       } else {
-        this.$set(this.formData, name, value)
+        this.$set(this.formData[this.formName], name, value)
       }
-      this.$emit('input', this.formData)
+      this.$emit('input', this.formData[this.formName])
     },
 
     handleSubmit(e) {
       e.preventDefault()
-      this.$v.formData.$touch()
+      this.$v.formData[this.formName].$touch()
 
       if (!this.$v.$invalid) {
-        this.$emit('submit', this.formData)
+        this.$emit('submit', this.formData[this.formName])
       } else {
         setTimeout(() => this.$scrollTo('.form-error-section', 400, -20), 100)
       }
@@ -379,22 +423,26 @@ export default {
       //   }
       // }
       // this.$v.formData.$touch()
-      if (this.formData[fieldName].length >= 2) {
+      if (this.formData[this.formName][fieldName].length >= 2) {
         this.$emit('increment', fieldMultiName)
       }
     },
     async validateAndIncrementGroup(fieldGroupName) {
       const checkError = await new Promise((resolve) => {
         const errors = []
-        for (const fieldName in this.$v.formData[fieldGroupName]) {
+        for (const fieldName in this.$v.formData[this.formName][
+          fieldGroupName
+        ]) {
           if (fieldName.charAt(0) === '$') continue
           if (
             Object.hasOwnProperty.call(
-              this.$v.formData[fieldGroupName],
+              this.$v.formData[this.formName][fieldGroupName],
               fieldName
             )
           ) {
-            const element = this.$v.formData[fieldGroupName][fieldName]
+            const element = this.$v.formData[this.formName][fieldGroupName][
+              fieldName
+            ]
             element.$touch()
             errors.push(element.$error)
           }
@@ -406,104 +454,118 @@ export default {
       }
     },
     decrementGroup(fieldGroupName) {
-      this.$set(this.formData[fieldGroupName], 'ticketType', '')
-      this.$set(this.formData[fieldGroupName], 'maxAvailable', '')
-      this.$set(this.formData[fieldGroupName], 'ticketPrice', '')
+      this.$set(this.formData[this.formName][fieldGroupName], 'ticketType', '')
+      this.$set(
+        this.formData[this.formName][fieldGroupName],
+        'maxAvailable',
+        ''
+      )
+      this.$set(this.formData[this.formName][fieldGroupName], 'ticketPrice', '')
       this.$emit('decrementGroup', fieldGroupName)
     },
     handleBlurEvent(field) {
-      this.$parent[field.blurEvent](this.formData[field.name]).then((res) => {
-        this.formData[res.fieldToMod] = res.value
+      this.$parent[field.blurEvent](
+        this.formData[this.formName][field.name]
+      ).then((res) => {
+        this.formData[this.formName][res.fieldToMod] = res.value
       })
     },
     handleChangeEvent(field) {
-      if (!this.$v.formData.accountNumber.$invalid) {
-        this.$parent[field.changeEvent](this.formData.accountNumber).then(
-          (res) => {
-            this.formData[res.fieldToMod] = res.value
-          }
-        )
+      if (!this.$v.formData[this.formName].accountNumber.$invalid) {
+        this.$parent[field.changeEvent](
+          this.formData[this.formName].accountNumber
+        ).then((res) => {
+          this.formData[this.formName][res.fieldToMod] = res.value
+        })
       }
     },
   },
   validations() {
     return {
       formData: {
-        ...this.fieldRules,
-        eventImage: {
-          required: validators.required,
-          isValidSize: helpers.regex('isValidSize', /^((?!exceed)[\s\S])*$/),
-        },
-        phone: {
-          required: validators.required,
-          isPhone,
-        },
-        adminPass: {
-          required: validators.required,
-          minLength: validators.minLength(8),
-          containsUppercase: helpers.regex('containsUppercase', /[A-Z]/),
-          containsLowercase: helpers.regex('containsUppercase', /[a-z]/),
-          containsNumber: helpers.regex('containsUppercase', /[0-9]/),
-          containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
-        },
-        ticket: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
+        eventDetails: {
+          ...this.fieldRules,
+          eventImage: {
             required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+            isValidSize: helpers.regex('isValidSize', /^((?!exceed)[\s\S])*$/),
           },
         },
-        ticket_1: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
+        organiserDetails: {
+          ...this.fieldRules,
+          phone: {
             required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+            isPhone,
+          },
+          adminPass: {
+            required: validators.required,
+            minLength: validators.minLength(8),
+            containsUppercase: helpers.regex('containsUppercase', /[A-Z]/),
+            containsLowercase: helpers.regex('containsUppercase', /[a-z]/),
+            containsNumber: helpers.regex('containsUppercase', /[0-9]/),
+            containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
           },
         },
-        ticket_2: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
-            required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+        paymentDetails: {
+          ...this.fieldRules,
+          tickets: {
+            ...this.fieldRules.tickets,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
           },
-        },
-        ticket_3: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
-            required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+          tickets_1: {
+            ...this.fieldRules.tickets_1,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
           },
-        },
-        ticket_4: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
-            required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+          tickets_2: {
+            ...this.fieldRules.tickets_2,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
           },
-        },
-        ticket_5: {
-          ...this.fieldRules.ticket,
-          ticketPrice: {
-            required: validators.required,
-            validPrice: validators.or(
-              helpers.regex('isFree', /free/i),
-              validators.integer && validators.minValue(100)
-            ),
+          tickets_3: {
+            ...this.fieldRules.tickets_3,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
+          },
+          tickets_4: {
+            ...this.fieldRules.tickets_4,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
+          },
+          tickets_5: {
+            ...this.fieldRules.tickets_5,
+            ticketPrice: {
+              required: validators.required,
+              validPrice: validators.or(
+                helpers.regex('isFree', /free/i),
+                validators.integer && validators.minValue(100)
+              ),
+            },
           },
         },
       },
