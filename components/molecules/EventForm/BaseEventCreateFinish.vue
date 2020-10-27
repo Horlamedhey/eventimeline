@@ -9,30 +9,38 @@
     <div ref="form" class="mt-10 shadow-md">
       <div
         class="px-6 py-32 text-center rounded shadow-outline sm:px-16"
-        :style="{
-          backgroundImage: `url(/confetti.gif)`,
-        }"
+        :style="
+          loading
+            ? {}
+            : {
+                backgroundImage: `url(/confetti.gif)`,
+              }
+        "
       >
-        <div class="text-xl font-semibold">
-          <h2>Congrats!</h2>
-          <h2 class="mt-8">You just finished creating your event!</h2>
-        </div>
-        <div class="mt-24 text-lg font-medium">
-          <p>
-            We have sent a unique url link to your mail.That is your super power
-            key to manage this event and everything in-between, including
-            payments and withdrawals.
-          </p>
-          <p class="mt-5">
-            Do make sure to keep it safe and not share with anyone.
-          </p>
-        </div>
-        <!--  -->
+        <div v-if="loading">Event loading...</div>
+        <template v-else>
+          <div class="text-xl font-semibold">
+            <h2>Congrats!</h2>
+            <h2 class="mt-8">You just finished creating your event!</h2>
+          </div>
+          <div class="mt-24 text-lg font-medium">
+            <p>
+              We have sent a unique url link to your mail.That is your super
+              power key to manage this event and everything in-between,
+              including payments and withdrawals.
+            </p>
+            <p class="mt-5">
+              Do make sure to keep it safe and not share with anyone.
+            </p>
+          </div>
+          <!--  -->
+        </template>
       </div>
     </div>
-    <div ref="actionBtn">
+    <div v-if="!loading" ref="actionBtn">
       <div class="flex items-center justify-center mt-20">
         <BaseButton
+          :to="`/event/${newEventId}`"
           type="button"
           class="flex items-center justify-center w-56 py-3 ml-8 font-medium bg-transparent border border-black rounded-full ripple-bg-black-100 group"
         >
@@ -66,5 +74,15 @@ import formsAnimationMixin from '~/mixins/formsAnimationMixin'
 export default {
   name: 'BaseEventCreateFinish',
   mixins: [formsAnimationMixin],
+  props: {
+    loading: {
+      type: Boolean,
+      default: false,
+    },
+    newEventId: {
+      type: String,
+      default: '',
+    },
+  },
 }
 </script>

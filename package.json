@@ -14,33 +14,34 @@
   "dependencies": {
     "@nuxtjs/apollo": "^4.0.1-rc.1",
     "@nuxtjs/axios": "^5.12.0",
-    "@nuxtjs/pwa": "3.0.0-beta.20"
+    "@nuxtjs/pwa": "3.0.0-beta.20",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "@coding-wisely/vue-tailwind-datepicker": "^1.1.5",
-    "cloudinary-vue": "^1.1.2",
-    "dayjs": "^1.8.36",
-    "graphql-tag": "^2.11.0",
-    "gsap": "^3.5.1",
-    "nuxt": "^2.14.0",
-    "realm-web": "^0.9.0",
-    "tailwindcss-ripple": "^0.5.0",
-    "vue-tailwind-picker": "^1.1.4",
-    "vuelidate": "^0.7.5",
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/tailwindcss": "^2.1.0",
     "babel-eslint": "^10.1.0",
+    "cloudinary-vue": "^1.1.2",
+    "dayjs": "^1.8.36",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "graphql-tag": "^2.11.0",
+    "gsap": "^3.5.1",
     "node-sass": "^4.14.1",
+    "nuxt": "^2.14.0",
     "prettier": "^2.0.5",
+    "realm-web": "^0.9.0",
     "sass-loader": "^10.0.2",
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
-    "stylelint-config-standard": "^20.0.0"
+    "stylelint-config-standard": "^20.0.0",
+    "tailwindcss-ripple": "^0.5.0",
+    "vue-tailwind-picker": "^1.1.4",
+    "vuelidate": "^0.7.5"
   }
 }

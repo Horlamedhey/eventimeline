@@ -1,15 +1,17 @@
 <template>
-  <div v-if="event" class="relative w-full h-full pb-16">
+  <div class="relative w-full h-full pb-16">
     <div
       :style="{
-        backgroundImage: `url(https://res.cloudinary.com/befittinglife/image/upload/q_auto,c_scale/v1596032411/${event.image})`,
+        backgroundImage: `url(https://res.cloudinary.com/befittinglife/image/upload/q_auto,c_scale/v1596032411/${event.eventImage})`,
         height: '40vh',
         maxHeight: '300px',
       }"
       class="relative m-auto bg-center bg-cover lg:rounded-b lg:w-10/12 xl:w-8/12"
     >
       <div class="w-full h-full rounded blur-div"></div>
-      <BaseEventStatus class="event-status md:py-4 md:px-8"></BaseEventStatus>
+      <div class="event-status md:py-4 md:px-8">
+        {{ event.soldOut ? 'SOLD OUT' : 'STILL SELLING' }}
+      </div>
       <BaseEventInfoCard :event="event"></BaseEventInfoCard>
     </div>
     <div style="height: 20vh; max-height: 220px"></div>
@@ -22,11 +24,7 @@
         About Event
       </h2>
       <p class="px-2 mt-8 text-base sm:text-lg text-black-800">
-        We're back at Q-Bar lounge Bar every Thursday from 7pm - 1am virtually
-        during until we can get back into the bars and clubs! Take a drink, take
-        a wine & have a time! Bringing back memories, learn some tunes & hear
-        the best of the new tunes! The original lime to party event from Release
-        D Riddim! Release D Riddim and Guest DJs!
+        {{ event.eventDescription }}
       </p>
       <h3
         class="px-2 mt-20 text-2xl font-medium sm:text-2xl text-black-variant-900"
@@ -34,18 +32,18 @@
         Provisions
       </h3>
       <BaseList
-        v-if="event.provisions && event.provisions.length > 0"
+        v-if="event.eventProvisions && event.eventProvisions.length > 0"
         class="px-3 sm:px-6"
       >
         <li
-          v-for="provision in event.provisions"
+          v-for="provision in event.eventProvisions"
           :key="provision"
           class="flex mt-2 space-x-5 text-base sm:text-lg"
         >
           <div class="w-auto" style="padding: 0.4rem 0">
             <BaseCheckIcon class="w-4 h-4 text-success-variant"></BaseCheckIcon>
           </div>
-          <span class="w-10/12">
+          <span class="w-10/12 capitalize">
             {{ provision }}
           </span>
         </li>
@@ -72,24 +70,31 @@
       </div>
     </div>
   </div>
-  <div v-else>Loading...</div>
 </template>
 
 <script>
 // mixins
+import fetchEvent from '@/graphs/fetchEvent'
 import basicMixins from '~/mixins/pagesBasicMixins.js'
 export default {
   name: 'Event',
   mixins: [basicMixins],
-  fetch() {
-    this.event = this.events.find((v) => v.id === this.$route.params.id)
-  },
-  data() {
-    return {
-      event: null,
+  async asyncData({ app, params }) {
+    try {
+      const {
+        data: { event },
+      } = await app.$apolloClient.query({
+        query: fetchEvent,
+        variables: { eventId: params.id },
+      })
+
+      return {
+        event,
+      }
+    } catch (error) {
+      console.log('meeeee', error)
     }
   },
-  computed: {},
 }
 </script>
 

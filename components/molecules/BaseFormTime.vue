@@ -139,13 +139,13 @@ export default {
   },
   watch: {
     hour(val) {
-      this.emitTime(`${val}:${this.minute}${this.meridiem}`)
+      this.emitTime(`${val}:${this.minute} ${this.meridiem}`)
     },
     minute(val) {
-      this.emitTime(`${this.hour}:${val}${this.meridiem}`)
+      this.emitTime(`${this.hour}:${val} ${this.meridiem}`)
     },
     meridiem(val) {
-      this.emitTime(`${this.hour}:${this.minute}${val}`)
+      this.emitTime(`${this.hour}:${this.minute} ${val}`)
     },
   },
   methods: {

@@ -6,4 +6,5 @@ export default (context, inject) => {
   // Create an anonymous credential
 
   inject('realmApp', app)
+  inject('apolloClient', context.app.apolloProvider.defaultClient)
 }

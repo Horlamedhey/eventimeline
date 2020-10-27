@@ -79,10 +79,15 @@ export default {
           options: [
             { label: 'Birthday', value: 'birthday' },
             { label: 'Conference', value: 'conference' },
+            { label: 'Convocation', value: 'convocation' },
+            { label: 'Dinner', value: 'dinner' },
+            { label: 'Seminar', value: 'seminar' },
             { label: 'Hangout', value: 'hangout' },
             { label: 'Launch Party', value: 'launch party' },
             { label: 'Matriculation', value: 'matriculation' },
             { label: 'Meetup', value: 'meetup' },
+            { label: 'Wedding', value: 'wedding' },
+            { label: 'Others', value: 'others' },
           ],
           label: 'SELECT CATEGORY',
           classList: 'w-full mt-8',
@@ -106,6 +111,18 @@ export default {
           value: '',
         },
         {
+          component: 'BaseFormText',
+          name: 'eventLocation',
+          type: 'text',
+          label: 'LOCATION',
+          autocomplete: 'on',
+          classList: 'mt-8 w-full',
+          inputClassList:
+            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'required' }],
+          value: '',
+        },
+        {
           component: 'BaseFormDate',
           name: 'eventDate',
           type: 'text',
@@ -125,7 +142,7 @@ export default {
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
           validators: [{ component: 'required' }],
-          value: `01:00AM`,
+          value: `01:00 AM`,
         },
         {
           component: 'BaseFormFileUpload',

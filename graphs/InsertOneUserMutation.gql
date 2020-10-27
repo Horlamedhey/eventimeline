@@ -1,0 +1,59 @@
+mutation insertOneUser(
+  $organiserName: String!
+  $phone: String!
+  $authId: String!
+  $accountName: String!
+  $accountNumber: String!
+  $bankName: String!
+  $eventTitle: String!
+  $eventDescription: String!
+  $eventCategory: String!
+  $eventProvisions: [String]!
+  $tickets: [EventTicketInsertInput!]!
+  $eventLocation: String!
+  $eventDate: DateTime!
+  $eventImage: String!
+  $color: String!
+  $textColor: String!
+  $thirdPartyPerks: [String]!
+  $createdAt: DateTime!
+  $updatedAt: DateTime!
+) {
+  insertOneUser(
+    data: {
+      name: $organiserName
+      phone: $phone
+      authId: $authId
+      accounts: {
+        create: {
+          accountName: $accountName
+          accountNumber: $accountNumber
+          bankName: $bankName
+          users: { link: [$authId] }
+        }
+      }
+      events: {
+        create: {
+          eventCategory: $eventCategory
+          isOnline: false
+          eventLocation: $eventLocation
+          eventTitle: $eventTitle
+          eventDescription: $eventDescription
+          color: $color
+          textColor: $textColor
+          eventImage: $eventImage
+          eventDate: $eventDate
+          eventProvisions: $eventProvisions
+          tickets: $tickets
+          thirdPartyPerks: $thirdPartyPerks
+          organiser: { link: $authId }
+          soldOut: false
+          createdAt: $createdAt
+          updatedAt: $updatedAt
+        }
+      }
+    }
+  ) {
+    _id
+  }
+}

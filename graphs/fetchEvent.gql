@@ -1,0 +1,23 @@
+query fetchEvents($eventId: ObjectId!) {
+  event(query: { _id: $eventId }) {
+    _id
+    eventTitle
+    eventDescription
+    cheapestTicket {
+      ticketPrice
+    }
+    tickets {
+      ticketType
+      ticketPrice
+      maxAvailable
+      quantitySold
+    }
+    eventProvisions
+    eventLocation
+    eventDate
+    eventImage
+    color
+    textColor
+    soldOut
+  }
+}

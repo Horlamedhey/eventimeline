@@ -28,19 +28,33 @@
       :position="5"
       :current-form="currentForm"
       :set-current-form="setCurrentForm"
+      :loading="loading"
+      :new-event-id="newEventId"
       class="absolute top-0 z-0 opacity-0"
     ></BaseEventCreateFinish>
   </div>
 </template>
 
 <script>
+import createEventMixin from '@/mixins/createEventMixin'
 export default {
   name: 'BaseCreateEventForm',
+  mixins: [createEventMixin],
   data() {
     return {
+      loading: false,
+      newEventId: null,
       currentForm: 0,
       finalData: {},
     }
+  },
+  watch: {
+    currentForm(curr, prev) {
+      if (curr === 5) {
+        this.loading = true
+        this.recordEvent()
+      }
+    },
   },
   mounted() {
     setTimeout(() => {

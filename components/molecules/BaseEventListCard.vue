@@ -1,6 +1,6 @@
 <template>
-  <n-link :to="`/event/${event.id}`">
-    <div class="flex space-x-8 group">
+  <n-link :to="`/event/${event._id}`">
+    <div class="flex items-center space-x-8 group">
       <div class="relative w-3/12 h-2/12 sm:w-40">
         <!-- <img
           :src="`/images/${event.image}`"
@@ -9,8 +9,8 @@
         /> -->
         <client-only>
           <cld-image
-            :public-id="event.image"
-            :alt="event.title"
+            :public-id="event.eventImage"
+            :alt="event.eventTitle"
             fetch-format="auto"
             quality="auto"
             client-hints="true"
@@ -23,24 +23,31 @@
             <cld-placeholder type="blur"> </cld-placeholder>
           </cld-image>
         </client-only>
-        <BaseEventStatus
-          class="top-0 mt-6 event-status lg:px-3"
-        ></BaseEventStatus>
+        <div class="top-0 mt-6 event-status lg:px-3">
+          {{ event.soldOut ? 'SOLD OUT' : 'STILL SELLING' }}
+        </div>
       </div>
       <div
         class="flex justify-between w-9/12 p-4 transition duration-700 bg-white rounded shadow-outline group-hover:shadow-lg"
       >
-        <div class="flex flex-col justify-between">
+        <div class="flex flex-col justify-between overflow-hidden">
           <div>
             <p class="text-sm font-bold font-quicksand text-accent-light">
-              {{ event.date1 }}
+              {{ event.eventDate | formatEventDate }}
             </p>
             <p class="mt-2 text-lg font-bold font-quicksand text-black-700">
-              {{ event.title }}
+              {{ event.eventTitle }}
             </p>
           </div>
+          <p class="text-xs my-truncate">
+            {{ event.eventDescription }}
+          </p>
           <p class="text-lg font-bold font-quicksand text-black-300">
-            {{ event.price }}
+            {{
+              event.cheapestTicket.ticketPrice
+                ? `N ${event.cheapestTicket.ticketPrice}`
+                : 'FREE'
+            }}
           </p>
         </div>
         <div class="flex flex-col justify-between">
@@ -49,7 +56,7 @@
           </BaseButton>
 
           <BaseCheckIcon
-            v-if="event.provisions && event.provisions.length > 0"
+            v-if="event.isProvisions"
             class="text-success-variant"
           ></BaseCheckIcon>
         </div>
@@ -74,5 +81,12 @@ export default {
 <style lang="scss" scoped>
 .event-status {
   right: -1rem;
+}
+.my-truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
-  <n-link :to="`/event/${event.id}`">
+  <n-link :to="`/event/${event._id}`">
     <div class="relative transition duration-500 group">
       <div
         class="relative flex justify-center p-1 overflow-hidden transition duration-500 group-hover:shadow-xl rounded-xl"
       >
         <client-only>
           <cld-image
-            :public-id="event.image"
-            :alt="event.title"
+            :public-id="event.eventImage"
+            :alt="event.eventTitle"
             fetch-format="auto"
             quality="auto"
             client-hints="true"
@@ -24,23 +24,31 @@
           <BaseHeartIcon fill="#ffc510"></BaseHeartIcon>
         </BaseButton>
         <div
-          class="absolute bottom-0 flex items-center w-10/12 h-auto p-3 mb-3 shadow-2xl max-h-1/3"
+          class="absolute bottom-0 flex items-center w-10/12 h-auto p-3 mb-3 shadow-xl max-h-1/3"
           :style="{ borderRadius: '0.65rem', backgroundColor: event.color }"
         >
           <h3 :style="{ color: event.textColor }" class="text-sm font-inter">
-            {{ event.title }}
+            {{ event.eventTitle }}
           </h3>
         </div>
       </div>
       <div class="flex justify-between px-2 mt-1">
-        <p class="text-sm font-inter text-black-700">{{ event.price }}</p>
-        <p class="text-sm font-inter text-black-700">{{ event.date }}</p>
+        <p class="text-sm font-inter text-black-700">
+          {{
+            event.cheapestTicket.ticketPrice
+              ? `N ${event.cheapestTicket.ticketPrice}`
+              : 'FREE'
+          }}
+        </p>
+        <p class="text-sm font-inter text-black-700">
+          {{ event.eventDate | formatEventDate }}
+        </p>
       </div>
-      <BaseEventStatus
-        class="top-0 z-0 mt-6 event-status lg:px-3"
-      ></BaseEventStatus>
+      <div class="top-0 z-0 mt-6 event-status lg:px-3">
+        {{ event.soldOut ? 'SOLD OUT' : 'STILL SELLING' }}
+      </div>
       <BaseCheckIcon
-        v-if="event.provisions && event.provisions.length > 0"
+        v-if="event.isProvisions"
         class="absolute top-0 z-10 w-4 h-4 mt-5 text-success-variant provisions-indicator"
       ></BaseCheckIcon>
     </div>

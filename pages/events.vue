@@ -71,12 +71,13 @@
 <script>
 //
 // mixins
+import fetchEventsMixin from '~/mixins/fetchEventsMixin.js'
 import basicMixins from '~/mixins/pagesBasicMixins.js'
 export default {
   metaInfo: {
     title: 'Events',
   },
-  mixins: [basicMixins],
+  mixins: [basicMixins, fetchEventsMixin],
   data() {
     return {}
   },

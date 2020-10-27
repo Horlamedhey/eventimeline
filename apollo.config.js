@@ -4,7 +4,7 @@ module.exports = {
       name: 'eventimeline',
       // URL to the GraphQL API
       url:
-        'https://realm.mongodb.com/api/client/v2.0/app/eventimeline-aegna/graphql',
+        'https://realm.mongodb.com/api/client/v2.0/app/eventimeline-jlgbq/graphql',
     },
     // Files processed by the extension
     includes: ['src/**/*.vue', 'src/**/*.js'],

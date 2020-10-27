@@ -8,8 +8,8 @@
     >
       <client-only>
         <cld-image
-          :public-id="event.image"
-          :alt="event.title"
+          :public-id="event.eventImage"
+          :alt="event.eventTitle"
           fetch-format="auto"
           quality="auto"
           client-hints="true"
@@ -30,33 +30,39 @@
         <p
           class="flex justify-between text-base font-medium font-quicksand text-accent-light"
         >
-          <span>{{ event.date }}</span>
+          <span>{{ event.eventDate | formatEventDate }}</span>
           <BaseButton class="bg-transparent focus:outline-none">
             <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>
           </BaseButton>
         </p>
         <p class="mt-2 text-xl font-semibold font-josefinsans text-black-700">
-          {{ event.title }}
+          {{ event.eventTitle }}
         </p>
       </div>
 
       <div class="items-end justify-between sm:flex">
         <div>
-          <div class="flex items-center justify-between">
-            <span class="text-lg venue-price font-quicksand"> Venue: </span>
-            <span
+          <div class="flex items-center justify-between space-x-2">
+            <div class="text-lg venue-price font-quicksand">Venue:</div>
+            <div
               class="text-base venue-price-values text-black-800 font-quicksand"
             >
-              {{ 'Tanke, Ilorin' }}
-            </span>
+              {{ event.eventLocation }}
+            </div>
           </div>
-          <div class="flex items-center justify-between font-quicksand sm:mt-2">
-            <span class="venue-price"> Price: </span>
-            <span
+          <div
+            class="flex items-center justify-between space-x-2 font-quicksand sm:mt-2"
+          >
+            <div class="venue-price">Price:</div>
+            <div
               class="text-xl venue-price-values text-black-400 font-quicksand"
             >
-              {{ event.price }}
-            </span>
+              {{
+                event.cheapestTicket.ticketPrice
+                  ? `N ${event.cheapestTicket.ticketPrice}`
+                  : 'FREE'
+              }}
+            </div>
           </div>
         </div>
 

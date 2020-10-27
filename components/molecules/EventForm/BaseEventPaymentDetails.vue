@@ -96,7 +96,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'w-full mt-8 md:mt-0 md:w-4/12 sm:pr-4',
@@ -152,7 +152,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'mt-8 md:mt-0 w-full md:w-4/12 sm:pr-4',
@@ -208,7 +208,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'mt-8 md:mt-0 w-full md:w-4/12 sm:pr-4',
@@ -264,7 +264,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'mt-8 md:mt-0 w-full md:w-4/12 sm:pr-4',
@@ -320,7 +320,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'mt-8 md:mt-0 w-full md:w-4/12 sm:pr-4',
@@ -376,7 +376,7 @@ export default {
             {
               component: 'BaseFormText',
               name: 'maxAvailable',
-              type: 'text',
+              type: 'number',
               label: 'MAX. AVAILABLE',
               autocomplete: 'on',
               classList: 'mt-8 md:mt-0 w-full md:w-4/12 sm:pr-4',

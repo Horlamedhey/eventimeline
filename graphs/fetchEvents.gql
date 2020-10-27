@@ -1,0 +1,16 @@
+query fetchEvents($route: Boolean!) {
+  events(sortBy: CREATEDAT_DESC) {
+    _id
+    eventTitle
+    eventDescription @include(if: $route)
+    cheapestTicket {
+      ticketPrice
+    }
+    isProvisions
+    eventDate
+    eventImage
+    color
+    textColor
+    soldOut
+  }
+}

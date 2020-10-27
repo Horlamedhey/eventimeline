@@ -53,6 +53,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    'plugins/filters.js',
     'plugins/realmAuth.js',
     'plugins/cloudinary',
     'plugins/gsap.client.js',

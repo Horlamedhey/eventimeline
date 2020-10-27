@@ -190,7 +190,10 @@ export const actions = {
       if (this.$realmApp.currentUser) {
         this.$apolloHelpers.onLogin(this.$realmApp.currentUser.accessToken)
       } else {
-        const credentials = Realm.Credentials.anonymous()
+        const credentials = Realm.Credentials.emailPassword(
+          'admin@eventimeline.com',
+          'admin@eventimeline.com'
+        )
         const user = await this.$realmApp.logIn(credentials)
         assert(user.id === this.$realmApp.currentUser.id)
         this.$apolloHelpers.onLogin(user.accessToken)

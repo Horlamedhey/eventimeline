@@ -28,6 +28,9 @@ export default {
       required: 'Please enter event provision',
       minLength: 'Event provision needs to be at least 2 characters long',
     },
+    eventLocation: {
+      required: 'Please enter event location',
+    },
     eventDate: {
       required: 'Please select event date',
     },
