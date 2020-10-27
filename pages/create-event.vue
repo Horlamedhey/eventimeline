@@ -3,7 +3,9 @@
     class="flex flex-wrap justify-between pb-64 m-auto bg-white border-t md:flex-no-wrap font-quicksand xl:w-7/12"
   >
     <BaseCreateEventIntro
-      style="background-image: url('@/static/images/create-event-vector.png')"
+      :style="{
+        backgroundImage: `url(${require('@/static/images/confetti.gif')})`,
+      }"
       class="px-8 py-20 bg-no-repeat bg-contain w-72 sm:w-96"
     ></BaseCreateEventIntro>
     <BaseCreateEventForm
