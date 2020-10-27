@@ -4,7 +4,7 @@
       v-if="loading"
       class="fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center bg-fixed bg-contain bg-secondary-dark"
       :style="{
-        backgroundImage: `url('/images/confetti.gif')`,
+        backgroundImage: `url('@/static/images/confetti.gif')`,
         backgroundColor: '#352286',
       }"
     >
