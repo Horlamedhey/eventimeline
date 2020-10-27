@@ -4,7 +4,7 @@
   >
     <BaseCreateEventIntro
       :style="{
-        backgroundImage: `url(${require('@/static/images/confetti.gif')})`,
+        backgroundImage: `url(${require('@/static/images/create-event-vector.png')})`,
       }"
       class="px-8 py-20 bg-no-repeat bg-contain w-72 sm:w-96"
     ></BaseCreateEventIntro>
