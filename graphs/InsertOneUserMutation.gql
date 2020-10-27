@@ -8,14 +8,14 @@ mutation insertOneUser(
   $eventTitle: String!
   $eventDescription: String!
   $eventCategory: String!
-  $eventProvisions: [String]!
+  $eventProvisions: [String]
   $tickets: [EventTicketInsertInput!]!
   $eventLocation: String!
   $eventDate: DateTime!
   $eventImage: String!
   $color: String!
   $textColor: String!
-  $thirdPartyPerks: [String]!
+  $thirdPartyPerks: [String]
   $createdAt: DateTime!
   $updatedAt: DateTime!
 ) {
