@@ -1,0 +1,19 @@
+mutation insertOneAccount(
+  $accountName: String!
+  $accountNumber: String!
+  $bankName: String!
+  $createdAt: DateTime!
+  $updatedAt: DateTime!
+) {
+  insertOneAccount(
+    data: {
+      accountName: $accountName
+      accountNumber: $accountNumber
+      bankName: $bankName
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

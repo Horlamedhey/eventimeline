@@ -1,0 +1,23 @@
+mutation insertOneUser(
+  $organiserName: String!
+  $phone: String!
+  $authId: String!
+  $bankAccounts: [ObjectId]!
+  $events: [ObjectId]!
+  $createdAt: DateTime!
+  $updatedAt: DateTime!
+) {
+  insertOneUser(
+    data: {
+      name: $organiserName
+      phone: $phone
+      authId: $authId
+      accounts: { link: $bankAccounts }
+      events: { link: $events }
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

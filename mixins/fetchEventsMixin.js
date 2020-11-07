@@ -1,4 +1,4 @@
-import fetchEvents from '@/graphs/fetchEvents'
+import fetchEvents from '@/graphs/read/fetchEvents'
 export default {
   async asyncData({ app, route }) {
     try {

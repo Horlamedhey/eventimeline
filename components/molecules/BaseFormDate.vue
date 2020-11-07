@@ -17,7 +17,7 @@
         :input-field-classes="inputClassList"
         class="w-full"
         @input="(value) => $emit('input', value)"
-        @fo`c`us="$emit('focus', $event)"
+        @focus="$emit('focus', $event)"
         @blur="$emit('blur', $event)"
         @keypress="$emit('keypress', $event)"
       ></vue-tailwind-datepicker>

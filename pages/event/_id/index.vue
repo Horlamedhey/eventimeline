@@ -74,7 +74,7 @@
 
 <script>
 // mixins
-import fetchEvent from '@/graphs/fetchEvent'
+import fetchEvent from '@/graphs/read/fetchEvent'
 import basicMixins from '~/mixins/pagesBasicMixins.js'
 export default {
   name: 'Event',

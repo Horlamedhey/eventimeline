@@ -1,0 +1,21 @@
+mutation updateOneUser(
+  $organiserName: String
+  $phone: String
+  $authId: String!
+  $bankAccounts: [ObjectId]
+  $events: [ObjectId]
+  $updatedAt: DateTime!
+) {
+  updateOneUser(
+    query: { authId: $authId }
+    set: {
+      name: $organiserName
+      phone: $phone
+      accounts: { link: $bankAccounts }
+      events: { link: $events }
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

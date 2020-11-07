@@ -1,0 +1,43 @@
+mutation insertOneEvent(
+  $authId: String!
+  $eventTitle: String!
+  $eventDescription: String!
+  $eventCategory: String!
+  $eventProvisions: [String]
+  $isProvisions: Boolean!
+  $tickets: [EventTicketInsertInput!]!
+  $cheapestTicket: EventCheapestTicketInsertInput!
+  $eventLocation: String!
+  $finalEventDate: DateTime!
+  $eventImage: String!
+  $color: String!
+  $textColor: String!
+  $thirdPartyPerks: [String]
+  $createdAt: DateTime!
+  $updatedAt: DateTime!
+) {
+  insertOneEvent(
+    data: {
+      eventCategory: $eventCategory
+      isOnline: false
+      eventLocation: $eventLocation
+      eventTitle: $eventTitle
+      eventDescription: $eventDescription
+      color: $color
+      textColor: $textColor
+      eventImage: $eventImage
+      eventDate: $finalEventDate
+      eventProvisions: $eventProvisions
+      isProvisions: $isProvisions
+      tickets: $tickets
+      cheapestTicket: $cheapestTicket
+      thirdPartyPerks: $thirdPartyPerks
+      organiser: { link: $authId }
+      soldOut: false
+      createdAt: $createdAt
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

@@ -13,7 +13,7 @@
           loading
             ? {}
             : {
-                backgroundImage: `url(/confetti.gif)`,
+                backgroundImage: `url(${require('@/static/images/confetti.gif')})`,
               }
         "
       >

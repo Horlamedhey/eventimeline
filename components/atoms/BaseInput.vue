@@ -180,7 +180,7 @@ export default {
     },
     /** Value of the input */
     value: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
     /** Placeholder text for the input */

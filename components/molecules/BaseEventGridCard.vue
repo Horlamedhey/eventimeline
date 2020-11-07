@@ -41,7 +41,7 @@
           }}
         </p>
         <p class="text-sm font-inter text-black-700">
-          {{ event.eventDate | formatEventDate }}
+          {{ event.eventDate | formatShortEventDate }}
         </p>
       </div>
       <div class="top-0 z-0 mt-6 event-status lg:px-3">
