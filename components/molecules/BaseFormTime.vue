@@ -12,50 +12,21 @@
       </BaseLabel>
     </div>
 
-    <div :class="inputClassList">
-      <div class="flex items-center justify-around h-full">
-        <select
-          id="hour"
-          v-model="hour"
-          name="hours"
-          class="block px-4 leading-tight bg-transparent rounded appearance-none focus:outline-none focus:border-gray-500"
-        >
-          <option value="01">01</option>
-          <option value="02">02</option>
-          <option value="03">03</option>
-          <option value="04">04</option>
-          <option value="05">05</option>
-          <option value="06">06</option>
-          <option value="07">07</option>
-          <option value="08">08</option>
-          <option value="09">09</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
-          <option value="12">12</option>
-        </select>
-        <span class="mr-3 text-xl">:</span>
-        <select
-          id="minute"
-          v-model="minute"
-          name="minutes"
-          class="block px-4 leading-tight bg-transparent rounded appearance-none focus:outline-none focus:border-gray-500"
-        >
-          <option value="00">00</option>
-          <option value="15">15</option>
-          <option value="30">30</option>
-          <option value="45">45</option>
-        </select>
-        <select
-          id="meridiem"
-          v-model="meridiem"
-          name="ampm"
-          class="block px-4 leading-tight bg-transparent rounded appearance-none focus:outline-none focus:border-gray-500"
-        >
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
-      </div>
-    </div>
+    <date-picker
+      :value="value"
+      :default-value="new Date()"
+      value-type="format"
+      format="hh:mm A"
+      type="time"
+      :input-class="inputClassList"
+      @input="(value) => $emit('input', value)"
+      @focus="$emit('focus', $event)"
+      @blur="$emit('blur', $event)"
+    >
+      <template v-slot:icon-calendar>
+        <BaseClockIcon class="text-white"></BaseClockIcon>
+      </template>
+    </date-picker>
 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
@@ -64,8 +35,11 @@
 </template>
 
 <script>
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 export default {
   name: 'BaseFormText',
+  components: { DatePicker },
   props: {
     /** Label text for the field */
     label: String,
@@ -155,3 +129,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.mx-datepicker {
+  @apply w-full;
+}
+</style>

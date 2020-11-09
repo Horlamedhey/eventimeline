@@ -12,16 +12,17 @@
       </BaseLabel>
     </div>
 
-    <client-only>
-      <vue-tailwind-datepicker
-        :input-field-classes="inputClassList"
-        class="w-full"
-        @input="(value) => $emit('input', value)"
-        @focus="$emit('focus', $event)"
-        @blur="$emit('blur', $event)"
-        @keypress="$emit('keypress', $event)"
-      ></vue-tailwind-datepicker>
-    </client-only>
+    <date-picker
+      :value="value"
+      :default-value="new Date()"
+      value-type="format"
+      format="YYYY-MM-DD"
+      :input-class="inputClassList"
+      :disabled-date="disabledBeforeToday"
+      @input="(value) => $emit('input', value)"
+      @focus="$emit('focus', $event)"
+      @blur="$emit('blur', $event)"
+    ></date-picker>
 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
@@ -30,10 +31,11 @@
 </template>
 
 <script>
-import VueTailwindDatepicker from '@coding-wisely/vue-tailwind-datepicker'
+import DatePicker from 'vue2-datepicker'
+import 'vue2-datepicker/index.css'
 export default {
   name: 'BaseFormDate',
-  components: { VueTailwindDatepicker },
+  components: { DatePicker },
   props: {
     /** Label text for the field */
     label: String,
@@ -98,5 +100,19 @@ export default {
       return '_' + Math.random().toString(36).substr(2, 9)
     },
   },
+  methods: {
+    disabledBeforeToday(date) {
+      const today = new Date()
+      today.setHours(0, 0, 0, 0)
+
+      return date < today
+    },
+  },
 }
 </script>
+
+<style lang="scss">
+.mx-datepicker {
+  @apply w-full;
+}
+</style>

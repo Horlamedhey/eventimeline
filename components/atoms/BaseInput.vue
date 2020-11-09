@@ -20,53 +20,7 @@
       >
         {{ prefix }}
       </div>
-      <client-only v-if="name === 'eventdate'">
-        <VueTailWindPicker
-          :init="false"
-          format-date="YYYY/MM/DD"
-          :theme="{
-            background: '#1A202C',
-            text: 'text-white',
-            border: 'border-gray-700',
-            currentColor: 'text-gray-200',
-            navigation: {
-              background: 'bg-gray-800',
-              hover: 'hover:bg-gray-700',
-              focus: 'bg-gray-700',
-            },
-            picker: {
-              rounded: 'rounded-md',
-              selected: {
-                background: 'bg-accent3',
-                border: 'border-accent4',
-                hover: 'hover:border-accent4',
-              },
-              holiday: 'text-red-400',
-              weekend: 'text-green-400',
-              event: 'bg-blue-500',
-            },
-            event: {
-              border: 'border-gray-700',
-            },
-          }"
-          @change="(value) => $emit('input', value)"
-        >
-          <input
-            :id="fieldId || name"
-            :value="value"
-            :name="name"
-            readonly
-            class="w-full leading-none bg-transparent outline-none"
-            :class="[inputClassList]"
-            @focus="$emit('focus', $event)"
-            @blur="$emit('blur', $event)"
-            @keypress="$emit('keypress', $event)"
-            @paste="$emit('paste', $event)"
-          />
-        </VueTailWindPicker>
-      </client-only>
       <input
-        v-else
         :id="fieldId || name"
         :type="inputType"
         :value="value"
@@ -150,9 +104,6 @@
 <script>
 export default {
   name: 'BaseInput',
-  components: {
-    VueTailWindPicker: () => import('vue-tailwind-picker'),
-  },
   props: {
     /** Type of the text input. Options ['text', 'email', 'url', 'tel', 'search', 'password'] */
     type: {

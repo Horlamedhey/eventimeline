@@ -54,7 +54,7 @@ export default {
           accessToken,
           customData: { accounts, events },
         },
-      } = await this.authenticateUser(email, adminPass)
+      } = await this.authenticateUser(email.toLowerCase(), adminPass)
 
       // collect existing data
       const allAccounts = newUser ? [] : accounts.map((v) => v.$oid)
