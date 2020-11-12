@@ -1,5 +1,5 @@
 import assert from 'assert'
-import * as Realm from 'realm-web'
+// import * as Realm from 'realm-web'
 // import gql from 'graphql-tag'
 import InsertOneUserMutation from '@/graphs/create/InsertOneUserMutation'
 import UpdateOneUserMutation from '@/graphs/update/UpdateOneUserMutation'
@@ -23,7 +23,11 @@ export default {
           eventTime,
           eventImage,
         },
-        organiserDetails: { organiserName, phone, email, adminPass },
+        organiserDetails: {
+          organiserName,
+          phone,
+          // email, adminPass
+        },
         paymentDetails: { accountName, accountNumber, bankName, tickets },
         thirdPartyArtisans: thirdPartyPerks,
       } = this.finalData
@@ -54,7 +58,7 @@ export default {
           accessToken,
           customData: { accounts, events },
         },
-      } = await this.authenticateUser(email.toLowerCase(), adminPass)
+      } = this.authUser
 
       // collect existing data
       const allAccounts = newUser ? [] : accounts.map((v) => v.$oid)
@@ -134,27 +138,6 @@ export default {
         this.loading = false
       } catch (err) {
         console.error(err.message)
-      }
-    },
-    async authenticateUser(email, password) {
-      //   create user credential
-      const credentials = Realm.Credentials.emailPassword(email, password)
-
-      try {
-        // login
-        const user = await this.$realmApp.logIn(credentials)
-        return { user, newUser: false }
-      } catch (err) {
-        console.log(err)
-
-        // register
-        try {
-          await this.$realmApp.emailPasswordAuth.registerUser(email, password)
-          const user = await this.$realmApp.logIn(credentials)
-          return { user, newUser: true }
-        } catch (err) {
-          console.error(err)
-        }
       }
     },
     async getBankAccountId(accountVariables) {

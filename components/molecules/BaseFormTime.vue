@@ -134,4 +134,10 @@ export default {
 .mx-datepicker {
   @apply w-full;
 }
+.mx-time-column .mx-time-item.active {
+  @apply text-primary;
+}
+.mx-time-column .mx-time-item:hover {
+  @apply bg-primary-variant bg-opacity-25;
+}
 </style>

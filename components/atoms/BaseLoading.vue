@@ -29,7 +29,7 @@ export default {
   height: 30px;
   display: inline-block;
   overflow: hidden;
-  background: #fff;
+  background: transparent;
 }
 .ldio-qsi76kw0mz9 {
   width: 100%;

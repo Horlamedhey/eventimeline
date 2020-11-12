@@ -36,6 +36,7 @@
 </template>
 
 <script>
+// import * as Realm from 'realm-web'
 import createEventMixin from '@/mixins/createEventMixin'
 export default {
   name: 'BaseCreateEventForm',
@@ -45,6 +46,7 @@ export default {
       loading: false,
       newEventId: null,
       currentForm: 0,
+      authUser: {},
       finalData: {},
     }
   },
@@ -62,13 +64,16 @@ export default {
     }, 1500)
   },
   methods: {
-    setCurrentForm(val, data, formName) {
+    setCurrentForm(val, data, formName, addition) {
       if (
         val > this.currentForm &&
         data !== undefined &&
         formName !== undefined
       ) {
         this.finalData[formName] = data
+      }
+      if (val === 3) {
+        this.authUser = addition
       }
       this.currentForm = val
     },

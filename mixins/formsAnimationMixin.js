@@ -22,6 +22,7 @@ export default {
       timeline: null,
       prevValues: {},
       currValues: {},
+      processedCurrValues: {},
     }
   },
   watch: {
@@ -58,6 +59,7 @@ export default {
   },
   methods: {
     setValues(values, unStandardForm) {
+      // TODO: Set object values such as ticket prices
       if (!unStandardForm) {
         this.fields.forEach((v) => {
           v.value = values[v.name]
@@ -76,17 +78,18 @@ export default {
         ).placeholder = undefined
       }
     },
+    // validateBeforeNext(arg) {
     validateBeforeNext() {
+      // console.log(arg)
       this.completed = true
     },
     validate(isValid) {
       if (isValid) {
+        // console.log('valid', this.choicesSorted)
         const multiNamedFields = this.fields.filter(
           (v) => v.multiName !== undefined
         )
         const multiNames = []
-
-        const processedCurrValues = {}
 
         for (let i = 0; i < multiNamedFields.length; i++) {
           const multiName = multiNamedFields[i].multiName
@@ -116,25 +119,30 @@ export default {
                 const multiName = multiNames[i]
 
                 if (key.includes(multiName)) {
-                  if (processedCurrValues[multiName]) {
-                    processedCurrValues[multiName].push(element)
+                  if (this.processedCurrValues[multiName]) {
+                    this.processedCurrValues[multiName].push(element)
                   } else {
-                    processedCurrValues[multiName] = [element]
+                    this.processedCurrValues[multiName] = [element]
                   }
                 } else {
-                  processedCurrValues[key] = element
+                  this.processedCurrValues[key] = element
                 }
               }
             } else {
-              processedCurrValues[key] = element
+              this.processedCurrValues[key] = element
             }
           }
         }
-        this.setCurrentForm(
-          this.position + 1,
-          processedCurrValues,
-          this.formName
-        )
+        if (this.position === 2) {
+          // console.log(this.choicesSorted, 'authing')
+          this.authenticateOrganiser()
+        } else {
+          this.setCurrentForm(
+            this.position + 1,
+            this.processedCurrValues,
+            this.formName
+          )
+        }
       } else {
         this.completed = false
       }

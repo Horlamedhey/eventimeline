@@ -115,4 +115,16 @@ export default {
 .mx-datepicker {
   @apply w-full;
 }
+.mx-calendar-content .cell.active {
+  @apply bg-primary;
+}
+.mx-table-date .today {
+  @apply text-primary-light;
+}
+.mx-btn:hover {
+  @apply text-primary;
+}
+.mx-calendar-content .cell:hover {
+  @apply bg-primary-variant bg-opacity-25;
+}
 </style>

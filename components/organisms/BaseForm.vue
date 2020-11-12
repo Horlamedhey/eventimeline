@@ -192,10 +192,6 @@ import validationErrorMessages from '@/mixins/validationErrorMessages'
 import { validationMixin } from 'vuelidate'
 import * as validators from 'vuelidate/lib/validators'
 import { helpers } from 'vuelidate/lib/validators'
-const isPhone = helpers.regex(
-  'isPhone',
-  /((?:\+|00)[17](?: |-)?|(?:\+|00)[1-9]\d{0,2}(?: |-)?|(?:\+|00)1-\d{3}(?: |-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |-)[0-9]{3}(?: |-)[0-9]{4})|([0-9]{7}))/g
-)
 // import scrollTo from '@/mixins/scrollTo'
 
 export default {
@@ -341,47 +337,77 @@ export default {
             break
           }
         }
-
+        // console.log('form validating', validity)
         this.validate(validity)
       }
     },
-    fields(curr) {
-      const processedCurr = curr.reduce((prevFields, inputField) => {
-        if (inputField.group) {
-          return {
-            ...prevFields,
-            [inputField.group]: inputField.fields.reduce(
-              (prevFields, inputField) => {
-                return {
-                  ...prevFields,
-                  [inputField.name]: inputField.value,
-                }
-              },
-              {}
-            ),
+    fields: {
+      deep: true,
+      handler(curr) {
+        const processedCurr = curr.reduce((prevFields, inputField) => {
+          if (inputField.group) {
+            return {
+              ...prevFields,
+              [inputField.group]: inputField.fields.reduce(
+                (prevFields, inputField) => {
+                  return {
+                    ...prevFields,
+                    [inputField.name]: inputField.value,
+                  }
+                },
+                {}
+              ),
+            }
+          } else {
+            return {
+              ...prevFields,
+              [inputField.name]: inputField.value,
+            }
           }
-        } else {
-          return {
-            ...prevFields,
-            [inputField.name]: inputField.value,
+        }, {})
+        for (const key in processedCurr) {
+          if (
+            Object.hasOwnProperty.call(processedCurr, key) &&
+            !Object.hasOwnProperty.call(this.formData[this.formName], key)
+          ) {
+            this.formData[this.formName][key] = processedCurr[key]
+            // console.log(key, processedCurr[key])
           }
         }
-      }, {})
-      for (const key in processedCurr) {
-        if (
-          Object.hasOwnProperty.call(processedCurr, key) &&
-          !Object.hasOwnProperty.call(this.formData[this.formName], key)
-        ) {
-          this.formData[this.formName][key] = processedCurr[key]
-          // console.log(key, processedCurr[key])
-        }
-      }
+        this.recomputeFormData()
+      },
     },
   },
   mounted() {
     this.$emit('input', this.formData[this.formName])
   },
   methods: {
+    recomputeFormData() {
+      this.formData = {
+        [this.formName]: this.fields.reduce((prevFields, inputField) => {
+          if (inputField.group) {
+            return {
+              ...prevFields,
+              [inputField.group]: inputField.fields.reduce(
+                (prevFields, inputField) => {
+                  return {
+                    ...prevFields,
+                    [inputField.name]: inputField.value,
+                  }
+                },
+                {}
+              ),
+            }
+          } else {
+            return {
+              ...prevFields,
+              [inputField.name]: inputField.value,
+            }
+          }
+        }, {}),
+      }
+      this.$emit('input', this.formData[this.formName])
+    },
     generateFieldRules(fieldValidators) {
       return fieldValidators.reduce(
         (prevValidators, validator) => ({
@@ -494,7 +520,10 @@ export default {
           ...this.fieldRules,
           phone: {
             required: validators.required,
-            isPhone,
+            // isPhone: helpers.regex(
+            //   'isPhone',
+            //   /((?:\+|00)[17](?: |-)?|(?:\+|00)[1-9]\d{0,2}(?: |-)?|(?:\+|00)1-\d{3}(?: |-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |-)[0-9]{3}(?: |-)[0-9]{4})|([0-9]{7}))/g
+            // ),
           },
           adminPass: {
             required: validators.required,
