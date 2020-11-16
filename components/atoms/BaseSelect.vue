@@ -8,7 +8,7 @@
       class="absolute top-0 bottom-0 left-0 mt-1 ml-2"
     ></BaseLoading>
     <select
-      :id="id"
+      :id="fieldId"
       v-model="localValue"
       class="w-full leading-none bg-transparent outline-none"
       :class="[inputClassList, { 'pl-10': loading }]"
@@ -71,7 +71,7 @@ export default {
       default: false,
     },
     /** id attribute for select */
-    id: String,
+    fieldId: String,
     /** name attribute for select */
     name: String,
     loading: Boolean,
@@ -85,6 +85,11 @@ export default {
     return {
       localValue: this.value,
     }
+  },
+  watch: {
+    value(curr) {
+      this.localValue = curr
+    },
   },
 }
 </script>

@@ -9,6 +9,7 @@
       class="px-8 py-20 bg-no-repeat bg-contain w-72 sm:w-96"
     ></BaseCreateEventIntro>
     <BaseCreateEventForm
+      :banks="banks"
       class="w-full px-3 sm:px-0 sm:w-9/12 sm:m-auto md:w-7/12 lg:w-5/12"
     ></BaseCreateEventForm>
   </div>
@@ -23,6 +24,24 @@
 export default {
   metaInfo: {
     title: 'Create Event',
+  },
+  asyncData({ error }) {
+    try {
+      return fetch('https://api.paystack.co/bank')
+        .then((res) => {
+          return res.json().then((val) => {
+            return val.data.reduce((prev, curr) => {
+              const { name: label, code } = curr
+              return [...prev, { label, value: `${code}_${label}` }]
+            }, [])
+          })
+        })
+        .then((banks) => {
+          return { banks }
+        })
+    } catch (err) {
+      throw (error, err)
+    }
   },
   // data() {
   //   return {}

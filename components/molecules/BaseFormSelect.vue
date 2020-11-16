@@ -34,7 +34,7 @@
 
     <div>
       <BaseSelect
-        :id="id"
+        :field-id="fieldId"
         :value="value"
         :disabled="disabled"
         :empty-value-label="emptyValueLabel"
@@ -62,6 +62,7 @@ export default {
   name: 'BaseFormSelect',
   props: {
     /** Label text for the field */
+    fieldId: String,
     label: String,
     /** Available options for the select. A single option format is: { label: String, value: String, disabled: Boolean } */
     options: {

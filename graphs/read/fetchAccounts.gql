@@ -1,0 +1,11 @@
+query fetchAccounts($authId: String!) {
+  user(query: { authId: $authId }) {
+    accounts {
+      _id
+      accountName
+      accountNumber
+      bankName
+      bankCode
+    }
+  }
+}

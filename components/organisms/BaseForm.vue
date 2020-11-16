@@ -248,27 +248,29 @@ export default {
   data() {
     return {
       formData: {
-        [this.formName]: this.fields.reduce((prevFields, inputField) => {
-          if (inputField.group) {
-            return {
-              ...prevFields,
-              [inputField.group]: inputField.fields.reduce(
-                (prevFields, inputField) => {
-                  return {
-                    ...prevFields,
-                    [inputField.name]: inputField.value,
-                  }
-                },
-                {}
-              ),
+        [this.formName]: this.fields
+          .filter((v) => v.visible === undefined || v.visible)
+          .reduce((prevFields, inputField) => {
+            if (inputField.group) {
+              return {
+                ...prevFields,
+                [inputField.group]: inputField.fields.reduce(
+                  (prevFields, inputField) => {
+                    return {
+                      ...prevFields,
+                      [inputField.name]: inputField.value,
+                    }
+                  },
+                  {}
+                ),
+              }
+            } else {
+              return {
+                ...prevFields,
+                [inputField.name]: inputField.value,
+              }
             }
-          } else {
-            return {
-              ...prevFields,
-              [inputField.name]: inputField.value,
-            }
-          }
-        }, {}),
+          }, {}),
       },
     }
   },
@@ -297,29 +299,31 @@ export default {
         })
     },
     fieldRules() {
-      return this.fields.reduce((prevFields, inputField) => {
-        if (inputField.group) {
-          return {
-            ...prevFields,
-            [inputField.group]: inputField.fields.reduce(
-              (prevFields, inputField) => {
-                return {
-                  ...prevFields,
-                  [inputField.name]: this.generateFieldRules(
-                    inputField.validators
-                  ),
-                }
-              },
-              {}
-            ),
+      return this.fields
+        .filter((v) => v.visible === undefined || v.visible)
+        .reduce((prevFields, inputField) => {
+          if (inputField.group) {
+            return {
+              ...prevFields,
+              [inputField.group]: inputField.fields.reduce(
+                (prevFields, inputField) => {
+                  return {
+                    ...prevFields,
+                    [inputField.name]: this.generateFieldRules(
+                      inputField.validators
+                    ),
+                  }
+                },
+                {}
+              ),
+            }
+          } else {
+            return {
+              ...prevFields,
+              [inputField.name]: this.generateFieldRules(inputField.validators),
+            }
           }
-        } else {
-          return {
-            ...prevFields,
-            [inputField.name]: this.generateFieldRules(inputField.validators),
-          }
-        }
-      }, {})
+        }, {})
     },
   },
   watch: {
@@ -406,7 +410,8 @@ export default {
           }
         }, {}),
       }
-      this.$emit('input', this.formData[this.formName])
+      // TODO: I removed emission from here
+      // this.$emit('input', this.formData[this.formName])
     },
     generateFieldRules(fieldValidators) {
       return fieldValidators.reduce(
@@ -549,7 +554,6 @@ export default {
           tickets_1: {
             ...this.fieldRules.tickets_1,
             ticketPrice: {
-              required: validators.required,
               validPrice: validators.or(
                 helpers.regex('isFree', /free/i),
                 validators.integer && validators.minValue(100)
@@ -559,7 +563,6 @@ export default {
           tickets_2: {
             ...this.fieldRules.tickets_2,
             ticketPrice: {
-              required: validators.required,
               validPrice: validators.or(
                 helpers.regex('isFree', /free/i),
                 validators.integer && validators.minValue(100)
@@ -569,7 +572,6 @@ export default {
           tickets_3: {
             ...this.fieldRules.tickets_3,
             ticketPrice: {
-              required: validators.required,
               validPrice: validators.or(
                 helpers.regex('isFree', /free/i),
                 validators.integer && validators.minValue(100)
@@ -579,7 +581,6 @@ export default {
           tickets_4: {
             ...this.fieldRules.tickets_4,
             ticketPrice: {
-              required: validators.required,
               validPrice: validators.or(
                 helpers.regex('isFree', /free/i),
                 validators.integer && validators.minValue(100)
@@ -589,7 +590,6 @@ export default {
           tickets_5: {
             ...this.fieldRules.tickets_5,
             ticketPrice: {
-              required: validators.required,
               validPrice: validators.or(
                 helpers.regex('isFree', /free/i),
                 validators.integer && validators.minValue(100)

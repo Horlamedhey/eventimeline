@@ -42,34 +42,41 @@
         ></BaseArrowRightIcon>
       </BaseButton>
     </div>
+    <client-only>
+      <BaseBankAccountDialog
+        :bank-account-dialog="bankAccountDialog"
+        :close-bank-account-dialog="() => (bankAccountDialog = false)"
+        :bank-accounts="bankAccounts"
+        :loading="loadingAccounts"
+        @selectedData="processChoice"
+      ></BaseBankAccountDialog>
+    </client-only>
   </div>
 </template>
 
 <script>
+import fetchAccounts from '@/graphs/read/fetchAccounts'
 import formsAnimationMixin from '~/mixins/formsAnimationMixin'
 export default {
   name: 'BaseEventPaymentDetails',
   mixins: [formsAnimationMixin],
-  // TODO: convert fetch to method
+  props: {
+    banks: {
+      type: Array,
+      default: () => [],
+    },
+  },
   fetch() {
     const bankField = this.fields.find((v) => v.name === 'bankName')
-    this.$axios
-      .$get('https://api.paystack.co/bank')
-      .then((res) => {
-        // console.log(res)
-        const banks = res.data.reduce((prev, curr) => {
-          const { name: label, code: value } = curr
-          return [...prev, { label, value }]
-        }, [])
-        bankField.options = banks
-      })
-      .then(() => {
-        bankField.loading = false
-      })
+    bankField.options = this.banks
   },
-  fetchOnServer: false,
+  // fetchOnServer: false,
   data() {
     return {
+      loadingAccounts: false,
+      bankAccountDialog: false,
+      sortedChoices: false,
+      bankAccounts: [],
       formName: 'paymentDetails',
       fields: [
         {
@@ -143,10 +150,7 @@ export default {
               classList: 'w-full md:w-4/12 sm:pr-4',
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-              validators: [
-                { component: 'required' },
-                { component: 'minLength', param: 3 },
-              ],
+              validators: [{ component: 'minLength', param: 3 }],
               value: '',
             },
             {
@@ -159,7 +163,6 @@ export default {
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
               validators: [
-                { component: 'required' },
                 { component: 'integer' },
                 { component: 'minValue', param: 5 },
               ],
@@ -199,10 +202,7 @@ export default {
               classList: 'w-full md:w-4/12 sm:pr-4',
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-              validators: [
-                { component: 'required' },
-                { component: 'minLength', param: 3 },
-              ],
+              validators: [{ component: 'minLength', param: 3 }],
               value: '',
             },
             {
@@ -215,7 +215,6 @@ export default {
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
               validators: [
-                { component: 'required' },
                 { component: 'integer' },
                 { component: 'minValue', param: 5 },
               ],
@@ -255,10 +254,7 @@ export default {
               classList: 'w-full md:w-4/12 sm:pr-4',
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-              validators: [
-                { component: 'required' },
-                { component: 'minLength', param: 3 },
-              ],
+              validators: [{ component: 'minLength', param: 3 }],
               value: '',
             },
             {
@@ -271,7 +267,6 @@ export default {
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
               validators: [
-                { component: 'required' },
                 { component: 'integer' },
                 { component: 'minValue', param: 5 },
               ],
@@ -311,10 +306,7 @@ export default {
               classList: 'w-full md:w-4/12 sm:pr-4',
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-              validators: [
-                { component: 'required' },
-                { component: 'minLength', param: 3 },
-              ],
+              validators: [{ component: 'minLength', param: 3 }],
               value: '',
             },
             {
@@ -327,7 +319,6 @@ export default {
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
               validators: [
-                { component: 'required' },
                 { component: 'integer' },
                 { component: 'minValue', param: 5 },
               ],
@@ -367,10 +358,7 @@ export default {
               classList: 'w-full md:w-4/12 sm:pr-4',
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-              validators: [
-                { component: 'required' },
-                { component: 'minLength', param: 3 },
-              ],
+              validators: [{ component: 'minLength', param: 3 }],
               value: '',
             },
             {
@@ -383,7 +371,6 @@ export default {
               inputClassList:
                 'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
               validators: [
-                { component: 'required' },
                 { component: 'integer' },
                 { component: 'minValue', param: 5 },
               ],
@@ -411,9 +398,10 @@ export default {
         {
           component: 'BaseFormSelect',
           name: 'bankName',
+          fieldId: 'bankName',
           options: [],
           label: 'SELECT BANK',
-          loading: true,
+          // loading: true,
           classList: 'w-full mt-8',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
@@ -460,31 +448,47 @@ export default {
           ],
           value: '',
         },
-        {
-          component: 'BaseFormText',
-          name: 'bvn',
-          type: 'password',
-          label: 'Bank Verification Number (BVN)',
-          autocomplete: 'on',
-          classList: 'mt-8 w-full',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          extraInfoClassList: 'sm:w-56 w-48 sm:ml-8 -ml-40 sm:mt-0 mt-5',
-          extraInfo: 'This is to prevent fraud on our platform. You’re safe.',
-          loading: false,
-          validators: [
-            { component: 'required' },
-            { component: 'numeric' },
-            { component: 'minLength', param: 11 },
-            { component: 'maxLength', param: 11 },
-          ],
-          value: '',
-        },
+        // {
+        //   component: 'BaseFormText',
+        //   name: 'bvn',
+        //   type: 'password',
+        //   label: 'Bank Verification Number (BVN)',
+        //   autocomplete: 'on',
+        //   classList: 'mt-8 w-full',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+        //   extraInfoClassList: 'sm:w-56 w-48 sm:ml-8 -ml-40 sm:mt-0 mt-5',
+        //   extraInfo: 'This is to prevent fraud on our platform. You’re safe.',
+        //   loading: false,
+        //   validators: [
+        //     { component: 'required' },
+        //     { component: 'numeric' },
+        //     { component: 'minLength', param: 11 },
+        //     { component: 'maxLength', param: 11 },
+        //   ],
+        //   value: '',
+        //   visible: true,
+        // },
       ],
     }
   },
+  watch: {
+    currentForm(curr, prev) {
+      if (
+        curr === this.position &&
+        this.$realmApp.currentUser.customData.accounts !== undefined &&
+        this.$realmApp.currentUser.customData.accounts.length > 0 &&
+        !this.sortedChoices
+      ) {
+        this.loadingAccounts = true
+        this.bankAccountDialog = true
+        this.fetchBankAccounts()
+      }
+    },
+  },
   methods: {
     getAccountName(accountNumber) {
+      console.log('me')
       return new Promise((resolve) => {
         const accountNameField = this.fields.find(
           (v) => v.name === 'accountName'
@@ -495,8 +499,10 @@ export default {
           accountNameField.value.length > 0 &&
           !accountNameField.error
         ) {
+          console.log('me1')
           resolve({ value: accountNameField.value, fieldToMod: 'accountName' })
         } else {
+          console.log('me2')
           accountNameField.loading = true
           this.$axios.onRequest((config) => {
             config.headers.common.Authorization =
@@ -506,7 +512,9 @@ export default {
           this.$axios
             .$get(
               `https://api.paystack.co/bank/resolve?account_number=${accountNumber}&bank_code=${
-                this.fields.find((v) => v.name === 'bankName').value
+                this.fields
+                  .find((v) => v.name === 'bankName')
+                  .value.split('_')[0]
               }`
             )
             .then((res) => {
@@ -525,6 +533,7 @@ export default {
         }
       })
     },
+    // TODO: Test dynamic addition of ticket
     incrementGroup(groupName) {
       const lastGroup = this.fields.find(
         (v) => v.group && v.group === groupName
@@ -573,6 +582,34 @@ export default {
       }
       arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0])
       return arr
+    },
+    async fetchBankAccounts() {
+      try {
+        const {
+          data: {
+            user: { accounts },
+          },
+        } = await this.$apolloClient.query({
+          query: fetchAccounts,
+          variables: { authId: this.$realmApp.currentUser.customData.authId },
+        })
+        this.bankAccounts = accounts.map((v) => ({ ...v, selected: false }))
+        this.loadingAccounts = false
+      } catch (err) {
+        console.log(err.message)
+      }
+    },
+    processChoice(choice) {
+      this.bankAccountDialog = false
+      this.fields.find(
+        (v) => v.name === 'bankName'
+      ).value = `${choice.bankCode}_${choice.bankName}`
+      this.fields.find((v) => v.name === 'accountNumber').value =
+        choice.accountNumber
+      this.fields.find((v) => v.name === 'accountName').value =
+        choice.accountName
+      // this.fields.find((v) => v.name === 'bvn').visible = false
+      this.sortedChoices = true
     },
   },
 }

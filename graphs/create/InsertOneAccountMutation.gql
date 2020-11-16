@@ -2,6 +2,7 @@ mutation insertOneAccount(
   $accountName: String!
   $accountNumber: String!
   $bankName: String!
+  $bankCode: String!
   $createdAt: DateTime!
   $updatedAt: DateTime!
 ) {
@@ -10,6 +11,7 @@ mutation insertOneAccount(
       accountName: $accountName
       accountNumber: $accountNumber
       bankName: $bankName
+      bankCode: $bankCode
       createdAt: $createdAt
       updatedAt: $updatedAt
     }

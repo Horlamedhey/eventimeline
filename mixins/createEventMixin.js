@@ -3,10 +3,12 @@ import assert from 'assert'
 // import gql from 'graphql-tag'
 import InsertOneUserMutation from '@/graphs/create/InsertOneUserMutation'
 import UpdateOneUserMutation from '@/graphs/update/UpdateOneUserMutation'
+import UpdateOneUserMutationWithAccounts from '@/graphs/update/UpdateOneUserMutationWithAccounts'
 import InsertOneEventMutation from '@/graphs/create/InsertOneEventMutation'
 import InsertOneAccountMutation from '@/graphs/create/InsertOneAccountMutation'
 import fetchAccount from '@/graphs/read/fetchAccount'
 import getColorContrast from '@/helpers/getColorContrast'
+import getArrayEquality from '@/helpers/arrayEqualityChecker'
 
 export default {
   methods: {
@@ -36,15 +38,23 @@ export default {
 
       for (let i = 0; i < tickets.length; i++) {
         const ticket = tickets[i]
-        ticket.quantitySold = 0
-        ticket.currency = 'naira'
         if (
-          typeof ticket.ticketPrice === 'string' &&
-          ticket.ticketPrice.toLowerCase() === 'free'
+          ticket.maxAvailable === null ||
+          ticket.ticketType === '' ||
+          isNaN(ticket.ticketPrice)
         ) {
-          ticket.ticketPrice = 0
+          tickets.splice(i, 1)
         } else {
-          ticket.ticketPrice = parseInt(ticket.ticketPrice)
+          ticket.quantitySold = 0
+          ticket.currency = 'naira'
+          if (
+            typeof ticket.ticketPrice === 'string' &&
+            ticket.ticketPrice.toLowerCase() === 'free'
+          ) {
+            ticket.ticketPrice = 0
+          } else {
+            ticket.ticketPrice = parseInt(ticket.ticketPrice)
+          }
         }
       }
       //   extract event imae an color
@@ -56,7 +66,12 @@ export default {
         user: {
           id: authId,
           accessToken,
-          customData: { accounts, events },
+          customData: {
+            name: existingName,
+            phone: existingPhone,
+            accounts,
+            events,
+          },
         },
       } = this.authUser
 
@@ -72,7 +87,8 @@ export default {
       const accountVariables = {
         accountName,
         accountNumber,
-        bankName,
+        bankName: bankName.split('_')[1],
+        bankCode: bankName.split('_')[0],
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -112,15 +128,15 @@ export default {
 
       // create user mutation variables
       const userVariables = {
-        organiserName,
-        phone,
+        organiserName:
+          organiserName !== existingName ? organiserName : undefined,
+        phone: phone !== existingPhone ? phone : undefined,
         authId,
         bankAccounts: allAccounts,
         events: [newEventId, ...allEvents],
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-
       try {
         //   create/update user
         if (newUser) {
@@ -130,7 +146,17 @@ export default {
           })
         } else {
           await this.$apolloClient.mutate({
-            mutation: UpdateOneUserMutation,
+            mutation:
+              accounts.length !== allAccounts.length ||
+              !(
+                accounts.length === allAccounts.length &&
+                (await getArrayEquality(
+                  accounts.map((v) => v.$oid),
+                  allAccounts
+                ))
+              )
+                ? UpdateOneUserMutationWithAccounts
+                : UpdateOneUserMutation,
             variables: userVariables,
           })
         }

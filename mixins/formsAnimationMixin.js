@@ -59,23 +59,40 @@ export default {
   },
   methods: {
     setValues(values, unStandardForm) {
-      // TODO: Set object values such as ticket prices
       if (!unStandardForm) {
-        this.fields.forEach((v) => {
-          v.value = values[v.name]
+        this.fields.forEach((u) => {
+          if (u.fields !== undefined) {
+            u.fields.forEach((v) => {
+              if (values[u.group] !== undefined) {
+                v.value = values[u.group][v.name]
+              }
+            })
+          } else {
+            u.value = values[u.name]
+          }
         })
       }
       this.prevValues = { ...this.currValues }
       this.currValues = { ...values }
-      if (
-        this.prevValues.bankName !== undefined &&
-        this.prevValues.bankName.length === 0 &&
-        this.currValues.bankName.length > 0
-      ) {
-        this.fields.find((v) => v.name === 'accountNumber').disabled = false
-        this.fields.find(
-          (v) => v.name === 'accountNumber'
-        ).placeholder = undefined
+      if (this.currentForm === 3) {
+        if (
+          this.prevValues.bankName !== undefined &&
+          this.prevValues.bankName.length === 0 &&
+          this.currValues.bankName.length > 0
+        ) {
+          this.fields.find((v) => v.name === 'accountNumber').disabled = false
+          this.fields.find(
+            (v) => v.name === 'accountNumber'
+          ).placeholder = undefined
+        }
+        // if (
+        //   this.sortedChoices &&
+        //   (this.currValues.bankName !== this.prevValues.bankName ||
+        //     this.currValues.accountNumber !== this.prev.accountNumber)
+        // ) {
+        //   console.log('me')
+        //   this.fields.find((v) => v.name === 'accountName').value = ''
+        // }
       }
     },
     // validateBeforeNext(arg) {

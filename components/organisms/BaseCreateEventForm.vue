@@ -16,6 +16,7 @@
       :position="3"
       :current-form="currentForm"
       :set-current-form="setCurrentForm"
+      :banks="banks"
       class="absolute top-0 z-0 opacity-0"
     ></BaseEventPaymentDetails>
     <BaseEventThirdPartyArtisans
@@ -41,6 +42,12 @@ import createEventMixin from '@/mixins/createEventMixin'
 export default {
   name: 'BaseCreateEventForm',
   mixins: [createEventMixin],
+  props: {
+    banks: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       loading: false,

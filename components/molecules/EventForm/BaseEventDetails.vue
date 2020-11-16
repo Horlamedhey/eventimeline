@@ -102,7 +102,7 @@ export default {
           multiName: 'eventProvisions',
           name: 'eventProvisions1',
           type: 'text',
-          label: 'PROVISIONS e.g. Security...',
+          label: 'PROVISIONS e.g. Security... (OPTIONAL)',
           incremental: true,
           classList: 'mt-8 w-full',
           inputClassList:
