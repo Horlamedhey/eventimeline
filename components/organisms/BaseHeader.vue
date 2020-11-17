@@ -57,24 +57,23 @@
           </BaseButton>
 
           <BaseNavItem
-            class="ml-1 text-xs sm:text-sm font-inter"
-            content-class="flex items-center px-2 py-1 text-gray-500 transition-colors duration-500 ease-in-out rounded hover:text-black hover:bg-gray-200 focus:outline-none active:bg-gray-400"
+            to="/my-events"
+            class="ml-1 text-xs sm:text-sm font-inter text-accent"
+            content-class=" hover:bg-accent nav-item-content hover:text-white"
           >
-            <span> Help </span>
+            <span class="font-semibold"> My Events </span>
 
-            <BaseChevronDownIcon
-              class="inline-block w-4 h-4"
-            ></BaseChevronDownIcon>
+            <BaseEventsIcon class="inline-block w-4 h-4 ml-1"></BaseEventsIcon>
           </BaseNavItem>
           <BaseNavItem
             to="/create-event"
             class="text-xs sm:text-sm font-inter text-primary"
-            content-class="flex items-center px-2 py-1 whitespace-no-wrap transition-colors duration-500 ease-in-out rounded hover:bg-primary hover:text-white"
+            content-class="hover:bg-primary nav-item-content hover:text-white"
           >
             <span class="font-semibold">Create Event</span>
 
             <BaseAddIcon
-              class="inline-block w-5 h-5"
+              class="inline-block w-5 h-5 ml-1"
               stroke-width="2.5"
             ></BaseAddIcon>
           </BaseNavItem>
@@ -99,3 +98,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.nav-item-content {
+  @apply flex items-center px-2 py-1 whitespace-no-wrap transition-colors duration-500 ease-in-out rounded;
+}
+</style>

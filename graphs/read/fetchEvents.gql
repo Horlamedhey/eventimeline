@@ -1,8 +1,8 @@
-query fetchEvents($route: Boolean!) {
+query fetchEvents($eventsRoute: Boolean!) {
   events(sortBy: CREATEDAT_DESC) {
     _id
     eventTitle
-    eventDescription @include(if: $route)
+    eventDescription @include(if: $eventsRoute)
     cheapestTicket {
       ticketPrice
     }

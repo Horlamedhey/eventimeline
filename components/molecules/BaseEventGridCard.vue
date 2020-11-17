@@ -20,7 +20,10 @@
             <cld-placeholder type="blur"> </cld-placeholder>
           </cld-image>
         </client-only>
-        <BaseButton class="absolute top-0 right-0 mt-20 mr-5 text-white">
+        <BaseButton
+          v-if="!isMyEvents"
+          class="absolute top-0 right-0 mt-20 mr-5 text-white"
+        >
           <BaseHeartIcon fill="#ffc510"></BaseHeartIcon>
         </BaseButton>
         <div
@@ -33,19 +36,33 @@
         </div>
       </div>
       <div class="flex justify-between px-2 mt-1">
-        <p class="text-sm font-inter text-black-700">
+        <p
+          v-if="event.cheapestTicket"
+          class="text-sm font-inter text-black-700"
+        >
           {{
             event.cheapestTicket.ticketPrice
               ? `N ${event.cheapestTicket.ticketPrice}`
               : 'FREE'
           }}
         </p>
+        <BaseButton
+          v-if="isMyEvents"
+          :to="`/event/${event._id}/dashboard`"
+          class="text-sm underline font-inter text-black-700 text-primary"
+        >
+          Go to dashboard
+        </BaseButton>
         <p class="text-sm font-inter text-black-700">
           {{ event.eventDate | formatShortEventDate }}
         </p>
       </div>
       <div class="top-0 z-0 mt-6 event-status lg:px-3">
         {{ event.soldOut ? 'SOLD OUT' : 'STILL SELLING' }}
+      </div>
+      <!-- TODO: Compute event role -->
+      <div v-if="isMyEvents" class="top-0 z-0 mt-16 event-status lg:px-3">
+        <p class="text-sm font-inter text-black-700">Organiser</p>
       </div>
       <BaseCheckIcon
         v-if="event.isProvisions"
@@ -62,6 +79,10 @@ export default {
     event: {
       type: Object,
       default: () => {},
+    },
+    isMyEvents: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {},

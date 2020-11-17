@@ -6,7 +6,9 @@ export default {
         data: { events },
       } = await app.$apolloClient.query({
         query: fetchEvents,
-        variables: { route: route.name === 'events' },
+        variables: {
+          eventsRoute: route.name === 'events',
+        },
       })
 
       return {

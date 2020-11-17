@@ -17,6 +17,7 @@
         v-for="event in events"
         :key="event.id"
         :event="event"
+        :is-my-events="isMyEvents"
         class="w-full px-2 mb-10 lg:w-10/12 xl:w-6/12 xl:px-8"
       ></BaseEventListCard>
     </div>
@@ -27,6 +28,10 @@
 export default {
   name: 'BaseListEventCardsSection',
   props: {
+    isMyEvents: {
+      type: Boolean,
+      default: false,
+    },
     events: {
       type: Array,
       default: () => [],

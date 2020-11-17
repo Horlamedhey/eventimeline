@@ -38,6 +38,12 @@
         >
           Organise event and ticketing
         </BaseButton>
+        <BaseButton
+          to="/create-event"
+          class="px-5 py-2 mt-3 top-event-buttons md:mt-5 event-buttons bg-primary-light focus:outline-none hover:bg-opacity-75"
+        >
+          Provide a service
+        </BaseButton>
       </div>
     </div>
     <!--  -->

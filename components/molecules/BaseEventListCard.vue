@@ -42,16 +42,32 @@
           <p class="text-xs my-truncate">
             {{ event.eventDescription }}
           </p>
-          <p class="text-lg font-bold font-quicksand text-black-300">
+          <p
+            v-if="event.cheapestTicket"
+            class="text-lg font-bold font-quicksand text-black-300"
+          >
             {{
               event.cheapestTicket.ticketPrice
                 ? `N ${event.cheapestTicket.ticketPrice}`
                 : 'FREE'
             }}
           </p>
+          <BaseButton
+            v-if="isMyEvents"
+            :to="`/event/${event._id}/dashboard`"
+            class="mt-2 text-sm underline font-inter text-black-700 text-primary"
+          >
+            Go to dashboard
+          </BaseButton>
         </div>
-        <div class="flex flex-col justify-between">
-          <BaseButton>
+        <div class="flex flex-col items-end justify-between">
+          <p
+            v-if="isMyEvents"
+            class="text-lg font-bold font-quicksand text-black-300"
+          >
+            Organiser
+          </p>
+          <BaseButton v-else>
             <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>
           </BaseButton>
 
@@ -72,6 +88,10 @@ export default {
     event: {
       type: Object,
       default: () => {},
+    },
+    isMyEvents: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {},

@@ -1,0 +1,22 @@
+query fetchMyEvents($authId: String!) {
+  events(
+    sortBy: CREATEDAT_DESC
+    query: {
+      OR: [
+        { organiser: { authId: $authId } }
+        { agents_in: { authId: $authId } }
+        { thirdParties_in: { authId: $authId } }
+      ]
+    }
+  ) {
+    _id
+    eventTitle
+    eventDescription
+    isProvisions
+    eventDate
+    eventImage
+    color
+    textColor
+    soldOut
+  }
+}
