@@ -62,7 +62,7 @@
       </div>
       <!-- TODO: Compute event role -->
       <div v-if="isMyEvents" class="top-0 z-0 mt-16 event-status lg:px-3">
-        <p class="text-sm font-inter text-black-700">Organiser</p>
+        <p class="text-sm font-inter text-black-700">{{ event.role }}</p>
       </div>
       <BaseCheckIcon
         v-if="event.isProvisions"

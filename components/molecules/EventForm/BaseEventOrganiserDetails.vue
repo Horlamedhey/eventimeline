@@ -47,7 +47,7 @@
 
     <BaseIncorrectPassword
       :incorrect-password="incorrectPassword"
-      :close-incorrect-password="() => (incorrectPassword = false)"
+      @closeIncorrectPassword="() => (incorrectPassword = false)"
     ></BaseIncorrectPassword>
 
     <BaseNewDataDialog

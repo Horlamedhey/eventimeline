@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex items-center justify-between px-2 py-3 header sm:px-11 sm:py-5"
+    class="relative flex items-center justify-between px-2 py-3 header sm:px-11 sm:py-5"
   >
     <div class="w-auto">
       <div class="hidden md:block">
@@ -57,14 +57,20 @@
           </BaseButton>
 
           <BaseNavItem
-            to="/my-events"
-            class="ml-1 text-xs sm:text-sm font-inter text-accent"
+            class="relative ml-1 text-xs sm:text-sm font-inter text-accent"
             content-class=" hover:bg-accent nav-item-content hover:text-white"
+            @click="gotoMyEvents"
           >
             <span class="font-semibold"> My Events </span>
 
             <BaseEventsIcon class="inline-block w-4 h-4 ml-1"></BaseEventsIcon>
+            <BaseTriangleIcon
+              id="loginFormDirectionIcon"
+              class="absolute top-0 right-0 mt-6 mr-12 text-accent"
+              style="opacity: 0"
+            ></BaseTriangleIcon>
           </BaseNavItem>
+
           <BaseNavItem
             to="/create-event"
             class="text-xs sm:text-sm font-inter text-primary"
@@ -80,6 +86,10 @@
         </ul>
       </nav>
     </div>
+    <BaseLoginMenu
+      :login-open="loginOpen"
+      @closeLogin="loginOpen = false"
+    ></BaseLoginMenu>
   </header>
 </template>
 
@@ -88,13 +98,51 @@ export default {
   name: 'BaseHeader',
   data() {
     return {
-      // menuIsOpen: false,
+      loginOpen: false,
+      timeline: null,
     }
   },
+  watch: {
+    loginOpen(curr) {
+      const loginFormDirectionIcon = document.getElementById(
+        'loginFormDirectionIcon'
+      )
+      if (curr) {
+        this.timeline.fromTo(
+          loginFormDirectionIcon,
+          {
+            opacity: 0,
+          },
+          { opacity: 1, duration: 0.5, delay: 1, ease: 'Power1.out' }
+        )
+      } else {
+        this.timeline.fromTo(
+          loginFormDirectionIcon,
+          { opacity: 1 },
+          {
+            opacity: 0,
+            duration: 0.5,
+            ease: 'Power1.out',
+          }
+        )
+      }
+    },
+  },
+  beforeMount() {
+    this.timeline = this.$gsap.timeline()
+  },
   methods: {
-    // toggleMenu() {
-    //   this.menuIsOpen = !this.menuIsOpen;
-    // },
+    gotoMyEvents() {
+      // eslint-disable-next-line eqeqeq
+      if (Object.keys(this.$realmApp.currentUser.customData).length === 0) {
+        this.openLogin()
+      } else {
+        this.$router.push('/my-events')
+      }
+    },
+    openLogin() {
+      this.loginOpen = true
+    },
   },
 }
 </script>

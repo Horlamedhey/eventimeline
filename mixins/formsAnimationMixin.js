@@ -1,4 +1,6 @@
+import setFormValues from '@/mixins/setFormValues'
 export default {
+  mixins: [setFormValues],
   props: {
     position: {
       type: Number,
@@ -20,8 +22,6 @@ export default {
     return {
       completed: false,
       timeline: null,
-      prevValues: {},
-      currValues: {},
       processedCurrValues: {},
     }
   },
@@ -58,22 +58,7 @@ export default {
     this.timeline = this.$gsap.timeline()
   },
   methods: {
-    setValues(values, unStandardForm) {
-      if (!unStandardForm) {
-        this.fields.forEach((u) => {
-          if (u.fields !== undefined) {
-            u.fields.forEach((v) => {
-              if (values[u.group] !== undefined) {
-                v.value = values[u.group][v.name]
-              }
-            })
-          } else {
-            u.value = values[u.name]
-          }
-        })
-      }
-      this.prevValues = { ...this.currValues }
-      this.currValues = { ...values }
+    advanceSet(values, unStandardForm) {
       if (this.currentForm === 3) {
         if (
           this.prevValues.bankName !== undefined &&

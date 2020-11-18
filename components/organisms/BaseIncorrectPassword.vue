@@ -1,27 +1,34 @@
 <template>
   <div
     ref="sideBarOverlay"
-    class="absolute top-0 bottom-0 left-0 right-0 flex justify-end -mt-4 -mb-4 -ml-10 -mr-4 bg-transparent opacity-0 -z-1"
+    class="absolute top-0 bottom-0 left-0 right-0 flex justify-end bg-transparent opacity-0 -z-1"
   >
     <div
       ref="centerMenu"
-      class="relative px-16 py-6 m-auto transform scale-0 bg-white rounded-lg shadow-lg opacity-0"
+      class="relative px-12 py-6 m-auto transform scale-0 bg-white rounded-lg shadow-lg opacity-0"
+      style="width: 95%; max-width: 350px"
       @click.stop=""
     >
       <BaseButton
         class="absolute top-0 right-0 mt-2 mr-2 sm:rounded-full focus:outline-none"
-        @click="closeIncorrectPassword"
+        @click="$emit('closeIncorrectPassword')"
       >
         <BaseCloseIcon class="text-primary-lighter"></BaseCloseIcon>
       </BaseButton>
-      <p
-        style="width: 300px; height: 150px"
-        class="flex items-center font-medium"
-      >
-        Account already exists, but password is incorrect, please input the
-        correct password to continue.
+      <p class="flex items-center w-full h-full font-medium">
+        <span v-if="incorrectEmail">
+          Account does not exist or your password is incorrect, please check
+          your input and try again to continue.
+        </span>
+        <span v-else>
+          Account already exists, but password is incorrect, please input the
+          correct password to continue.
+        </span>
       </p>
-      <BaseButton to="/" class="font-medium cursor-pointer text-error">
+      <BaseButton
+        to="/"
+        class="inline-block mt-2 font-medium cursor-pointer text-error"
+      >
         Forgot password?
       </BaseButton>
     </div>
@@ -35,10 +42,11 @@ export default {
     incorrectPassword: {
       type: Boolean,
       default: false,
+      required: true,
     },
-    closeIncorrectPassword: {
-      type: Function,
-      default: () => {},
+    incorrectEmail: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

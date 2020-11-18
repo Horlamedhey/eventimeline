@@ -65,7 +65,7 @@
             v-if="isMyEvents"
             class="text-lg font-bold font-quicksand text-black-300"
           >
-            Organiser
+            {{ event.role }}
           </p>
           <BaseButton v-else>
             <BaseHeartIcon class="text-white" fill="#ea218d"></BaseHeartIcon>

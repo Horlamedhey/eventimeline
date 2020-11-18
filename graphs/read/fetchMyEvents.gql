@@ -18,5 +18,14 @@ query fetchMyEvents($authId: String!) {
     color
     textColor
     soldOut
+    organiser {
+      authId
+    }
+    agents {
+      authId
+    }
+    thirdParties {
+      authId
+    }
   }
 }

@@ -100,4 +100,21 @@ export default {
       required: "Please enter agent's ID",
     },
   },
+  loginDetails: {
+    email: {
+      required: 'Please enter your email',
+      email: 'Your email is not in the correct format',
+    },
+    password: {
+      required: 'Please enter a password',
+      minLength: 'Password needs to be at least 8 character long',
+      containsUppercase:
+        'Password needs to contain at least one upper case character',
+      containsLowercase:
+        'Password needs to contain at least one lower case character',
+      containsNumber: 'Password needs to contain at least one number',
+      containsSpecial:
+        'Password needs to contain at least one special character. !@#$%&*()',
+    },
+  },
 }

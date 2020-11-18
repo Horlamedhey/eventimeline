@@ -247,6 +247,14 @@ export default {
   },
   data() {
     return {
+      passwordValidations: {
+        required: validators.required,
+        minLength: validators.minLength(8),
+        containsUppercase: helpers.regex('containsUppercase', /[A-Z]/),
+        containsLowercase: helpers.regex('containsUppercase', /[a-z]/),
+        containsNumber: helpers.regex('containsUppercase', /[0-9]/),
+        containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
+      },
       formData: {
         [this.formName]: this.fields
           .filter((v) => v.visible === undefined || v.visible)
@@ -530,14 +538,7 @@ export default {
             //   /((?:\+|00)[17](?: |-)?|(?:\+|00)[1-9]\d{0,2}(?: |-)?|(?:\+|00)1-\d{3}(?: |-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |-)[0-9]{3}(?: |-)[0-9]{4})|([0-9]{7}))/g
             // ),
           },
-          adminPass: {
-            required: validators.required,
-            minLength: validators.minLength(8),
-            containsUppercase: helpers.regex('containsUppercase', /[A-Z]/),
-            containsLowercase: helpers.regex('containsUppercase', /[a-z]/),
-            containsNumber: helpers.regex('containsUppercase', /[0-9]/),
-            containsSpecial: helpers.regex('containsUppercase', /[#?!@$%^&*-]/),
-          },
+          adminPass: this.passwordValidations,
         },
         paymentDetails: {
           ...this.fieldRules,
@@ -596,6 +597,10 @@ export default {
               ),
             },
           },
+        },
+        loginDetails: {
+          ...this.fieldRules,
+          password: this.passwordValidations,
         },
       },
     }
