@@ -44,6 +44,10 @@
     </div>
     <client-only>
       <BaseBankAccountDialog
+        v-if="
+          $realmApp.currentUser &&
+          $realmApp.currentUser.customData.accounts !== undefined
+        "
         :bank-account-dialog="bankAccountDialog"
         :close-bank-account-dialog="() => (bankAccountDialog = false)"
         :bank-accounts="bankAccounts"

@@ -97,7 +97,7 @@ export default {
           {
             zIndex: -1,
           },
-          { zIndex: 1 }
+          { zIndex: 4 }
         )
         this.timeline.fromTo(
           this.$refs.loginMenu,
@@ -110,7 +110,7 @@ export default {
       } else {
         this.timeline.fromTo(
           this.$refs.loginMenu,
-          { opacity: 1, zIndex: 1, y: 0 },
+          { opacity: 1, zIndex: 4, y: 0 },
           {
             opacity: 0,
             zIndex: -1,
