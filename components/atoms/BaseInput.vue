@@ -34,6 +34,7 @@
         :class="[
           inputClassList,
           {
+            'pr-10': appendInner !== null,
             'pl-12': inputType === 'search',
             'pl-10': loading,
             'pl-6':

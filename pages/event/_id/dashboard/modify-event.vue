@@ -50,7 +50,6 @@
 <script>
 export default {
   name: 'ModifyEvent',
-  layout: 'dashboard',
   head() {
     return {
       script: [{ src: 'https://widget.cloudinary.com/v2.0/global/all.js' }],

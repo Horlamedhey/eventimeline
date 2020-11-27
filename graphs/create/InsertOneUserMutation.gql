@@ -1,5 +1,6 @@
 mutation insertOneUser(
   $organiserName: String!
+  $email: String!
   $phone: String!
   $authId: String!
   $bankAccounts: [ObjectId]!
@@ -10,6 +11,7 @@ mutation insertOneUser(
   insertOneUser(
     data: {
       name: $organiserName
+      email: $email
       phone: $phone
       authId: $authId
       accounts: { link: $bankAccounts }

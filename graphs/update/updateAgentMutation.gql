@@ -1,0 +1,18 @@
+mutation updateOneEvent(
+  $agents: [EventAgentUpdateInput]!
+  $eventId: ObjectId!
+  $updatedAt: DateTime!
+) {
+  updateOneEvent(
+    query: { _id: $eventId }
+    set: { agents: $agents, updatedAt: $updatedAt }
+  ) {
+    agents {
+      email
+      agentId
+      agentInfo {
+        name
+      }
+    }
+  }
+}

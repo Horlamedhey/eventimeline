@@ -21,13 +21,20 @@
       <div class="mt-10">
         <BaseForm
           v-if="createAgent"
+          form-name="agentForm"
           :fields="fields"
+          :completed="completed"
+          :validate="validate"
           @input="setValues"
         ></BaseForm>
         <BaseButton
           class="w-full py-3 mt-8 text-lg font-medium text-white rounded ripple-bg-accent2"
+          type="button"
+          :class="loading ? 'cursor-wait' : ''"
+          @click="loading ? null : (completed = true)"
         >
-          Create Agent
+          <BaseLoading v-if="loading"></BaseLoading>
+          <span v-else> Create Agent </span>
         </BaseButton>
       </div>
     </div>
@@ -35,8 +42,12 @@
 </template>
 
 <script>
+import * as Realm from 'realm-web'
+import fetchUser from '@/graphs/read/fetchUser'
+import updateAgentMutation from '@/graphs/update/updateAgentMutation'
+import InsertOneUserMutation from '@/graphs/create/InsertOneUserMutation'
 export default {
-  name: 'BaseCraeteAgent',
+  name: 'BaseCreateAgent',
   props: {
     createAgent: {
       type: Boolean,
@@ -46,23 +57,26 @@ export default {
       type: Function,
       default: () => {},
     },
+    agents: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
+      loading: false,
+      completed: false,
       fields: [
         {
           component: 'BaseFormText',
-          name: 'agentName',
+          name: 'agentEmail',
           type: 'text',
-          placeholder: "Agent's Name",
+          label: "Agent's Email",
           autocomplete: 'on',
           classList: 'w-full',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-4 rounded font-medium w-full py-6 text-lg',
-          validators: [
-            { component: 'required' },
-            { component: 'minLength', param: 3 },
-          ],
+          validators: [{ component: 'required' }, { component: 'email' }],
           value: '',
         },
         {
@@ -74,7 +88,7 @@ export default {
           appendInner: () =>
             import('~/components/atoms/icons/BaseClipboardIcon'),
           appendInnerAction: 'copyValue',
-          placeholder: "Agent's ID",
+          label: "Agent's ID",
           classList: 'w-full mt-8',
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-4 rounded font-medium w-full py-6 text-lg',
@@ -87,9 +101,7 @@ export default {
   watch: {
     createAgent(curr) {
       if (curr) {
-        this.fields[1].value = `${
-          this.$route.params.id
-        }-${this.generateUniqueString()}`
+        this.fields[1].value = `ET@${this.generateUniqueString()}`
         const timeline = this.$gsap.timeline()
         timeline.to(this.$refs.sideBarOverlay, {
           zIndex: 0,
@@ -158,6 +170,106 @@ export default {
         .then(() => {
           this.fields[1].disabled = true
         })
+    },
+    validate(isValid) {
+      if (isValid) {
+        this.loading = true
+        this.addAgent()
+      } else this.completed = false
+    },
+    async addAgent() {
+      try {
+        // register
+        await this.$realmApp.emailPasswordAuth.registerUser(
+          this.fields[0].value.toLowerCase(),
+          this.fields[1].value
+        )
+        const credentials = Realm.Credentials.emailPassword(
+          this.fields[0].value.toLowerCase(),
+          this.fields[1].value
+        )
+        const user = await this.$realmApp.logIn(credentials)
+        const userVariables = {
+          organiserName: this.fields[0].value.split('.')[0],
+          phone: '',
+          bankAccounts: [],
+          email: this.fields[0].value.toLowerCase(),
+          authId: user.id,
+          events: [this.$route.params.id],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+        await this.$apolloClient.mutate({
+          mutation: InsertOneUserMutation,
+          variables: userVariables,
+        })
+        await this.$realmApp.currentUser.logOut()
+        const {
+          data: {
+            updateOneEvent: { agents },
+          },
+        } = await this.$apolloClient.mutate({
+          mutation: updateAgentMutation,
+          variables: {
+            agents: [
+              {
+                email: this.fields[0].value.toLowerCase(),
+                agentId: this.fields[1].value,
+              },
+              ...(this.agents || []).map((v) => ({
+                email: v.email,
+                agentId: v.agentId,
+              })),
+            ],
+            eventId: this.$route.params.id,
+            updatedAt: new Date(),
+          },
+        })
+
+        this.$emit('updatedAgents', agents)
+        this.fields[0].value = ''
+      } catch (err) {
+        console.log(err.message)
+        if (err.message.toLowerCase().includes('name already in use')) {
+          // login
+          try {
+            const {
+              data: {
+                user: { email },
+              },
+            } = await this.$apolloClient.query({
+              query: fetchUser,
+              variables: { email: this.fields[0].value.toLowerCase() },
+            })
+            const {
+              data: {
+                updateOneEvent: { agents },
+              },
+            } = await this.$apolloClient.mutate({
+              mutation: updateAgentMutation,
+              variables: {
+                agents: [
+                  { email, agentId: this.fields[1].value },
+                  ...(this.agents || []).map((v) => ({
+                    email: v.email,
+                    agentId: v.agentId,
+                  })),
+                ],
+                eventId: this.$route.params.id,
+                updatedAt: new Date(),
+              },
+            })
+
+            this.$emit('updatedAgents', agents)
+            this.fields[0].value = ''
+          } catch (err) {
+            console.error(err.message)
+          } finally {
+            this.loading = false
+            this.completed = false
+          }
+        }
+      }
     },
   },
 }

@@ -598,6 +598,7 @@ export default {
             },
           },
         },
+        agentForm: this.fieldRules,
         loginDetails: {
           ...this.fieldRules,
           password: this.passwordValidations,

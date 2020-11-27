@@ -28,7 +28,8 @@ export default {
         organiserDetails: {
           organiserName,
           phone,
-          // email, adminPass
+          email,
+          // adminPass
         },
         paymentDetails: { accountName, accountNumber, bankName, tickets },
         thirdPartyArtisans: thirdPartyPerks,
@@ -130,6 +131,7 @@ export default {
       const userVariables = {
         organiserName:
           organiserName !== existingName ? organiserName : undefined,
+        email,
         phone: phone !== existingPhone ? phone : undefined,
         authId,
         bankAccounts: allAccounts,

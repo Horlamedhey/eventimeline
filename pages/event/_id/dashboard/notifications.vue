@@ -22,7 +22,6 @@
 <script>
 export default {
   name: 'Notifications',
-  layout: 'dashboard',
   data() {
     return {
       notifications: [

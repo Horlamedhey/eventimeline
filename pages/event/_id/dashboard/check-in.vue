@@ -29,7 +29,6 @@
 import ticketTableMixin from '~/mixins/ticketTableMixin'
 export default {
   name: 'CheckIn',
-  layout: 'dashboard',
   mixins: [ticketTableMixin],
   data() {
     return {

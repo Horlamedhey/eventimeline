@@ -100,6 +100,15 @@ export default {
       required: "Please enter agent's ID",
     },
   },
+  agentForm: {
+    agentEmail: {
+      required: "Please enter agent's email",
+      email: 'Email is not in the correct format',
+    },
+    agentId: {
+      required: "Please enter agent's ID",
+    },
+  },
   loginDetails: {
     email: {
       required: 'Please enter your email',

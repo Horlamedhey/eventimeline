@@ -1,0 +1,31 @@
+query fetchAdminEvent($eventId: ObjectId!) {
+  event(query: { _id: $eventId }) {
+    _id
+    eventTitle
+    eventDescription
+    organiser {
+      email
+    }
+    tickets {
+      ticketType
+      ticketPrice
+      maxAvailable
+      quantitySold
+    }
+    eventProvisions
+    eventLocation
+    eventDate
+    eventImage
+    agents {
+      email
+      agentId
+      agentInfo {
+        name
+      }
+    }
+    thirdParties {
+      email
+    }
+    createdAt
+  }
+}

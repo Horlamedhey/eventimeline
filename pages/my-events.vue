@@ -8,7 +8,7 @@
 
 <script>
 import fetchMyEvents from '@/graphs/read/fetchMyEvents'
-// import basicMixins from '~/mixins/pagesBasicMixins.js'
+import computeRole from '~/helpers/computeRole.js'
 export default {
   metaInfo: {
     title: 'My Events',
@@ -19,7 +19,7 @@ export default {
         data: { events },
       } = await this.$apolloClient.query({
         query: fetchMyEvents,
-        variables: { authId: this.$realmApp.currentUser.customData.authId },
+        variables: { email: this.$realmApp.currentUser.customData.email },
       })
 
       this.events = events
@@ -36,20 +36,9 @@ export default {
   computed: {
     formattedEvents() {
       if (!this.$fetchState.pending) {
-        const authId = this.$realmApp.currentUser.customData.authId
+        const email = this.$realmApp.currentUser.customData.email
         return this.events.map((u) => {
-          if (u.organiser && u.organiser.authId === authId) u.role = 'Organiser'
-          else if (
-            u.agents.length > 0 &&
-            u.agents.find((v) => v.authId === authId) !== undefined
-          )
-            u.role = 'Agent'
-          else if (
-            u.thirdParties.length > 0 &&
-            u.thirdParties.find((v) => v.authId === authId) !== undefined
-          )
-            u.role = 'ThirdParty'
-          return u
+          return computeRole(u, email)
         })
       } else return []
     },

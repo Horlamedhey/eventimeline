@@ -1,0 +1,6 @@
+query fetchUser($email: String!) {
+  user(query: { email: $email }) {
+    email
+    name
+  }
+}

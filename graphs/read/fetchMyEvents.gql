@@ -1,11 +1,11 @@
-query fetchMyEvents($authId: String!) {
+query fetchMyEvents($email: String!) {
   events(
     sortBy: CREATEDAT_DESC
     query: {
       OR: [
-        { organiser: { authId: $authId } }
-        { agents_in: { authId: $authId } }
-        { thirdParties_in: { authId: $authId } }
+        { organiser: { email: $email } }
+        { agents_in: { email: $email } }
+        { thirdParties_in: { email: $email } }
       ]
     }
   ) {
@@ -19,13 +19,13 @@ query fetchMyEvents($authId: String!) {
     textColor
     soldOut
     organiser {
-      authId
+      email
     }
     agents {
-      authId
+      email
     }
     thirdParties {
-      authId
+      email
     }
   }
 }

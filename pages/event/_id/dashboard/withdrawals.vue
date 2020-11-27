@@ -60,7 +60,6 @@
 <script>
 export default {
   name: 'Withdrawals',
-  layout: 'dashboard',
   data() {
     return {
       noHistory: false,

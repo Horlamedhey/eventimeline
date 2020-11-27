@@ -40,7 +40,7 @@
         </n-link>
       </div>
     </div>
-    <h2 class="text-primary">Organiser</h2>
+    <h2 class="text-primary">{{ $store.state.dashboardRole }}</h2>
   </header>
 </template>
 

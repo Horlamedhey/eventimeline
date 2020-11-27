@@ -3,11 +3,15 @@
     <BaseCreateAgent
       :create-agent="createAgent"
       :close-create-agent="() => (createAgent = false)"
+      :agents="event.agents"
+      @updatedAgents="updatedAgents"
     ></BaseCreateAgent>
     <BaseActOnAgent
       :act-on-agent="actOnAgent"
-      :close-act-on-agent="() => (actOnAgent = false)"
-      :copy-link="copyLink"
+      :loading="loading"
+      @close="() => (actOnAgent = false)"
+      @copyLink="copyLink"
+      @deleteAgent="deleteAgent"
     ></BaseActOnAgent>
     <BaseButton
       class="block px-6 py-2 ml-auto text-xl font-medium text-center rounded-lg ripple-bg-dashboard-accent text-dashboard-accent-variant"
@@ -32,33 +36,33 @@
 </template>
 
 <script>
+import updateAgentMutation from '@/graphs/update/updateAgentMutation'
 export default {
   name: 'Agents',
-  layout: 'dashboard',
+  props: {
+    event: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
+      loading: false,
       createAgent: false,
       actOnAgent: false,
       noAgents: false,
       activeTableItem: null,
       tableHeads: ['Agent name', 'Unique ID', 'Sold', 'Qty.', ''],
-      tableBody: [
-        {
-          name: 'Item 7',
-          uniqueId: 'eventID-s7hnhe7h4',
-          sold: '$6000',
-          quantity: '14',
-        },
-        {
-          name: 'Kokobar',
-          uniqueId: 'eventID-74dj7nhr7',
-          sold: '$4500',
-          quantity: '12',
-        },
-      ],
+      tableBody: [],
     }
   },
+  mounted() {
+    this.tableBody = this.formatAgents(this.event.agents)
+  },
   methods: {
+    dome() {
+      console.log(this.$realmApp.currentUser)
+    },
     takeAction(index) {
       this.activeTableItem = index
       this.actOnAgent = true
@@ -66,7 +70,7 @@ export default {
     copyLink() {
       const copyText = document.createElement('input')
       new Promise((resolve) => {
-        copyText.value = this.tableBody[this.activeTableItem].uniqueId
+        copyText.value = this.tableBody[this.activeTableItem].agentId
         copyText.style.top = '0'
         copyText.style.left = '0'
         copyText.style.position = 'fixed'
@@ -85,6 +89,52 @@ export default {
         this.activeTableItem = null
         document.body.removeChild(copyText)
       })
+    },
+    updatedAgents(agents) {
+      this.createAgent = false
+      this.$emit('agents', agents)
+      this.tableBody = this.formatAgents(agents)
+    },
+    formatAgents(agents) {
+      return agents.map((v) => {
+        const {
+          agentId,
+          agentInfo: { name },
+        } = v
+        return { name, agentId, sold: '$0', quantity: '0' }
+      })
+    },
+    async deleteAgent() {
+      // TODO: Delete event from deleted agent account and add event to already existing user account for agent
+      this.loading = true
+      // this.tableBody
+      try {
+        const myAgents = [...this.event.agents]
+        myAgents.splice(this.activeTableItem, 1)
+        const {
+          data: {
+            updateOneEvent: { agents },
+          },
+        } = await this.$apolloClient.mutate({
+          mutation: updateAgentMutation,
+          variables: {
+            agents: myAgents.map((v) => ({
+              email: v.email,
+              agentId: v.agentId,
+            })),
+
+            eventId: this.$route.params.id,
+            updatedAt: new Date(),
+          },
+        })
+        this.tableBody.splice(this.activeTableItem, 1)
+        this.$emit('agents', agents)
+        this.loading = false
+        this.actOnAgent = false
+        this.activeTableItem = null
+      } catch (err) {
+        console.log(err)
+      }
     },
   },
 }
