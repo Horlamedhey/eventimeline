@@ -1,53 +1,54 @@
 <template>
   <div
-    ref="overlay"
-    class="absolute top-0 bottom-0 left-0 right-0 flex justify-end opacity-0 -z-1 bg-black-200"
-    @click="$emit('close')"
+    ref="sideBarOverlay"
+    class="absolute top-0 bottom-0 left-0 right-0 flex justify-end bg-transparent opacity-0 -z-1"
   >
     <div
       ref="centerMenu"
-      class="relative px-10 py-6 m-auto transform scale-0 bg-white rounded-lg opacity-0"
+      class="relative px-12 py-6 m-auto transform scale-0 bg-white rounded-lg shadow-lg opacity-0"
       style="width: 95%; max-width: 350px"
       @click.stop=""
     >
-      <p>{{ confirmationMessage }}</p>
-      <div class="flex justify-between px-20 mt-4">
-        <BaseButton class="font-bold text-success" @click="$emit('close')">
-          No
-        </BaseButton>
-        <BaseButton class="font-bold text-error" @click="$emit('confirm')">
-          Yes
-        </BaseButton>
-      </div>
+      <BaseButton
+        class="absolute top-0 right-0 mt-2 mr-2 sm:rounded-full focus:outline-none"
+        @click="$emit('close')"
+      >
+        <BaseCloseIcon class="text-primary-lighter"></BaseCloseIcon>
+      </BaseButton>
+
+      <slot></slot>
+      <BaseButton
+        class="block m-auto mt-2 font-bold text-primary-lighter"
+        @click="$emit('close')"
+      >
+        Ok
+      </BaseButton>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'BaseConfirmationDialog',
+  name: 'BaseInfoDialog',
   props: {
-    confirmationDialog: {
+    infoDialog: {
       type: Boolean,
       default: false,
-    },
-    confirmationMessage: {
-      type: String,
-      default: '',
+      required: true,
     },
   },
   data() {
     return {}
   },
   watch: {
-    confirmationDialog(curr) {
+    infoDialog(curr) {
       if (curr) {
         const timeline = this.$gsap.timeline()
-        timeline.to(this.$refs.overlay, {
-          zIndex: 10,
+        timeline.to(this.$refs.sideBarOverlay, {
+          zIndex: 1,
           duration: 0.2,
         })
-        timeline.to(this.$refs.overlay, {
+        timeline.to(this.$refs.sideBarOverlay, {
           opacity: 1,
           duration: 0.3,
           ease: 'power1.out',
@@ -70,7 +71,7 @@ export default {
           duration: 0.5,
           ease: 'power1.out',
         })
-        timeline.to(this.$refs.overlay, {
+        timeline.to(this.$refs.sideBarOverlay, {
           zIndex: -1,
           opacity: 0,
           duration: 0.3,
@@ -82,3 +83,9 @@ export default {
   methods: {},
 }
 </script>
+
+<style lang="scss">
+.action-button {
+  @apply block w-56 py-2 mt-8 text-lg font-medium text-white rounded;
+}
+</style>

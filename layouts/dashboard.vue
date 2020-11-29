@@ -41,29 +41,32 @@ export default {
           to: `/event/${eventId}/dashboard/`,
         },
         {
-          label: 'Agents',
-          icon: () => import('@/components/atoms/icons/BaseUsersIcon'),
-          to: `/event/${eventId}/dashboard/agents`,
-        },
-        {
-          label: 'Withdrawals',
-          icon: () => import('@/components/atoms/icons/BaseCreditCardIcon'),
-          to: `/event/${eventId}/dashboard/withdrawals`,
-        },
-        {
           label: 'Check In',
           icon: () => import('@/components/atoms/icons/BaseCheckIcon'),
           to: `/event/${eventId}/dashboard/check-in`,
         },
         {
-          label: 'Notifications',
-          icon: () => import('@/components/atoms/icons/BaseBellIcon'),
-          to: `/event/${eventId}/dashboard/notifications`,
+          label: 'Withdrawals',
+          icon: () => import('@/components/atoms/icons/BaseCreditCardIcon'),
+          to: `/event/${eventId}/dashboard/withdrawals`,
+          show: this.$store.state.dashboardRole === 'Organiser',
+        },
+        {
+          label: 'Agents',
+          icon: () => import('@/components/atoms/icons/BaseUsersIcon'),
+          to: `/event/${eventId}/dashboard/agents`,
+          show: this.$store.state.dashboardRole === 'Organiser',
         },
         {
           label: 'Modify Event',
           icon: () => import('@/components/atoms/icons/BaseSettingsIcon'),
           to: `/event/${eventId}/dashboard/modify-event`,
+          show: this.$store.state.dashboardRole === 'Organiser',
+        },
+        {
+          label: 'Notifications',
+          icon: () => import('@/components/atoms/icons/BaseBellIcon'),
+          to: `/event/${eventId}/dashboard/notifications`,
         },
       ]
     },

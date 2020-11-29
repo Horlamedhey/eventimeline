@@ -1,16 +1,19 @@
-query fetchEvents($eventsRoute: Boolean!) {
-  events(sortBy: CREATEDAT_DESC) {
-    _id
-    eventTitle
-    eventDescription @include(if: $eventsRoute)
-    cheapestTicket {
-      ticketPrice
+query fetchEvents($eventsRoute: Boolean!, $lastId: String) {
+  PaginatedEvents(input: $lastId) {
+    count
+    events {
+      _id
+      eventTitle
+      eventDescription @include(if: $eventsRoute)
+      cheapestTicket {
+        ticketPrice
+      }
+      isProvisions
+      eventDate
+      eventImage
+      color
+      textColor
+      soldOut
     }
-    isProvisions
-    eventDate
-    eventImage
-    color
-    textColor
-    soldOut
   }
 }

@@ -1,6 +1,6 @@
 export default (event, email) => {
   // console.log(event, email)
-  if (event.organiser && event.organiser.email === email)
+  if (event.organiser && event.organiser === email)
     return { ...event, role: 'Organiser' }
   else if (
     event.agents &&
@@ -9,6 +9,7 @@ export default (event, email) => {
   )
     return { ...event, role: 'Agent' }
   else if (
+    event.thirdParties &&
     event.thirdParties.length > 0 &&
     event.thirdParties.find((v) => v.email === email) !== undefined
   )

@@ -3,7 +3,9 @@ export default {
   async asyncData({ app, route }) {
     try {
       const {
-        data: { events },
+        data: {
+          PaginatedEvents: { events },
+        },
       } = await app.$apolloClient.query({
         query: fetchEvents,
         variables: {

@@ -83,6 +83,20 @@
               stroke-width="2.5"
             ></BaseAddIcon>
           </BaseNavItem>
+          <client-only>
+            <BaseNavItem
+              v-if="showLogout"
+              class="text-xs sm:text-sm font-inter text-error"
+              content-class="hover:bg-error nav-item-content hover:text-white"
+              @click="logoutConfirmation = true"
+            >
+              <span class="font-semibold">Logout</span>
+
+              <BaseLogoutIcon
+                class="inline-block w-5 h-5 ml-1"
+              ></BaseLogoutIcon>
+            </BaseNavItem>
+          </client-only>
         </ul>
       </nav>
     </div>
@@ -90,15 +104,25 @@
       :login-open="loginOpen"
       @closeLogin="loginOpen = false"
     ></BaseLoginMenu>
+
+    <BaseConfirmationDialog
+      :confirmation-dialog="logoutConfirmation"
+      confirmation-message="Are you sure you want to logout?"
+      style="position: fixed"
+      @close="logoutConfirmation = false"
+      @confirm="logout"
+    ></BaseConfirmationDialog>
   </header>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'BaseHeader',
   data() {
     return {
       loginOpen: false,
+      logoutConfirmation: false,
       timeline: null,
     }
   },
@@ -130,11 +154,17 @@ export default {
   },
   beforeMount() {
     this.timeline = this.$gsap.timeline()
+    this.$store.commit(
+      'setShowLogout',
+      this.$realmApp.currentUser.customData.email !== 'admin@eventimeline.com'
+    )
   },
   methods: {
     gotoMyEvents() {
       // eslint-disable-next-line eqeqeq
-      if (Object.keys(this.$realmApp.currentUser.customData).length === 0) {
+      if (
+        this.$realmApp.currentUser.customData.email === 'admin@eventimeline.com'
+      ) {
         this.openLogin()
       } else {
         this.$router.push('/my-events')
@@ -143,6 +173,19 @@ export default {
     openLogin() {
       this.loginOpen = true
     },
+    logout() {
+      // if (
+      //   this.$realmApp.currentUser.customData.email !== 'admin@eventimeline.com'
+      // ) {
+      this.logoutConfirmation = false
+      this.$realmApp.currentUser.logOut()
+      this.$router.replace('/')
+      this.$store.commit('setShowLogout', false)
+      // }
+    },
+  },
+  computed: {
+    ...mapState(['showLogout']),
   },
 }
 </script>

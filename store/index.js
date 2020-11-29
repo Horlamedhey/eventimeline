@@ -8,6 +8,7 @@ export const state = () => ({
   hydrated: false,
   footerHeight: null,
   dashboardRole: null,
+  showLogout: false,
 })
 
 export const mutations = {
@@ -19,6 +20,9 @@ export const mutations = {
   },
   setDashboardRole(state, val) {
     state.dashboardRole = val
+  },
+  setShowLogout(state, val) {
+    state.showLogout = val
   },
 }
 

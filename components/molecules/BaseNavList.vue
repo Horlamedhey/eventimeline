@@ -1,26 +1,29 @@
 <template>
   <ul v-if="items.length" :class="[classes]">
-    <BaseNavItem
-      v-for="item in items"
-      :key="item.label"
-      :to="item.to"
-      :href="item.href"
-      :icon="item.icon"
-      :active="item.active"
-      :indicator="indicator"
-      :pointer-key="item.pointerKey"
-      :pointer-value="item.pointerValue"
-      :content-class="contentClass"
-      :active-content-class="activeContentClass"
-      :content-container-class="contentContainerClass"
-      :active-content-container-class="activeContentContainerClass"
-      :active-class="activeClass"
-      :add-on-after="addOnAfter"
-      :active-addon-class="activeAddonClass"
-      :add-on-class="addOnClass"
-      @click="handleClick"
-      >{{ item.label }}</BaseNavItem
-    >
+    <template v-for="item in items">
+      <BaseNavItem
+        v-if="item.show === undefined || item.show"
+        :key="item.label"
+        :to="item.to"
+        :href="item.href"
+        :icon="item.icon"
+        :active="item.active"
+        :indicator="indicator"
+        :pointer-key="item.pointerKey"
+        :pointer-value="item.pointerValue"
+        :content-class="contentClass"
+        :active-content-class="activeContentClass"
+        :content-container-class="contentContainerClass"
+        :active-content-container-class="activeContentContainerClass"
+        :active-class="activeClass"
+        :add-on-after="addOnAfter"
+        :active-addon-class="activeAddonClass"
+        :add-on-class="addOnClass"
+        @click="handleClick"
+      >
+        {{ item.label }}
+      </BaseNavItem>
+    </template>
   </ul>
 </template>
 

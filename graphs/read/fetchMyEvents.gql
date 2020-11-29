@@ -1,31 +1,24 @@
-query fetchMyEvents($email: String!) {
-  events(
-    sortBy: CREATEDAT_DESC
-    query: {
-      OR: [
-        { organiser: { email: $email } }
-        { agents_in: { email: $email } }
-        { thirdParties_in: { email: $email } }
-      ]
-    }
-  ) {
-    _id
-    eventTitle
-    eventDescription
-    isProvisions
-    eventDate
-    eventImage
-    color
-    textColor
-    soldOut
-    organiser {
-      email
-    }
-    agents {
-      email
-    }
-    thirdParties {
-      email
+query fetchMyEvents($email: String!, $lastId: String) {
+  MyPaginatedEvents(input: { lastId: $lastId, email: $email }) {
+    moddedListedEvents
+    count
+    events {
+      _id
+      eventTitle
+      eventDescription
+      isProvisions
+      eventDate
+      eventImage
+      color
+      textColor
+      soldOut
+      organiser
+      agents {
+        email
+      }
+      # thirdParties {
+      #   email
+      # }
     }
   }
 }

@@ -16,18 +16,22 @@ export default {
   async fetch() {
     try {
       const {
-        data: { events },
+        data: {
+          MyPaginatedEvents: { events, moddedListedEvents },
+        },
       } = await this.$apolloClient.query({
         query: fetchMyEvents,
         variables: { email: this.$realmApp.currentUser.customData.email },
       })
 
       this.events = events
+      if (moddedListedEvents) {
+        this.$realmApp.currentUser.refreshCustomData()
+      }
     } catch (error) {
       console.log('meeeee', error)
     }
   },
-  fetchOnServer: false,
   data() {
     return {
       events: [],
@@ -43,5 +47,9 @@ export default {
       } else return []
     },
   },
+  // mounted() {
+  //   console.log(this.$realmApp.currentUser.customData)
+  // },
+  fetchOnServer: false,
 }
 </script>

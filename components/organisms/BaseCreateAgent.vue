@@ -37,6 +37,16 @@
           <span v-else> Create Agent </span>
         </BaseButton>
       </div>
+
+      <BaseInfoDialog
+        :info-dialog="infoDialog"
+        @close="() => (infoDialog = false)"
+      >
+        <p class="flex items-center w-full h-full font-medium text-error">
+          Sorry dear ORGANISER, you cannot add yourself as an agent to this
+          event.
+        </p>
+      </BaseInfoDialog>
     </div>
   </div>
 </template>
@@ -66,6 +76,7 @@ export default {
     return {
       loading: false,
       completed: false,
+      infoDialog: false,
       fields: [
         {
           component: 'BaseFormText',
@@ -178,95 +189,104 @@ export default {
       } else this.completed = false
     },
     async addAgent() {
-      try {
-        // register
-        await this.$realmApp.emailPasswordAuth.registerUser(
-          this.fields[0].value.toLowerCase(),
-          this.fields[1].value
-        )
-        const credentials = Realm.Credentials.emailPassword(
-          this.fields[0].value.toLowerCase(),
-          this.fields[1].value
-        )
-        const user = await this.$realmApp.logIn(credentials)
-        const userVariables = {
-          organiserName: this.fields[0].value.split('.')[0],
-          phone: '',
-          bankAccounts: [],
-          email: this.fields[0].value.toLowerCase(),
-          authId: user.id,
-          events: [this.$route.params.id],
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }
-        await this.$apolloClient.mutate({
-          mutation: InsertOneUserMutation,
-          variables: userVariables,
-        })
-        await this.$realmApp.currentUser.logOut()
-        const {
-          data: {
-            updateOneEvent: { agents },
-          },
-        } = await this.$apolloClient.mutate({
-          mutation: updateAgentMutation,
-          variables: {
-            agents: [
-              {
-                email: this.fields[0].value.toLowerCase(),
-                agentId: this.fields[1].value,
-              },
-              ...(this.agents || []).map((v) => ({
-                email: v.email,
-                agentId: v.agentId,
-              })),
-            ],
-            eventId: this.$route.params.id,
+      if (
+        this.fields[0].value.toLowerCase() ===
+        this.$realmApp.currentUser.customData.email
+      ) {
+        this.loading = false
+        this.completed = false
+        this.infoDialog = true
+      } else {
+        try {
+          // register
+          await this.$realmApp.emailPasswordAuth.registerUser(
+            this.fields[0].value.toLowerCase(),
+            this.fields[1].value
+          )
+          const credentials = Realm.Credentials.emailPassword(
+            this.fields[0].value.toLowerCase(),
+            this.fields[1].value
+          )
+          const user = await this.$realmApp.logIn(credentials)
+          const userVariables = {
+            organiserName: this.fields[0].value.split('.')[0],
+            phone: '',
+            bankAccounts: [],
+            email: this.fields[0].value.toLowerCase(),
+            authId: user.id,
+            events: [this.$route.params.id],
+            createdAt: new Date(),
             updatedAt: new Date(),
-          },
-        })
+          }
+          await this.$apolloClient.mutate({
+            mutation: InsertOneUserMutation,
+            variables: userVariables,
+          })
+          await this.$realmApp.currentUser.logOut()
+          const {
+            data: {
+              updateOneEvent: { agents },
+            },
+          } = await this.$apolloClient.mutate({
+            mutation: updateAgentMutation,
+            variables: {
+              agents: [
+                {
+                  email: this.fields[0].value.toLowerCase(),
+                  agentId: this.fields[1].value,
+                },
+                ...(this.agents || []).map((v) => ({
+                  email: v.email,
+                  agentId: v.agentId,
+                })),
+              ],
+              eventId: this.$route.params.id,
+              updatedAt: new Date(),
+            },
+          })
 
-        this.$emit('updatedAgents', agents)
-        this.fields[0].value = ''
-      } catch (err) {
-        console.log(err.message)
-        if (err.message.toLowerCase().includes('name already in use')) {
-          // login
-          try {
-            const {
-              data: {
-                user: { email },
-              },
-            } = await this.$apolloClient.query({
-              query: fetchUser,
-              variables: { email: this.fields[0].value.toLowerCase() },
-            })
-            const {
-              data: {
-                updateOneEvent: { agents },
-              },
-            } = await this.$apolloClient.mutate({
-              mutation: updateAgentMutation,
-              variables: {
-                agents: [
-                  { email, agentId: this.fields[1].value },
-                  ...(this.agents || []).map((v) => ({
-                    email: v.email,
-                    agentId: v.agentId,
-                  })),
-                ],
-                eventId: this.$route.params.id,
-                updatedAt: new Date(),
-              },
-            })
+          this.$emit('updatedAgents', agents)
+          this.fields[0].value = ''
+        } catch (err) {
+          console.log(err.message)
+          if (err.message.toLowerCase().includes('name already in use')) {
+            // login
+            try {
+              const {
+                data: {
+                  user: { email },
+                },
+              } = await this.$apolloClient.query({
+                query: fetchUser,
+                variables: { email: this.fields[0].value.toLowerCase() },
+              })
+              const {
+                data: {
+                  updateOneEvent: { agents },
+                },
+              } = await this.$apolloClient.mutate({
+                mutation: updateAgentMutation,
+                variables: {
+                  agents: [
+                    { email, agentId: this.fields[1].value },
+                    ...(this.agents || []).map((v) => ({
+                      email: v.email,
+                      agentId: v.agentId,
+                    })),
+                  ],
+                  eventId: this.$route.params.id,
+                  updatedAt: new Date(),
+                },
+              })
 
-            this.$emit('updatedAgents', agents)
-            this.fields[0].value = ''
-          } catch (err) {
-            console.error(err.message)
-          } finally {
-            this.loading = false
-            this.completed = false
+              this.$emit('updatedAgents', agents)
+              this.fields[0].value = ''
+            } catch (err) {
+              console.error(err.message)
+            } finally {
+              this.loading = false
+              this.completed = false
+            }
           }
         }
       }

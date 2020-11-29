@@ -96,7 +96,7 @@ export default {
       this.tableBody = this.formatAgents(agents)
     },
     formatAgents(agents) {
-      return agents.map((v) => {
+      return (agents || []).map((v) => {
         const {
           agentId,
           agentInfo: { name },
@@ -105,7 +105,6 @@ export default {
       })
     },
     async deleteAgent() {
-      // TODO: Delete event from deleted agent account and add event to already existing user account for agent
       this.loading = true
       // this.tableBody
       try {

@@ -141,6 +141,7 @@ export default {
       try {
         await this.$realmApp.logIn(credentials)
         this.$emit('closeLogin')
+        this.$store.commit('setShowLogout', true)
         this.$router.push('/my-events')
       } catch (err) {
         this.completed = false
