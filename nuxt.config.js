@@ -57,6 +57,7 @@ export default {
     'plugins/realmAuth.js',
     'plugins/cloudinary',
     'plugins/gsap.client.js',
+    'plugins/paystack.client.js',
     'plugins/nuxt-client-init.client.js',
     // 'plugins/vue-tailwind-date-picker.client.js',
   ],

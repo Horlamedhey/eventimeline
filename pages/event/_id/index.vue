@@ -87,7 +87,7 @@ export default {
         query: fetchEvent,
         variables: { eventId: params.id },
       })
-
+      // console.log(event)
       return {
         event,
       }

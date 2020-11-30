@@ -29,6 +29,13 @@ module.exports = {
         '2-5xl': '1.75rem',
         '3-5xl': '2rem',
         '4-5xl': '2.5rem',
+        'xxs-important': '.625rem !important',
+        'tinier-important': '.813rem !important',
+        'sm-important': '.875rem !important',
+        '1xl-important': '1.375rem !important',
+        '2-5xl-important': '1.75rem !important',
+        '3-5xl-important': '2rem !important',
+        '4-5xl-important': '2.5rem !important',
       },
       colors: {
         primary: {
@@ -98,6 +105,7 @@ module.exports = {
         'gray-variant5': '#909090',
         'gray-variant6': '#fafafa',
         'gray-variant7': '#f8f9fa',
+        'gray-variant8': '#2D3748',
         Photographers: '#9FEFD2',
         'Catering-Service': '#FFDC70',
         DJs: '#FC6CAD',

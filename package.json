@@ -16,13 +16,14 @@
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/pwa": "3.0.0-beta.20",
     "chart.js": "^2.9.4",
-    "vue-chartjs": "^3.5.1"
+    "vue-chartjs": "^3.5.1",
+    "vue-paystack": "^2.0.4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
     "@nuxtjs/eslint-module": "^2.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
-    "@nuxtjs/tailwindcss": "^2.1.0",
+    "@nuxtjs/tailwindcss": "^3.2.0",
     "babel-eslint": "^10.1.0",
     "cloudinary-vue": "^1.1.2",
     "eslint": "^7.5.0",
