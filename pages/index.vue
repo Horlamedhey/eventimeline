@@ -62,6 +62,7 @@ export default {
   metaInfo: {
     title: 'Home',
   },
+  mounted() {},
 }
 </script>
 

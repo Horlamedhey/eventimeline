@@ -102,7 +102,7 @@ export default {
 
       // create event mutation variables
       const eventVariables = {
-        authId,
+        email,
         eventTitle,
         eventDescription,
         eventCategory,
@@ -146,6 +146,7 @@ export default {
             mutation: InsertOneUserMutation,
             variables: userVariables,
           })
+          await this.$realmApp.currentUser.refreshCustomData()
         } else {
           await this.$apolloClient.mutate({
             mutation:

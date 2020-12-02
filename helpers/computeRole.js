@@ -1,6 +1,9 @@
 export default (event, email) => {
   // console.log(event, email)
-  if (event.organiser && event.organiser === email)
+  if (
+    event.organiser &&
+    (event.organiser === email || event.organiser.email === email)
+  )
     return { ...event, role: 'Organiser' }
   else if (
     event.agents &&

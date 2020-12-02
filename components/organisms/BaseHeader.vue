@@ -174,14 +174,20 @@ export default {
       this.loginOpen = true
     },
     logout() {
-      // if (
-      //   this.$realmApp.currentUser.customData.email !== 'admin@eventimeline.com'
-      // ) {
-      this.logoutConfirmation = false
-      this.$realmApp.currentUser.logOut()
-      this.$router.replace('/')
       this.$store.commit('setShowLogout', false)
-      // }
+      this.logoutConfirmation = false
+      for (let i = 0; i < this.$realmApp.allUsers.length; i++) {
+        const user = this.$realmApp.allUsers[i]
+        if (
+          user.state === 'active' &&
+          user.customData.email !== 'admin@eventimeline.com'
+        ) {
+          user.logOut()
+        }
+      }
+      if (this.$route.path !== '/') {
+        this.$router.replace('/')
+      }
     },
   },
   computed: {

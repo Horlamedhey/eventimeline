@@ -10,6 +10,7 @@ export default {
         query: fetchEvents,
         variables: {
           eventsRoute: route.name === 'events',
+          authId: '5f908a893e9c107033bb2932',
         },
       })
 

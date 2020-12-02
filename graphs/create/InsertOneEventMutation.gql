@@ -1,5 +1,5 @@
 mutation insertOneEvent(
-  $authId: String!
+  $email: String!
   $eventTitle: String!
   $eventDescription: String!
   $eventCategory: String!
@@ -32,7 +32,7 @@ mutation insertOneEvent(
       tickets: $tickets
       cheapestTicket: $cheapestTicket
       thirdPartyPerks: $thirdPartyPerks
-      organiser: { link: $authId }
+      organiser: { link: $email }
       soldOut: false
       createdAt: $createdAt
       updatedAt: $updatedAt

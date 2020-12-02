@@ -209,7 +209,7 @@ export default {
           )
           const user = await this.$realmApp.logIn(credentials)
           const userVariables = {
-            organiserName: this.fields[0].value.split('.')[0],
+            organiserName: this.fields[0].value.split('@')[0].split('.')[0],
             phone: '',
             bankAccounts: [],
             email: this.fields[0].value.toLowerCase(),

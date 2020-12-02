@@ -29,7 +29,7 @@
     >
       <BaseEventGridCard
         v-for="event in events"
-        :key="event.id"
+        :key="event._id"
         :event="event"
         :is-my-events="isMyEvents"
         class="w-8/12 mx-2 mb-10 sm:mx-7 md:mx-6 lg:mx-12 sm:w-3/12 lg:w-2/12 xl:w-2/12 xl:mx-10"

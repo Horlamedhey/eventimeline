@@ -1,5 +1,6 @@
 <template>
   <BaseEventsPagesSlot
+    v-if="showLogout"
     :events="formattedEvents"
     :my-events-loading="$fetchState.pending"
     :is-my-events="true"
@@ -7,6 +8,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import fetchMyEvents from '@/graphs/read/fetchMyEvents'
 import computeRole from '~/helpers/computeRole.js'
 export default {
@@ -14,6 +16,7 @@ export default {
     title: 'My Events',
   },
   async fetch() {
+    this.$realmApp.currentUser.refreshCustomData()
     try {
       const {
         data: {
@@ -38,6 +41,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['showLogout']),
     formattedEvents() {
       if (!this.$fetchState.pending) {
         const email = this.$realmApp.currentUser.customData.email

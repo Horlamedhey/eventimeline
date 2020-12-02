@@ -24,7 +24,10 @@ export default {
         query: fetchAdminEvent,
         variables: { eventId: this.$route.params.id },
       })
-      this.event = computeRole(event, email)
+      await new Promise((resolve) => {
+        this.event = computeRole(event, email)
+        resolve()
+      })
       this.$store.commit('setDashboardRole', this.event.role)
     } catch (error) {
       console.log('meeeee', error)
