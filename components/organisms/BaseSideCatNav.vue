@@ -33,30 +33,17 @@ export default {
     categories() {
       return [
         {
-          label: 'All',
+          label: 'Latest',
           icon: () => import('~/components/atoms/icons/BaseAllIcon'),
           to: {
             path: '/',
             query: {
-              category: 'all',
+              category: 'latest',
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: 'category',
-          pointerValue: 'all',
-        },
-        {
-          label: 'Matriculations',
-          icon: () => import('~/components/atoms/icons/BaseAwardIcon'),
-          to: {
-            path: '/',
-            query: {
-              category: 'matriculations',
-              timeline: this.$route.query.timeline,
-            },
-          },
-          pointerKey: 'category',
-          pointerValue: 'matriculations',
+          pointerValue: 'latest',
         },
         {
           label: 'Birthdays',
@@ -64,53 +51,63 @@ export default {
           to: {
             path: '/',
             query: {
-              category: 'birthdays',
+              category: 'birthday',
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: 'category',
-          pointerValue: 'birthdays',
+          pointerValue: 'birthday',
         },
         {
-          label: 'Launch Parties',
-          icon: () => import('~/components/atoms/icons/BaseUsersIcon'),
+          label: 'Conferences',
+          icon: () => import('~/components/atoms/icons/BaseConferenceIcon'),
           to: {
             path: '/',
             query: {
-              category: 'launch-parties',
+              category: 'conference',
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: 'category',
-          pointerValue: 'launch-parties',
+          pointerValue: 'conference',
         },
         {
-          label: 'Hangouts',
-          icon: () => import('~/components/atoms/icons/BaseUsersIcon'),
+          label: 'Convocations',
+          icon: () => import('~/components/atoms/icons/BaseCertIcon'),
           to: {
             path: '/',
             query: {
-              category: 'hangouts',
+              category: 'convocation',
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: 'category',
-          pointerValue: 'hangouts',
+          pointerValue: 'convocation',
         },
         {
-          label: 'Meetups',
-          icon: () => import('~/components/atoms/icons/BaseBookmarkIcon'),
+          label: 'Dinners',
+          icon: () => import('~/components/atoms/icons/BaseFoodIcon'),
           to: {
             path: '/',
             query: {
-              category: 'meetups',
+              category: 'dinner',
               timeline: this.$route.query.timeline,
             },
           },
           pointerKey: 'category',
-          pointerValue: 'meetups',
+          pointerValue: 'dinner',
         },
       ]
+    },
+  },
+  watch: {
+    '$route.query': {
+      immediate: true,
+      handler(currVal) {
+        console.log(
+          this.categories.find((v) => v.to.query.category === currVal)
+        )
+      },
     },
   },
 }

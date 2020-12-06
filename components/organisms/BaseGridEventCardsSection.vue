@@ -14,7 +14,11 @@
         class="pt-1 font-semibold capitalize md:pt-0 text-1xl font-josefinsans"
         style="color: #1b1b1b"
       >
-        Popular
+        {{
+          $route.query.category
+            ? $route.query.category.split('-').join(' ')
+            : 'Latest'
+        }}
         <span
           v-if="$route.query.timeline"
           class="text-base font-normal font-quicksand"
@@ -25,15 +29,16 @@
       </h1>
     </div>
     <div
-      class="flex flex-wrap items-center justify-center mt-12 sm:justify-start events-container"
+      class="grid mt-12 mb-16 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-10 events-container"
     >
+      <!-- class="flex flex-wrap items-center justify-center mt-12 sm:justify-start events-container" -->
       <BaseEventGridCard
         v-for="event in events"
         :key="event._id"
         :event="event"
         :is-my-events="isMyEvents"
-        class="w-8/12 mx-2 mb-10 sm:mx-7 md:mx-6 lg:mx-12 sm:w-3/12 lg:w-2/12 xl:w-2/12 xl:mx-10"
       ></BaseEventGridCard>
+      <!-- class="w-8/12 mx-2 mb-10 sm:mx-7 md:mx-6 lg:mx-12 sm:w-3/12 lg:w-2/12 xl:w-2/12 xl:mx-10" -->
     </div>
 
     <BaseButton

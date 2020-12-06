@@ -2,6 +2,7 @@
   <BaseEventsPagesSlot
     v-if="showLogout"
     :events="formattedEvents"
+    :count="count"
     :my-events-loading="$fetchState.pending"
     :is-my-events="true"
   ></BaseEventsPagesSlot>
@@ -20,7 +21,7 @@ export default {
     try {
       const {
         data: {
-          MyPaginatedEvents: { events, moddedListedEvents },
+          MyPaginatedEvents: { events, count, moddedListedEvents },
         },
       } = await this.$apolloClient.query({
         query: fetchMyEvents,
@@ -28,6 +29,7 @@ export default {
       })
 
       this.events = events
+      this.count = count
       if (moddedListedEvents) {
         this.$realmApp.currentUser.refreshCustomData()
       }
@@ -38,6 +40,7 @@ export default {
   data() {
     return {
       events: [],
+      count: 0,
     }
   },
   computed: {

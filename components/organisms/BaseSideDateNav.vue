@@ -8,7 +8,7 @@
       active-class="transition duration-300 ease-in important-white-bg-text"
       active-addon-class="transition duration-300 ease-in text-black-600"
       active-content-container-class="transition duration-300 ease-in shadow important-white-bg-text"
-      add-on-class="transition duration-300 ease-in group-hover:text-black-600 w-5 h-5 mr-4"
+      add-on-class="w-5 h-5 mr-4 transition duration-300 ease-in group-hover:text-black-600"
     ></BaseNavList>
     <BaseButton
       class="block px-4 py-2 m-auto mt-3 transition duration-300 ease-in-out rounded cursor-pointer focus:outline-none active:bg-gray-100 hover:bg-gray-200"
@@ -25,16 +25,20 @@ import BaseCalendarIcon from '~/components/atoms/icons/BaseCalendarIcon.vue'
 export default {
   name: 'BaseSideDateNav',
   data() {
-    return {
-      dates: [
+    return {}
+  },
+  computed: {
+    dates() {
+      return [
         {
           label: 'Today',
           icon: BaseCalendarIcon,
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'today',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'today' ? undefined : 'today',
             },
           },
           pointerKey: 'timeline',
@@ -46,8 +50,11 @@ export default {
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'tomorrow',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'tomorrow'
+                  ? undefined
+                  : 'tomorrow',
             },
           },
           pointerKey: 'timeline',
@@ -59,8 +66,11 @@ export default {
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'this-week',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'this-week'
+                  ? undefined
+                  : 'this-week',
             },
           },
           pointerKey: 'timeline',
@@ -72,8 +82,11 @@ export default {
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'next-week',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'next-week'
+                  ? undefined
+                  : 'next-week',
             },
           },
           pointerKey: 'timeline',
@@ -85,8 +98,11 @@ export default {
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'this-month',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'this-month'
+                  ? undefined
+                  : 'this-month',
             },
           },
           pointerKey: 'timeline',
@@ -98,17 +114,19 @@ export default {
           to: {
             path: '/',
             query: {
-              category: this.$route.query.category || 'all',
-              timeline: 'next-month',
+              category: this.$route.query.category,
+              timeline:
+                this.$route.query.timeline === 'next-month'
+                  ? undefined
+                  : 'next-month',
             },
           },
           pointerKey: 'timeline',
           pointerValue: 'next-month',
         },
-      ],
-    }
+      ]
+    },
   },
-  computed: {},
 }
 </script>
 

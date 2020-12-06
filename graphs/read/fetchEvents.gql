@@ -1,5 +1,16 @@
-query fetchEvents($eventsRoute: Boolean!, $lastId: String) {
-  PaginatedEvents(input: $lastId) {
+query fetchEvents(
+  $eventsRoute: Boolean!
+  $lastId: String
+  $category: String
+  $timeline: PaginatedEventsInputQueryTimeline
+  $price: PaginatedEventsInputQueryPrice
+) {
+  PaginatedEvents(
+    input: {
+      lastId: $lastId
+      query: { category: $category, timeline: $timeline, price: $price }
+    }
+  ) {
     count
     events {
       _id

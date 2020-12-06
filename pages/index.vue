@@ -38,7 +38,13 @@
             : 'translate-x-0 ease-in'
         "
       >
+        <div v-if="events && events.length === 0" class="mt-20 text-center">
+          Sorry, there are no events here at this moment.
+          <br />
+          Please check back later.
+        </div>
         <BaseGridEventCardsSection
+          v-else
           :sidebar-open="sidebarOpen"
           :toggle-side-bar-open="toggleSideBar"
           :events="events"
@@ -48,13 +54,17 @@
     <BaseAnnounceDecor></BaseAnnounceDecor>
     <BasePartners></BasePartners>
 
-    <BaseLoader :loading="loading" class="z-50"></BaseLoader>
+    <BaseLoader
+      :loading="loading || $fetchState.pending"
+      class="z-50"
+    ></BaseLoader>
   </div>
 </template>
 
 <script>
 // mixins
 // import gql from 'graphql-tag'
+// import fetchEvents from '@/graphs/read/fetchEvents'
 import basicMixins from '~/mixins/pagesBasicMixins.js'
 import fetchEventsMixin from '~/mixins/fetchEventsMixin.js'
 export default {
@@ -62,7 +72,6 @@ export default {
   metaInfo: {
     title: 'Home',
   },
-  mounted() {},
 }
 </script>
 

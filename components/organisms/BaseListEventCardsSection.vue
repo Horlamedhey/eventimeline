@@ -11,7 +11,7 @@
       </BaseButton>
     </div>
     <div
-      class="flex flex-wrap items-center justify-center mt-12 events-container"
+      class="flex flex-wrap items-center justify-center mt-12 overflow-auto events-container"
     >
       <BaseEventListCard
         v-for="event in events"

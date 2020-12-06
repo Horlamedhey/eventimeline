@@ -27,7 +27,7 @@
         :key="`${item.label}-subItems`"
         :items="item.subItems"
         :classes="[subListClasses]"
-        add-on-after
+        :add-on-after="subAddOnAfter"
         :content-container-class="subListContentContainerClasses"
         :content-class="subListContentClasses"
         :active-class="subListActiveClasses"
@@ -57,6 +57,7 @@ export default {
     activeContentContainerClass: [String, Array],
     // if icon should come after
     addOnAfter: Boolean,
+    subAddOnAfter: Boolean,
     // class(es) of the additional icon of the active link
     activeAddonClass: [String, Array],
     // class(es) of the additional icon of each link

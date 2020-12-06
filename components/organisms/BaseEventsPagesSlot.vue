@@ -25,8 +25,16 @@
           style="box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2)"
           class="py-2 overflow-y-auto bg-gray-200 main-content"
         >
-          <div v-if="myEventsLoading" class="text-center">
+          <div v-if="isMyEvents && myEventsLoading" class="text-center">
             Please wait while we fetch your events...
+          </div>
+          <div v-else-if="eventsLoading" class="text-center">
+            Please wait while we fetch the events...
+          </div>
+          <div v-else-if="events && events.length === 0" class="text-center">
+            Sorry, there are no events here at this moment.
+            <br />
+            Please check back later.
           </div>
           <template v-else>
             <BaseListEventCardsSection
@@ -52,11 +60,11 @@
           <div class="flex items-center">
             <BaseHeartBeatIcon class="inline text-primary"></BaseHeartBeatIcon>
             <span class="ml-2 font-medium font-quicksand text-black-800">
-              See trending
+              Loaded items
             </span>
           </div>
           <div class="flex items-center">
-            <span>1 of 3206</span>
+            <span>{{ events.length }} of {{ count }}</span>
             <BaseChevronDownIcon
               class="inline transform -rotate-90 text-black-600"
             ></BaseChevronDownIcon>
@@ -76,6 +84,10 @@ export default {
   name: 'BaseEventsPagesSlot',
   mixins: [basicMixins],
   props: {
+    eventsLoading: {
+      type: Boolean,
+      default: false,
+    },
     myEventsLoading: {
       type: Boolean,
       default: true,
@@ -87,6 +99,10 @@ export default {
     events: {
       type: Array,
       default: () => [],
+    },
+    count: {
+      type: Number,
+      default: 0,
     },
   },
   data() {

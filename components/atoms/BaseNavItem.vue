@@ -36,7 +36,6 @@
           ? activeClass
           : '',
       ]"
-      :exact-active-class="activeClass"
     >
       <component
         :is="icon"
@@ -115,7 +114,7 @@ export default {
       return (
         (Object.keys(this.$route.query).includes(this.pointerKey) &&
           Object.values(this.$route.query).includes(this.pointerValue)) ||
-        (this.pointerValue === 'all' && !this.$route.query[this.pointerKey])
+        (this.pointerValue === 'latest' && !this.$route.query[this.pointerKey])
       )
     },
   },

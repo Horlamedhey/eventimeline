@@ -10,16 +10,17 @@
       <BaseLeveledNavList
         :items="filters"
         add-on-after
-        content-container-class="flex group mt-6"
-        content-class="text-xl bg-white font-quicksand font-medium flex transition duration-300 ease-in group-hover:text-gray-variant3 w-full px-3 justify-between items-center categories focus:outline-none py-2"
+        content-container-class="flex mt-6 group"
+        content-class="flex items-center justify-between w-full px-3 py-2 text-xl font-medium transition duration-300 ease-in bg-white font-quicksand group-hover:text-gray-variant3 categories focus:outline-none"
         active-class="text-gray-variant3"
-        active-content-class="border-l-3 border-primary shadow-lg active:bg-white"
+        active-content-class="shadow-lg border-l-3 border-primary active:bg-white"
         active-addon-class="transition duration-100 ease-in"
-        add-on-class="group-hover:text-gray-variant3 transition duration-100 ease-in transform"
+        add-on-class="transition duration-100 ease-in transform group-hover:text-gray-variant3"
         sub-list-classes="rounded-lg -mt-2 bg-primary sub-list pt-7 pb-4 px-1"
         sub-list-content-container-classes="group mt-1"
-        sub-list-content-classes="text-sm font-quicksand font-medium transition duration-300 ease-in group-hover:text-primary w-full px-3 text-black-600 focus:outline-none py-2 block"
+        sub-list-content-classes="text-sm font-quicksand font-medium transition duration-300 ease-in group-hover:text-primary w-full px-3 text-black-600 focus:outline-none py-2 flex items-center"
         sub-list-active-classes="text-primary"
+        sub-list-add-on-classes="w-5 h-5 mr-2"
         @click="handleClick"
       ></BaseLeveledNavList>
     </div>

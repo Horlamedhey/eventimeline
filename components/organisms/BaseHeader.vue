@@ -90,7 +90,7 @@
               content-class="hover:bg-error nav-item-content hover:text-white"
               @click="logoutConfirmation = true"
             >
-              <span class="font-semibold">Logout</span>
+              <span class="hidden font-semibold sm:inline">Logout</span>
 
               <BaseLogoutIcon
                 class="inline-block w-5 h-5 ml-1"

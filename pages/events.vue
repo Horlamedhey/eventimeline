@@ -1,5 +1,10 @@
 <template>
-  <BaseEventsPagesSlot :events="events">
+  <BaseEventsPagesSlot
+    :events="events"
+    :count="count"
+    :loading="$fetchState.pending"
+    @fetchMoreEvents="fetchMoreEvents"
+  >
     <template v-slot:side-bar="{ sidebarOpen }">
       <!-- sidebar -->
       <div
@@ -29,5 +34,10 @@ export default {
     title: 'Events',
   },
   mixins: [fetchEventsMixin],
+  data() {
+    return {
+      count: 0,
+    }
+  },
 }
 </script>

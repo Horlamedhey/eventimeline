@@ -16,77 +16,173 @@ export default {
           },
           subItems: [
             {
-              label: 'Matriculations',
+              label: 'Remove category filter',
+              icon: () => import('~/components/atoms/icons/BaseRemoveIcon'),
               to: {
                 path: '/events',
                 query: {
-                  category: 'matriculations',
+                  category: undefined,
                   timeline: this.$route.query.timeline,
                   price: this.$route.query.price,
                   location: this.$route.query.location,
                 },
               },
-              pointerKey: 'category',
-              pointerValue: 'matriculations',
+              pointerKey: 'remove',
+              pointerValue: 'remove',
             },
             {
               label: 'Birthdays',
+              icon: () => import('~/components/atoms/icons/BaseGiftIcon'),
               to: {
                 path: '/events',
                 query: {
-                  category: 'birthdays',
+                  category: 'birthday',
                   timeline: this.$route.query.timeline,
                   price: this.$route.query.price,
                   location: this.$route.query.location,
                 },
               },
               pointerKey: 'category',
-              pointerValue: 'birthdays',
+              pointerValue: 'birthday',
             },
             {
-              label: 'Launch Parties',
+              label: 'Conferences',
+              icon: () => import('~/components/atoms/icons/BaseConferenceIcon'),
               to: {
                 path: '/events',
                 query: {
-                  category: 'launch-parties',
+                  category: 'conference',
                   timeline: this.$route.query.timeline,
                   price: this.$route.query.price,
                   location: this.$route.query.location,
                 },
               },
               pointerKey: 'category',
-              pointerValue: 'launch-parties',
+              pointerValue: 'conference',
+            },
+            {
+              label: 'Convocations',
+              icon: () => import('~/components/atoms/icons/BaseCertIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'convocation',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'convocation',
+            },
+            {
+              label: 'Dinners',
+              icon: () => import('~/components/atoms/icons/BaseFoodIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'dinner',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'dinner',
             },
             {
               label: 'Hangouts',
+              icon: () => import('~/components/atoms/icons/BaseUsersIcon'),
               to: {
                 path: '/events',
                 query: {
-                  category: 'hangouts',
+                  category: 'hangout',
                   timeline: this.$route.query.timeline,
                   price: this.$route.query.price,
                   location: this.$route.query.location,
                 },
               },
               pointerKey: 'category',
-              pointerValue: 'hangouts',
+              pointerValue: 'hangout',
+            },
+            {
+              label: 'Launch Parties',
+              icon: () => import('~/components/atoms/icons/BaseLaunchIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'launch-party',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'launch-party',
+            },
+            {
+              label: 'Matriculations',
+              icon: () => import('~/components/atoms/icons/BaseAcademyIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'matriculation',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'matriculation',
             },
             {
               label: 'Meetups',
+              icon: () => import('~/components/atoms/icons/BaseBookmarkIcon'),
               to: {
                 path: '/events',
                 query: {
-                  category: 'meetups',
+                  category: 'meetup',
                   timeline: this.$route.query.timeline,
                   price: this.$route.query.price,
                   location: this.$route.query.location,
                 },
               },
               pointerKey: 'category',
-              pointerValue: 'meetups',
+              pointerValue: 'meetup',
+            },
+            {
+              label: 'Seminars',
+              icon: () => import('~/components/atoms/icons/BaseSeminarIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'seminar',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'seminar',
+            },
+            {
+              label: 'Weddings',
+              icon: () => import('~/components/atoms/icons/BaseRingIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: 'wedding',
+                  timeline: this.$route.query.timeline,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'category',
+              pointerValue: 'wedding',
             },
           ],
         },
+
         {
           label: 'Timeline',
           path: 'timeline',
@@ -98,6 +194,21 @@ export default {
             return vm.$route.query[this.path] !== undefined || this.isOpen
           },
           subItems: [
+            {
+              label: 'Remove timeline filter',
+              icon: () => import('~/components/atoms/icons/BaseRemoveIcon'),
+              to: {
+                path: '/events',
+                query: {
+                  category: this.$route.query.category,
+                  timeline: undefined,
+                  price: this.$route.query.price,
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'timeline',
+              pointerValue: 'remove',
+            },
             {
               label: 'Today',
               to: {
@@ -184,6 +295,7 @@ export default {
             },
           ],
         },
+
         {
           label: 'Price',
           path: 'price',
@@ -196,18 +308,33 @@ export default {
           },
           subItems: [
             {
-              label: 'N50 - N500',
+              label: 'Remove price filter',
+              icon: () => import('~/components/atoms/icons/BaseRemoveIcon'),
               to: {
                 path: '/events',
                 query: {
                   category: this.$route.query.category,
                   timeline: this.$route.query.timeline,
-                  price: '50-500',
+                  price: undefined,
                   location: this.$route.query.location,
                 },
               },
               pointerKey: 'price',
-              pointerValue: '50-500',
+              pointerValue: 'remove',
+            },
+            {
+              label: 'N0 - N500',
+              to: {
+                path: '/events',
+                query: {
+                  category: this.$route.query.category,
+                  timeline: this.$route.query.timeline,
+                  price: '0-500',
+                  location: this.$route.query.location,
+                },
+              },
+              pointerKey: 'price',
+              pointerValue: '0-500',
             },
             {
               label: 'N500 - N1, 000 ',
@@ -281,89 +408,89 @@ export default {
             },
           ],
         },
-        {
-          label: 'Location',
-          path: 'location',
-          icon: BaseChevronDownIcon,
-          get isOpen() {
-            return vm.expanded.includes(this.path)
-          },
-          get active() {
-            return vm.$route.query[this.path] !== undefined || this.isOpen
-          },
-          subItems: [
-            {
-              label: 'Your Area',
-              to: {
-                path: '/events',
-                query: {
-                  category: this.$route.query.category,
-                  timeline: this.$route.query.timeline,
-                  price: this.$route.query.price,
-                  location: 'your-area',
-                },
-              },
-              pointerKey: 'location',
-              pointerValue: 'your-area',
-            },
-            {
-              label: 'Your State',
-              to: {
-                path: '/events',
-                query: {
-                  category: this.$route.query.category,
-                  timeline: this.$route.query.timeline,
-                  price: this.$route.query.price,
-                  location: 'your-state',
-                },
-              },
-              pointerKey: 'location',
-              pointerValue: 'your-state',
-            },
-            {
-              label: 'Your Country',
-              to: {
-                path: '/events',
-                query: {
-                  category: this.$route.query.category,
-                  timeline: this.$route.query.timeline,
-                  price: this.$route.query.price,
-                  location: 'your-country',
-                },
-              },
-              pointerKey: 'location',
-              pointerValue: 'your-country',
-            },
-            {
-              label: 'Your Continent',
-              to: {
-                path: '/events',
-                query: {
-                  category: this.$route.query.category,
-                  timeline: this.$route.query.timeline,
-                  price: this.$route.query.price,
-                  location: 'your-continent',
-                },
-              },
-              pointerKey: 'location',
-              pointerValue: 'your-continent',
-            },
-            {
-              label: 'Your World',
-              to: {
-                path: '/events',
-                query: {
-                  category: this.$route.query.category,
-                  timeline: this.$route.query.timeline,
-                  price: this.$route.query.price,
-                  location: 'your-world',
-                },
-              },
-              pointerKey: 'location',
-              pointerValue: 'your-world',
-            },
-          ],
-        },
+        // {
+        //   label: 'Location',
+        //   path: 'location',
+        //   icon: BaseChevronDownIcon,
+        //   get isOpen() {
+        //     return vm.expanded.includes(this.path)
+        //   },
+        //   get active() {
+        //     return vm.$route.query[this.path] !== undefined || this.isOpen
+        //   },
+        //   subItems: [
+        //     {
+        //       label: 'Your Area',
+        //       to: {
+        //         path: '/events',
+        //         query: {
+        //           category: this.$route.query.category,
+        //           timeline: this.$route.query.timeline,
+        //           price: this.$route.query.price,
+        //           location: 'your-area',
+        //         },
+        //       },
+        //       pointerKey: 'location',
+        //       pointerValue: 'your-area',
+        //     },
+        //     {
+        //       label: 'Your State',
+        //       to: {
+        //         path: '/events',
+        //         query: {
+        //           category: this.$route.query.category,
+        //           timeline: this.$route.query.timeline,
+        //           price: this.$route.query.price,
+        //           location: 'your-state',
+        //         },
+        //       },
+        //       pointerKey: 'location',
+        //       pointerValue: 'your-state',
+        //     },
+        //     {
+        //       label: 'Your Country',
+        //       to: {
+        //         path: '/events',
+        //         query: {
+        //           category: this.$route.query.category,
+        //           timeline: this.$route.query.timeline,
+        //           price: this.$route.query.price,
+        //           location: 'your-country',
+        //         },
+        //       },
+        //       pointerKey: 'location',
+        //       pointerValue: 'your-country',
+        //     },
+        //     {
+        //       label: 'Your Continent',
+        //       to: {
+        //         path: '/events',
+        //         query: {
+        //           category: this.$route.query.category,
+        //           timeline: this.$route.query.timeline,
+        //           price: this.$route.query.price,
+        //           location: 'your-continent',
+        //         },
+        //       },
+        //       pointerKey: 'location',
+        //       pointerValue: 'your-continent',
+        //     },
+        //     {
+        //       label: 'Your World',
+        //       to: {
+        //         path: '/events',
+        //         query: {
+        //           category: this.$route.query.category,
+        //           timeline: this.$route.query.timeline,
+        //           price: this.$route.query.price,
+        //           location: 'your-world',
+        //         },
+        //       },
+        //       pointerKey: 'location',
+        //       pointerValue: 'your-world',
+        //     },
+        //   ],
+        // },
       ]
     },
   },
