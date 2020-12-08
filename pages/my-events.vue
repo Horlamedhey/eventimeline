@@ -1,11 +1,13 @@
 <template>
-  <BaseEventsPagesSlot
-    v-if="showLogout"
-    :events="formattedEvents"
-    :count="count"
-    :my-events-loading="$fetchState.pending"
-    :is-my-events="true"
-  ></BaseEventsPagesSlot>
+  <client-only>
+    <BaseEventsPagesSlot
+      v-if="showLogout"
+      :events="formattedEvents"
+      :count="count"
+      :my-events-loading="$fetchState.pending"
+      :is-my-events="true"
+    ></BaseEventsPagesSlot>
+  </client-only>
 </template>
 
 <script>
@@ -17,25 +19,29 @@ export default {
     title: 'My Events',
   },
   async fetch() {
-    this.$realmApp.currentUser.refreshCustomData()
-    try {
-      const {
-        data: {
-          MyPaginatedEvents: { events, count, moddedListedEvents },
-        },
-      } = await this.$apolloClient.query({
-        query: fetchMyEvents,
-        variables: { email: this.$realmApp.currentUser.customData.email },
-      })
+    const fetchTheEvents = async () => {
+      try {
+        const {
+          data: {
+            MyPaginatedEvents: { events, count, moddedListedEvents },
+          },
+        } = await this.$apolloClient.query({
+          query: fetchMyEvents,
+          variables: { email: this.$realmApp.currentUser.customData.email },
+        })
 
-      this.events = events
-      this.count = count
-      if (moddedListedEvents) {
+        this.events = events
+        this.count = count
+        if (moddedListedEvents) {
+          this.$realmApp.currentUser.refreshCustomData()
+        }
+      } catch (error) {
+        console.log('meeeee', error)
         this.$realmApp.currentUser.refreshCustomData()
+        await fetchTheEvents()
       }
-    } catch (error) {
-      console.log('meeeee', error)
     }
+    await fetchTheEvents()
   },
   data() {
     return {

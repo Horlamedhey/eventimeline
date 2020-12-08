@@ -92,10 +92,10 @@ const fetchTheEvents = async (app, route, lastId) => {
     return PaginatedEvents
   } catch (err) {
     console.log('meeeee', err.message)
-    if (err.message.includes('401') || err.message.includes('$apolloClient')) {
-      app.$realmApp.currentUser.refreshCustomData()
-      fetchTheEvents()
-    }
+    // if (err.message.includes('401') || err.message.includes('$apolloClient')) {
+    app.$realmApp.currentUser.refreshCustomData()
+    fetchTheEvents(app, route, lastId)
+    // }
     // else {
     //   return 'err'
     // }
@@ -103,27 +103,34 @@ const fetchTheEvents = async (app, route, lastId) => {
 }
 export default {
   async asyncData({ app, route }) {
+    console.log('asyncData')
     const { events, count } = await fetchTheEvents(app, route)
+    console.log(this)
     return { events, count }
   },
   data() {
     return {}
   },
-  async fetch() {
-    const result = await fetchTheEvents(
-      this.$nuxt.context.app,
-      this.$route,
-      this.paginating && this.events.length > 0
-        ? this.events[this.events.length - 1]._id
-        : undefined
-    )
-    this.events = result.events
+  // async fetch() {
+  //   console.log('fetch')
+  //   const result = await fetchTheEvents(
+  //     this.$nuxt.context.app,
+  //     this.$route,
+  //     this.paginating && this.events.length > 0
+  //       ? this.events[this.events.length - 1]._id
+  //       : undefined
+  //   )
+  //   this.events = result.events
 
-    this.count = result.count
-  },
-  fetchDelay: 1000,
-  watch: {
-    '$route.query': '$fetch',
+  //   this.count = result.count
+  // },
+  // fetchDelay: 1000,
+  // watch: {
+  //   '$route.query': '$fetch',
+  // },
+  watchQuery: ['category', 'timeline', 'price', 'page'],
+  onQueryChange() {
+    this.$forceUpdate()
   },
 
   methods: {

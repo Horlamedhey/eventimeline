@@ -181,6 +181,8 @@ module.exports = {
     transitionProperty: ['responsive', 'hover', 'focus', 'group-hover'],
     transitionDuration: ['responsive', 'hover', 'focus', 'group-hover'],
     textColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    backgroundColor: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
+    visibility: ['responsive', 'hover', 'focus', 'active', 'group-hover'],
   },
   plugins: [require('tailwindcss-ripple')()],
   purge: {

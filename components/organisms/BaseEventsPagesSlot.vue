@@ -1,10 +1,8 @@
 <template>
-  <div
-    class="bg-gray-variant4"
-    :style="{
+  <div class="bg-gray-variant4">
+    <!-- :style="{
       backgroundImage: `url(${require('@/static/images/confetti.jpg')})`,
-    }"
-  >
+    }" -->
     <div
       ref="mainContainer"
       class="relative flex py-10 overflow-hidden md:justify-around"
@@ -55,19 +53,81 @@
           </template>
         </div>
         <div
-          class="flex items-center justify-between px-6 py-3 mt-6 bg-white shadow"
+          v-if="showPaginationInfo && count > 0"
+          class="flex justify-between px-6 pb-3 mt-6 font-medium bg-white shadow lg:justify-between sm:flex-wrap lg:flex-no-wrap font-quicksand text-black-800"
         >
-          <div class="flex items-center">
+          <div
+            v-if="showPaginationInfo"
+            class="flex items-center pt-3 sm:justify-center lg: sm:justify-start sm:w-full lg:w-auto"
+          >
             <BaseHeartBeatIcon class="inline text-primary"></BaseHeartBeatIcon>
-            <span class="ml-2 font-medium font-quicksand text-black-800">
-              Loaded items
+            <span class="ml-2">
+              Showing {{ 12 * (pageNumber - 1) + 1 }}
+              <span v-if="lastItemNumber > 1">
+                to
+                {{ lastItemNumber }}
+              </span>
+              of {{ count }} event<span v-if="lastItemNumber > 1">s</span>
             </span>
           </div>
-          <div class="flex items-center">
-            <span>{{ events.length }} of {{ count }}</span>
-            <BaseChevronDownIcon
-              class="inline transform -rotate-90 text-black-600"
-            ></BaseChevronDownIcon>
+          <div
+            v-if="showPaginationInfo && count > 12"
+            class="flex items-center sm:justify-center lg: sm:justify-start sm:mt-3 lg:mt-0 sm:w-full lg:w-auto"
+          >
+            <BaseButton
+              v-if="pageCount > 10"
+              :to="computePath(pageNumberCoefficient - 9)"
+              :disabled="pageNumber < 11"
+              class="inline mt-3 text-black-600"
+            >
+              <BaseDoubleChevronLeftIcon></BaseDoubleChevronLeftIcon>
+            </BaseButton>
+
+            <BaseButton
+              :to="computePath(pageNumber - 1)"
+              :disabled="pageNumber === 1"
+            >
+              <BaseChevronDownIcon
+                class="inline mt-3 transform rotate-90 text-black-600"
+              ></BaseChevronDownIcon>
+            </BaseButton>
+
+            <BaseButton
+              v-for="i in Math.min(pageCount, 10)"
+              :key="i"
+              :to="computePath(i + pageNumberCoefficient)"
+              class="mx-1 group"
+            >
+              <div
+                :class="
+                  pageNumber === i + pageNumberCoefficient
+                    ? 'bg-primary'
+                    : 'bg-transparent'
+                "
+                class="w-8 h-1 transition duration-300 rounded-b group-hover:bg-primary"
+              ></div>
+              <div class="mt-2 text-center">
+                {{ i + pageNumberCoefficient }}
+              </div>
+            </BaseButton>
+            <BaseButton
+              :to="computePath(pageNumber + 1)"
+              :disabled="pageNumber === pageCount"
+            >
+              <BaseChevronDownIcon
+                class="inline mt-3 transform -rotate-90 text-black-600"
+              ></BaseChevronDownIcon>
+            </BaseButton>
+            <BaseButton
+              v-if="pageCount > 10"
+              :disabled="pageNumberCoefficient + 10 === pageCount"
+              :to="computePath(pageNumberCoefficient + 11)"
+              class="inline mt-3 text-black-600"
+            >
+              <BaseDoubleChevronLeftIcon
+                class="transform -rotate-180"
+              ></BaseDoubleChevronLeftIcon>
+            </BaseButton>
           </div>
         </div>
       </div>
@@ -108,7 +168,46 @@ export default {
   data() {
     return {}
   },
-  computed: {},
+  computed: {
+    pageNumber() {
+      return parseInt(this.$route.query.page) || 1
+    },
+    pageCount() {
+      return Math.ceil(this.count / 12)
+    },
+    lastItemNumber() {
+      return Math.min(this.count, 12 * this.pageNumber)
+    },
+    showPaginationInfo() {
+      return (
+        ((!this.isMyEvents && !this.eventsLoading) ||
+          (this.isMyEvents && !this.myEventsLoading)) &&
+        this.events.length > 0
+      )
+    },
+    pageNumberCoefficient() {
+      return (
+        Math.floor(
+          (this.pageNumber % 10 === 0 ? this.pageNumber - 1 : this.pageNumber) /
+            10
+        ) * 10
+      )
+    },
+  },
+  methods: {
+    computePath(pageNumber) {
+      return {
+        path: this.$route.path,
+        query: {
+          category: this.$route.query.category,
+          timeline: this.$route.query.timeline,
+          price: this.$route.query.price,
+          location: this.$route.query.location,
+          page: pageNumber,
+        },
+      }
+    },
+  },
 }
 </script>
 

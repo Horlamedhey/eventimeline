@@ -2,7 +2,6 @@
   <BaseEventsPagesSlot
     :events="events"
     :count="count"
-    :loading="$fetchState.pending"
     @fetchMoreEvents="fetchMoreEvents"
   >
     <template v-slot:side-bar="{ sidebarOpen }">

@@ -3,7 +3,8 @@
     :is="tag"
     :id="id"
     :class="{
-      'disabled:opacity-75': disabled,
+      'opacity-50': disabled,
+      'cursor-not-allowed': disabled,
       'bg-success': success,
       'bg-error': error,
       'bg-warning': warning,
@@ -14,7 +15,7 @@
     :target="computedTarget"
     :type="type"
     :disabled="disabled"
-    class="focus:outline-none"
+    class="cursor-pointer focus:outline-none"
     @click.stop="handleClick"
   >
     <!-- @slot Main slot used for text -->
@@ -34,7 +35,7 @@ export default {
     id: String,
     /** "to" prop for vue-router - renders a <router-link> */
     to: {
-      type: String,
+      type: [String, Object],
     },
     /** target attrbitue for the <a> tag */
     target: String,

@@ -334,6 +334,7 @@ export default {
     },
     callback(response) {
       console.log(response)
+      this.closeTickets()
     },
     closeTickets() {
       this.showTickets = false

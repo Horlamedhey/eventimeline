@@ -80,19 +80,34 @@ export default {
   name: 'Event',
   mixins: [basicMixins],
   async asyncData({ app, params }) {
-    try {
-      const {
-        data: { event },
-      } = await app.$apolloClient.query({
-        query: fetchEvent,
-        variables: { eventId: params.id },
-      })
-      // console.log(event)
-      return {
-        event,
+    const fetchTheEvents = async () => {
+      try {
+        const {
+          data: { event },
+        } = await app.$apolloClient.query({
+          query: fetchEvent,
+          variables: { eventId: params.id },
+        })
+        // console.log(event)
+        return event
+      } catch (err) {
+        console.log('meeeee', err.message)
+        if (app.$realmApp.currentUser) {
+          app.$realmApp.currentUser.refreshCustomData()
+          fetchTheEvents()
+        }
+
+        // else {
+        //   return 'err'
+        // }
       }
-    } catch (error) {
-      console.log('meeeee', error)
+    }
+    const event = await fetchTheEvents()
+    return { event }
+  },
+  data() {
+    return {
+      boughtTicketsDialog: false,
     }
   },
 }

@@ -9,6 +9,10 @@ export const state = () => ({
   footerHeight: null,
   dashboardRole: null,
   showLogout: false,
+  lastFetch: {
+    pageNumber: null,
+    lastId: null,
+  },
 })
 
 export const mutations = {
