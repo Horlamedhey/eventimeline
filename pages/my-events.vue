@@ -19,6 +19,7 @@ export default {
     title: 'My Events',
   },
   async fetch() {
+    const { pageNumber, lastId } = this.$store.state.myLastFetch
     const fetchTheEvents = async () => {
       try {
         const {
@@ -27,9 +28,23 @@ export default {
           },
         } = await this.$apolloClient.query({
           query: fetchMyEvents,
-          variables: { email: this.$realmApp.currentUser.customData.email },
+          variables: {
+            email: this.$realmApp.currentUser.customData.email,
+            lastId:
+              typeof pageNumber === 'number' &&
+              parseInt(this.$route.query.page) === pageNumber + 1
+                ? lastId
+                : undefined,
+            pageNumber: parseInt(this.$route.query.page),
+          },
         })
 
+        if (events && events.length > 0) {
+          this.$store.commit('setMyLastFetch', {
+            lastId: events[events.length - 1]._id,
+            pageNumber: parseInt(this.$route.query.page || 1),
+          })
+        }
         this.events = events
         this.count = count
         if (moddedListedEvents) {
@@ -60,9 +75,12 @@ export default {
       } else return []
     },
   },
-  // mounted() {
-  //   console.log(this.$realmApp.currentUser.customData)
-  // },
   fetchOnServer: false,
+  watch: {
+    '$route.query': '$fetch',
+  },
+  // onQueryChange() {
+  //   this.$forceUpdate()
+  // },
 }
 </script>

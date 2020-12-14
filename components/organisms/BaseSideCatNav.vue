@@ -100,15 +100,5 @@ export default {
       ]
     },
   },
-  watch: {
-    '$route.query': {
-      immediate: true,
-      handler(currVal) {
-        console.log(
-          this.categories.find((v) => v.to.query.category === currVal)
-        )
-      },
-    },
-  },
 }
 </script>

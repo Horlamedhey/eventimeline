@@ -13,6 +13,10 @@ export const state = () => ({
     pageNumber: null,
     lastId: null,
   },
+  myLastFetch: {
+    pageNumber: null,
+    lastId: null,
+  },
 })
 
 export const mutations = {
@@ -27,6 +31,12 @@ export const mutations = {
   },
   setShowLogout(state, val) {
     state.showLogout = val
+  },
+  setLastFetch(state, val) {
+    state.lastFetch = val
+  },
+  setMyLastFetch(state, val) {
+    state.myLastFetch = val
   },
 }
 

@@ -1,6 +1,7 @@
 query fetchEvents(
   $eventsRoute: Boolean!
   $lastId: String
+  $pageNumber: Int
   $category: String
   $timeline: PaginatedEventsInputQueryTimeline
   $price: PaginatedEventsInputQueryPrice
@@ -8,6 +9,7 @@ query fetchEvents(
   PaginatedEvents(
     input: {
       lastId: $lastId
+      pageNumber: $pageNumber
       query: { category: $category, timeline: $timeline, price: $price }
     }
   ) {

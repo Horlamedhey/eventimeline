@@ -66,6 +66,7 @@ const timelines = () => {
 }
 
 const fetchTheEvents = async (app, route, lastId) => {
+  // console.log(lastId)
   try {
     const {
       data: { PaginatedEvents },
@@ -86,9 +87,10 @@ const fetchTheEvents = async (app, route, lastId) => {
               upperLimit: parseInt(route.query.price.split('-')[1]),
             }
           : undefined,
+        pageNumber: parseInt(route.query.page),
       },
     })
-
+    // console.log(PaginatedEvents)
     return PaginatedEvents
   } catch (err) {
     console.log('meeeee', err.message)
@@ -102,55 +104,48 @@ const fetchTheEvents = async (app, route, lastId) => {
   }
 }
 export default {
-  async asyncData({ app, route }) {
-    console.log('asyncData')
-    const { events, count } = await fetchTheEvents(app, route)
-    console.log(this)
-    return { events, count }
+  async asyncData({ app, route, store }) {
+    const { pageNumber, lastId } = store.state.lastFetch
+    const { events, count } = await fetchTheEvents(
+      app,
+      route,
+      typeof pageNumber === 'number' &&
+        parseInt(route.query.page) === pageNumber + 1
+        ? lastId
+        : undefined
+    )
+    // console.log(this)
+    if (events && events.length > 0) {
+      store.commit('setLastFetch', {
+        lastId: events[events.length - 1]._id,
+        pageNumber: parseInt(route.query.page || 1),
+      })
+    }
+    return { events, count, loading: process.server }
   },
-  data() {
-    return {}
-  },
-  // async fetch() {
-  //   console.log('fetch')
-  //   const result = await fetchTheEvents(
-  //     this.$nuxt.context.app,
-  //     this.$route,
-  //     this.paginating && this.events.length > 0
-  //       ? this.events[this.events.length - 1]._id
-  //       : undefined
-  //   )
-  //   this.events = result.events
-
-  //   this.count = result.count
-  // },
-  // fetchDelay: 1000,
-  // watch: {
-  //   '$route.query': '$fetch',
-  // },
   watchQuery: ['category', 'timeline', 'price', 'page'],
   onQueryChange() {
     this.$forceUpdate()
   },
 
-  methods: {
-    async fetchMoreEvents($state) {
-      if (this.events.length === this.count) {
-        $state.loaded()
-        $state.complete()
-      } else {
-        this.err = false
-        this.paginating = true
-        await new Promise((resolve) => {
-          this.$fetch()
-          resolve()
-        })
-        if (this.err) {
-          $state.error()
-        } else {
-          $state.loaded()
-        }
-      }
-    },
-  },
+  // methods: {
+  //   async fetchMoreEvents($state) {
+  //     if (this.events.length === this.count) {
+  //       $state.loaded()
+  //       $state.complete()
+  //     } else {
+  //       this.err = false
+  //       this.paginating = true
+  //       await new Promise((resolve) => {
+  //         this.$fetch()
+  //         resolve()
+  //       })
+  //       if (this.err) {
+  //         $state.error()
+  //       } else {
+  //         $state.loaded()
+  //       }
+  //     }
+  //   },
+  // },
 }

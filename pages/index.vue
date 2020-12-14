@@ -54,10 +54,7 @@
     <BaseAnnounceDecor></BaseAnnounceDecor>
     <BasePartners></BasePartners>
 
-    <BaseLoader
-      :loading="loading || $fetchState.pending"
-      class="z-50"
-    ></BaseLoader>
+    <BaseLoader :loading="loading" class="z-50"></BaseLoader>
   </div>
 </template>
 

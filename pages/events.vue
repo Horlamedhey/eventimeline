@@ -1,9 +1,5 @@
 <template>
-  <BaseEventsPagesSlot
-    :events="events"
-    :count="count"
-    @fetchMoreEvents="fetchMoreEvents"
-  >
+  <BaseEventsPagesSlot :events="events" :count="count">
     <template v-slot:side-bar="{ sidebarOpen }">
       <!-- sidebar -->
       <div
