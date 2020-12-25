@@ -27,7 +27,7 @@
           <div class="h-full">
             <img
               ref="card"
-              src="/images/card.svg"
+              :src="require('@/static/images/card.svg')"
               alt=""
               class="absolute w-full mx-auto"
               style="z-index: -1"

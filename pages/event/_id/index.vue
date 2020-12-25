@@ -123,7 +123,7 @@ export default {
         console.log('meeeee', err.message)
         if (app.$realmApp.currentUser) {
           app.$realmApp.currentUser.refreshCustomData()
-          fetchTheEvents()
+          await fetchTheEvents()
         }
 
         // else {
