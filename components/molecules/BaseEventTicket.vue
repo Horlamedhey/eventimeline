@@ -27,7 +27,7 @@
           <div class="h-full">
             <img
               ref="card"
-              :src="require('@/static/images/card.svg')"
+              src="https://res.cloudinary.com/befittinglife/image/upload/v1608885403/assets/card.svg"
               alt=""
               class="absolute w-full mx-auto"
               style="z-index: -1"
