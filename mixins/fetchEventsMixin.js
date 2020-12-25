@@ -87,7 +87,7 @@ const fetchTheEvents = async (app, route, lastId) => {
               upperLimit: parseInt(route.query.price.split('-')[1]),
             }
           : undefined,
-        pageNumber: parseInt(route.query.page),
+        pageNumber: parseInt(route.query.page) || undefined,
       },
     })
     // console.log(PaginatedEvents)

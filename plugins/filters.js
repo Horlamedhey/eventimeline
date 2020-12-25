@@ -3,7 +3,7 @@ import moment from 'moment'
 
 Vue.filter('formatShortEventDate', (val) => moment(val).format('ll'))
 Vue.filter('formatEventDate', (val) => moment(val).format('LLLL'))
-
+Vue.filter('ticketDate', (val) => moment(val).format('MM/YY'))
 Vue.filter('eventLiveDuration', (value) => {
   // const interval = 1000
   const incomingLocalTime = moment.utc(value).local()
@@ -22,3 +22,4 @@ Vue.filter('eventLiveDuration', (value) => {
   //       duration.hours()
   //     return `${hours}:${duration.minutes()}:${duration.seconds()}`
 })
+Vue.filter('ticketIdSplit', (val) => val.match(/.{1,4}/g).join('  '))

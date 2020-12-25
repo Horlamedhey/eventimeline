@@ -2,7 +2,7 @@
  ** TailwindCSS Configuration File
  **
  ** Docs: https://tailwindcss.com/docs/configuration
- ** Default: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+ ** DEFAULT: https://github.com/tailwindcss/tailwindcss/blob/master/stubs/defaultConfig.stub.js
  */
 module.exports = {
   theme: {
@@ -39,7 +39,7 @@ module.exports = {
       },
       colors: {
         primary: {
-          default: '#4d31bf',
+          DEFAULT: '#4d31bf',
           light: '#6B4FDD',
           lighter: '#715ACC',
           variant: '#775FDA',
@@ -49,12 +49,12 @@ module.exports = {
           variant3: '#6B52D2',
         },
         secondary: {
-          default: '#ffc510',
+          DEFAULT: '#ffc510',
           dark: '#FFC100',
           light: 'rgba(255, 193, 0, 0.6)',
         },
         black: {
-          default: '#000000',
+          DEFAULT: '#000000',
           100: 'rgba(0, 0, 0, 0.1)',
           200: 'rgba(0, 0, 0, 0.2)',
           300: 'rgba(0, 0, 0, 0.3)',
@@ -66,7 +66,7 @@ module.exports = {
           900: 'rgba(0, 0, 0, 0.9)',
         },
         'black-variant': {
-          default: '#121212',
+          DEFAULT: '#121212',
           100: 'rgba(18, 18, 18, 0.1)',
           200: 'rgba(18, 18, 18, 0.2)',
           300: 'rgba(18, 18, 18, 0.3)',
@@ -78,7 +78,7 @@ module.exports = {
           900: 'rgba(18, 18, 18, 0.9)',
         },
         accent: {
-          default: '#ea218d',
+          DEFAULT: '#ea218d',
           light: '#FB0977',
           variant: '#ef2492',
           'variant-light': '#FFDBEE',
@@ -87,7 +87,7 @@ module.exports = {
         accent3: '#1930AD',
         accent4: '#2C35FF',
         error: {
-          default: '#E53E3E',
+          DEFAULT: '#E53E3E',
           light: 'rgba(229, 62, 62, 0.5)',
           lighter: 'rgba(229, 62, 62, 0.2)',
           variant: '#FF6F6F',
@@ -136,6 +136,7 @@ module.exports = {
       minHeight: {
         260: '65rem',
         220: '55rem',
+        56: '14rem',
       },
       margin: {
         7: '1.8rem',
@@ -144,6 +145,7 @@ module.exports = {
         fit: 'fit-content',
         '1-5/12': '12.5%',
         '2-5/12': '20.835%',
+        '3-5/12': '29.166%',
         '5-5/12': '45.835%',
         '7-5/12': '61%',
         '9-5/12': '79.165%',

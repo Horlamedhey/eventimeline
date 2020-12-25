@@ -59,6 +59,7 @@ export default {
     'plugins/gsap.client.js',
     'plugins/paystack.client.js',
     'plugins/nuxt-client-init.client.js',
+    'plugins/html2pdf.client.js',
     // 'plugins/vue-tailwind-date-picker.client.js',
   ],
   /*
@@ -88,6 +89,7 @@ export default {
     '@nuxtjs/axios',
     // '@nuxtjs/pwa',
     '@nuxtjs/apollo',
+    'vue-social-sharing/nuxt',
   ],
   /*
    ** Axios module configuration

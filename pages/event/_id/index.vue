@@ -12,7 +12,10 @@
       <div class="event-status md:py-4 md:px-8">
         {{ event.soldOut ? 'SOLD OUT' : 'STILL SELLING' }}
       </div>
-      <BaseEventInfoCard :event="event"></BaseEventInfoCard>
+      <BaseEventInfoCard
+        :event="event"
+        @boughtTicket="verifyPayment"
+      ></BaseEventInfoCard>
     </div>
     <div style="height: 20vh; max-height: 220px"></div>
     <article
@@ -63,12 +66,38 @@
         </span>
       </div>
       <div class="flex items-center space-x-3 sm:space-x-8">
-        <BaseFacebookIcon class="w-5 h-5 sm:w-6 sm:h-6"></BaseFacebookIcon>
-        <BaseTwitterIcon class="w-5 h-5 sm:w-6 sm:h-6"></BaseTwitterIcon>
-        <BaseInstagramIcon class="w-5 h-5 sm:w-6 sm:h-6"></BaseInstagramIcon>
-        <BaseWhatsappIcon class="w-5 h-5 sm:w-6 sm:h-6"></BaseWhatsappIcon>
+        <ShareNetwork
+          v-for="(shareNetwork, i) in shareNetworks"
+          :key="`shareNetwork${i}`"
+          :network="shareNetwork.name"
+          :url="`dev.eventimeline.com/${$route.fullPath}`"
+          :title="event.eventTitle"
+          :description="event.eventDescription"
+          quote="Check this event out, you're gonna like it"
+          hashtags="eventimeline"
+        >
+          <component
+            :is="shareNetwork.icon"
+            class="w-5 h-5 sm:w-6 sm:h-6"
+          ></component>
+        </ShareNetwork>
       </div>
     </div>
+    <BaseDialog :dialog="boughtTicketsDialog" @close="closeTicketDialog">
+      <div
+        v-if="boughtTicketsDialogLoading"
+        class="flex items-center justify-center text-center min-h-56"
+      >
+        Please wait while we verify your payment...
+      </div>
+      <BaseEventTicket
+        v-else-if="boughtTicketsDialog"
+        :tickets="boughtTickets"
+        :event-image="`https://res.cloudinary.com/befittinglife/image/upload/q_auto/v1596032411/${event.eventImage}`"
+        :event-date="event.eventDate"
+        @close="boughtTicketsDialog = false"
+      ></BaseEventTicket>
+    </BaseDialog>
   </div>
 </template>
 
@@ -107,8 +136,50 @@ export default {
   },
   data() {
     return {
+      boughtTicketsDialogLoading: false,
       boughtTicketsDialog: false,
+      boughtTickets: [],
+      shareNetworks: [
+        {
+          name: 'facebook',
+          icon: () => import('~/components/atoms/icons/BaseFacebookIcon'),
+        },
+        {
+          name: 'twitter',
+          icon: () => import('~/components/atoms/icons/BaseTwitterIcon'),
+        },
+        // {
+        //   name: 'instagram',
+        //   icon: () => import('~/components/atoms/icons/BaseInstagramIcon'),
+        // },
+        {
+          name: 'whatsapp',
+          icon: () => import('~/components/atoms/icons/BaseWhatsappIcon'),
+        },
+      ],
+      eventPath: '',
     }
+  },
+
+  // TODO: Set webhook to set number of sold tickets
+  methods: {
+    async verifyPayment(paymentInfo) {
+      this.boughtTicketsDialogLoading = true
+      this.boughtTicketsDialog = true
+      const verification = await this.$realmApp.currentUser.functions.verifyPaystackPayment(
+        paymentInfo.reference,
+        this.$route.params.id,
+        this.$route.query.agent || this.event.organiser.email
+      )
+      setTimeout(() => {
+        this.boughtTicketsDialogLoading = false
+      }, 2000)
+      this.boughtTickets = verification
+    },
+    closeTicketDialog() {
+      this.boughtTickets = []
+      this.boughtTicketsDialog = false
+    },
   },
 }
 </script>

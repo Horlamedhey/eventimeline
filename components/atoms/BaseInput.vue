@@ -26,6 +26,7 @@
         :value="value"
         :disabled="disabled"
         :name="name"
+        :min="inputType === 'number' ? 1 : undefined"
         :autocomplete="autocomplete"
         :placeholder="placeholder"
         :pattern="pattern"

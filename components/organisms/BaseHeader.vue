@@ -198,6 +198,6 @@ export default {
 
 <style lang="scss">
 .nav-item-content {
-  @apply flex items-center px-2 py-1 whitespace-no-wrap transition-colors duration-500 ease-in-out rounded;
+  @apply flex items-center px-2 py-1 whitespace-nowrap transition-colors duration-500 ease-in-out rounded;
 }
 </style>

@@ -17,6 +17,9 @@ query fetchEvents($eventId: ObjectId!) {
     eventDate
     eventImage
     color
+    organiser {
+      email
+    }
     textColor
     soldOut
   }

@@ -71,11 +71,18 @@
         >
           <BaseButton
             to="/donate"
-            class="flex items-center justify-around w-6/12 px-1 py-2 font-bold rounded sm:py-3 md:py-4 sm:w-full bg-primary font-quicksand focus:outline-none"
+            class="relative flex items-center justify-around w-6/12 px-1 py-2 font-bold rounded sm:py-3 md:py-4 sm:w-full bg-primary font-quicksand focus:outline-none"
           >
-            <span class="sm:w-3/4 sm:text-left sm:pl-2"> DONATE </span>
+            <span class="text-gray-400 sm:w-3/4 sm:text-left sm:pl-2">
+              DONATE
+            </span>
 
             <BaseDownloadIcon class="w-4 h-4 sm:w-5 sm:h-5"></BaseDownloadIcon>
+            <div
+              class="absolute flex items-center justify-center w-full h-full bg-opacity-75 bg-black-300"
+            >
+              Coming soon...
+            </div>
           </BaseButton>
           <BaseButton
             class="relative flex items-center justify-around w-6/12 px-1 py-2 ml-3 font-bold duration-500 rounded transion sm:py-3 md:py-4 sm:ml-0 sm:w-full sm:mt-3 font-quicksand focus:outline-none"
@@ -181,13 +188,24 @@
           input-class-list="focus:border-2 border focus:border-accent text-white border-white h-8 px-2 rounded w-full py-4 text-sm"
         ></BaseFormText>
       </div>
+      <div class="w-full mt-6">
+        <p class="mb-1 text-xs text-red-400">*Optional.</p>
+        <BaseFormText
+          v-model="name"
+          name="name"
+          type="text"
+          placeholder="NAME"
+          autocomlabelplete
+          label-class-list="text-white text-base"
+          input-class-list="focus:border-2 border focus:border-accent text-white border-white h-8 px-2 rounded w-full py-4 text-sm"
+        ></BaseFormText>
+      </div>
       <client-only>
         <paystack
           v-if="selectedTickets.length > 0 && email.length > 0"
           :amount="computedAmount"
           :email="email.toLowerCase()"
           :paystackkey="paystackkey"
-          :reference="reference()"
           :callback="callback"
           :close="closeTickets"
           :embed="false"
@@ -224,6 +242,7 @@ export default {
     return {
       paystackkey: 'pk_test_463329a8ae449eab684973547924b9cd5c56ebec', // paystack public key
       email: '',
+      name: '',
       timeline: null,
       showTickets: false,
       selectedTickets: [],
@@ -240,9 +259,9 @@ export default {
     metadata() {
       return {
         custom_fields: this.selectedTickets.map((v) => ({
-          display_name: v.ticketType,
-          variable_name: 'ticketDetails',
-          value: 'sweet',
+          units: parseInt(v.units),
+          ticketType: v.ticketType,
+          buyerName: this.name,
         })),
       }
     },
@@ -328,13 +347,13 @@ export default {
         this.selectedTickets.push({
           ticketType,
           ticketPrice,
-          units: document.getElementById(`${ticketType}-unit`).value,
+          units: parseInt(document.getElementById(`${ticketType}-unit`).value),
         })
       }
     },
     callback(response) {
-      console.log(response)
       this.closeTickets()
+      this.$emit('boughtTicket', response)
     },
     closeTickets() {
       this.showTickets = false
