@@ -285,7 +285,7 @@ export default {
       setTimeout(() => {
         this.$html2pdf(this.$refs.tickets, {
           margin: 1,
-          filename: 'document.pdf',
+          filename: 'tickets.pdf',
           image: { type: 'png' },
           html2canvas: {
             dpi: 400,
