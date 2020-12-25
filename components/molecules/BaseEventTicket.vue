@@ -1,12 +1,9 @@
 <template>
   <div id="app">
     <div class="w-11/12 mx-auto">
-      <template v-if="downloading">
-        <h2 class="text-2xl font-medium text-center">Download preview</h2>
-        <div class="flex items-center justify-center text-center">
-          Please wait while we process your download...
-        </div>
-      </template>
+      <h2 v-if="downloading" class="text-2xl font-medium text-center">
+        Download preview
+      </h2>
       <div
         ref="tickets"
         :class="
@@ -84,6 +81,13 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div
+        v-if="downloading"
+        class="flex items-center justify-center mt-4 text-center"
+      >
+        Please wait while we process your download...
       </div>
       <div
         :class="
@@ -295,7 +299,11 @@ export default {
             orientation: 'landscape',
             hotfixes: ['px_scaling'],
           },
-        }).then(() => (this.downloading = false))
+        }).then(() => {
+          setTimeout(() => {
+            this.downloading = false
+          }, 1000)
+        })
       }, 2000)
     },
   },
