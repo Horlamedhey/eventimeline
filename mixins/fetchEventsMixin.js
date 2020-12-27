@@ -95,9 +95,10 @@ const fetchTheEvents = async (app, route, lastId) => {
   } catch (err) {
     console.log('meeeee', err.message)
     // if (err.message.includes('401') || err.message.includes('$apolloClient')) {
-    app.$realmApp.currentUser.refreshCustomData()
-    fetchTheEvents(app, route, lastId)
-    // }
+    if (app.$realmApp.currentUser) {
+      app.$realmApp.currentUser.refreshCustomData()
+    }
+    await fetchTheEvents(app, route, lastId)
     // else {
     //   return 'err'
     // }

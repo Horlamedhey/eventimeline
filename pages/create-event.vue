@@ -10,7 +10,7 @@
     ></BaseCreateEventIntro>
     <BaseCreateEventForm
       :banks="banks"
-      class="w-full px-3 sm:px-0 sm:w-9/12 sm:m-auto md:w-7/12 lg:w-5/12"
+      class="w-full px-3 sm:px-0 sm:w-9/12 sm:m-auto md:w-7/12 lg:w-6/12"
     ></BaseCreateEventForm>
   </div>
 </template>

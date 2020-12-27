@@ -102,7 +102,7 @@ export default {
 
       // create event mutation variables
       const eventVariables = {
-        email,
+        email: email.toLowerCase(),
         eventTitle,
         eventDescription,
         eventCategory,
@@ -131,7 +131,7 @@ export default {
       const userVariables = {
         organiserName:
           organiserName !== existingName ? organiserName : undefined,
-        email,
+        email: email.toLowerCase(),
         phone: phone !== existingPhone ? phone : undefined,
         authId,
         bankAccounts: allAccounts,

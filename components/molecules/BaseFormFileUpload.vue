@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-wrap sm:flex-no-wrap" :class="classList">
+    <div class="flex flex-wrap sm:flex-nowrap" :class="classList">
       <input
         :id="id"
         type="text"
