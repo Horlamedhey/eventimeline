@@ -23,6 +23,15 @@ query fetchAdminEvent($eventId: ObjectId!) {
         name
       }
     }
+    soldTickets {
+      units
+      ticketType
+      buyerName
+      ticketId
+      seller
+      checkedIn
+      bookedOn
+    }
     thirdParties {
       email
     }

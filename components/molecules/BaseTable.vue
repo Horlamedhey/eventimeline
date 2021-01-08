@@ -1,9 +1,6 @@
 <template>
   <div class="p-5 bg-white rounded-lg shadow-outline">
-    <h4
-      v-if="tableBody.length === 0 || noData"
-      class="text-lg font-medium text-center"
-    >
+    <h4 v-if="tableBody.length === 0" class="text-lg font-medium text-center">
       {{ noDataText }}
     </h4>
     <template v-else>
@@ -90,10 +87,6 @@ export default {
     noDataText: {
       type: String,
       default: '',
-    },
-    noData: {
-      type: Boolean,
-      default: false,
     },
     tableHeads: {
       type: Array,

@@ -23,3 +23,12 @@ Vue.filter('eventLiveDuration', (value) => {
   //     return `${hours}:${duration.minutes()}:${duration.seconds()}`
 })
 Vue.filter('ticketIdSplit', (val) => val.match(/.{1,4}/g).join('  '))
+
+Vue.filter('currencyFormatter', (value) => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
+
+  return formatter.format(value)
+})

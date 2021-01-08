@@ -1,6 +1,6 @@
 <template>
   <line-chart
-    :chart-data="datacollection"
+    :chart-data="chartData"
     :tickets-count="ticketsCount"
   ></line-chart>
 </template>
@@ -13,22 +13,13 @@ export default {
     LineChart,
   },
   props: {
+    chartData: {
+      type: Array,
+      default: () => [],
+    },
     ticketsCount: {
       type: Number,
       default: 0,
-    },
-  },
-  data() {
-    return {
-      datacollection: null,
-    }
-  },
-  mounted() {
-    this.fillData()
-  },
-  methods: {
-    fillData() {
-      this.datacollection = [10, 20, 15, 25, 12, 22, 30]
     },
   },
 }

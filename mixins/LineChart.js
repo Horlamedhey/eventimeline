@@ -6,7 +6,7 @@ export default {
   props: {
     chartData: {
       type: Array,
-      default: () => [100, 40, 106],
+      default: () => [],
     },
     ticketsCount: {
       type: Number,
@@ -30,15 +30,15 @@ export default {
     this.gradient.addColorStop(1, 'rgba(255, 255, 255, 1)')
     this.renderChart(
       {
-        labels: [1, 2, 3, 4, 5, 6, 7],
+        labels: [0, 1, 2, 3, 4, 5, 6],
         datasets: [
           {
-            label: 'Data One',
+            label: 'Tickets sold',
             backgroundColor: this.gradient,
             borderColor: '#22BAB1',
             borderJoinStyle: 'round',
             // fill: false,
-            data: [0, 0, 0, 0],
+            data: this.chartData,
           },
         ],
       },

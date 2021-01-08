@@ -5,21 +5,39 @@
     ></BaseDashHeader>
     <transition name="slide" appear>
       <main class="h-full">
-        <div class="flex min-h-full p-4 space-x-12 font-quicksand">
+        <div class="flex min-h-full p-4 md:space-x-12 font-quicksand">
           <div
-            class="min-h-full px-6 py-10 rounded-xl w-76 min-w-76 from-primary to-primary-variant bg-gradient-to-br"
-            style="height: calc(100vh - 100px)"
+            ref="sideMenu"
+            :class="sidebarOpen ? 'translate-x-0 ease-out' : 'hideSideBar'"
+            class="absolute min-h-full px-6 py-10 transition duration-300 transform rounded-xl w-76 min-w-76 from-primary to-primary-variant bg-gradient-to-br md:relative normalSideBar"
           >
+            <!-- style="height: calc(100vh - 100px)" -->
             <BaseNavList
               :items="navItems"
               content-class="flex items-center px-4 py-5 rounded-lg hover:active-class "
               content-container-class="my-1 text-xl font-medium text-white"
               active-class="active-class"
               add-on-class="w-6 h-6 mr-6"
+              @click="sidebarOpen = false"
             >
             </BaseNavList>
           </div>
-          <div class="flex-grow">
+          <div
+            :class="
+              sidebarOpen
+                ? ['translate-x-11/12', 'sm:translate-x-1/2', 'ease-out']
+                : 'translate-x-0 ease-in'
+            "
+            class="flex-grow p-1 overflow-x-hidden transition duration-300 transform md:translate-x-0"
+          >
+            <BaseButton
+              class="mr-4 md:hidden focus:outline-none"
+              @click="sidebarOpen = !sidebarOpen"
+            >
+              <BaseSideBarIcon
+                :class="sidebarOpen ? 'text-accent' : 'text-primary'"
+              ></BaseSideBarIcon>
+            </BaseButton>
             <Nuxt />
           </div>
         </div>
@@ -31,6 +49,11 @@
 <script>
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      sidebarOpen: false,
+    }
+  },
   computed: {
     navItems() {
       const eventId = this.$route.params.id
@@ -38,7 +61,7 @@ export default {
         {
           label: 'Statistics',
           icon: () => import('@/components/atoms/icons/BaseStatsIcon'),
-          to: `/event/${eventId}/dashboard/`,
+          to: `/event/${eventId}/dashboard`,
         },
         {
           label: 'Check In',
@@ -109,5 +132,12 @@ body {
 }
 .dashboard-main-subtitle {
   @apply text-base font-medium text-black-700;
+}
+.hideSideBar {
+  --tw-translate-x: -110%;
+  @apply ease-in;
+}
+.normalSideBar {
+  @apply md:translate-x-0;
 }
 </style>

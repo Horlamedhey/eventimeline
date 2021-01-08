@@ -11,6 +11,7 @@ export default {
   target: 'server',
 
   server: {
+    host: '0.0.0.0',
     port: '8080', // default: localhost
   },
   privateRuntimeConfig: {
@@ -47,7 +48,7 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['pattern.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins

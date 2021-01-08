@@ -29,13 +29,14 @@
       v-else-if="to"
       :to="to"
       :exact="true"
-      :class="[
-        contentClass,
-        Object.keys($route.query).includes(pointerKey) &&
-        Object.values($route.query).includes(pointerValue)
+      :class="[contentClass]"
+      :active-class="
+        (Object.keys($route.query).includes(pointerKey) &&
+          Object.values($route.query).includes(pointerValue)) ||
+        $route.path === to
           ? activeClass
-          : '',
-      ]"
+          : ''
+      "
     >
       <component
         :is="icon"

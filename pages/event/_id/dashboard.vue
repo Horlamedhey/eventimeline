@@ -16,22 +16,27 @@ export default {
   name: 'Dashboard',
   layout: 'dashboard',
   async fetch() {
-    try {
-      const email = this.$realmApp.currentUser.customData.email
-      const {
-        data: { event },
-      } = await this.$apolloClient.query({
-        query: fetchAdminEvent,
-        variables: { eventId: this.$route.params.id },
-      })
-      await new Promise((resolve) => {
-        this.event = computeRole(event, email)
-        resolve()
-      })
-      this.$store.commit('setDashboardRole', this.event.role)
-    } catch (error) {
-      console.log('meeeee', error)
+    const fetchTheEvents = async () => {
+      try {
+        const email = this.$realmApp.currentUser.customData.email
+        const {
+          data: { event },
+        } = await this.$apolloClient.query({
+          query: fetchAdminEvent,
+          variables: { eventId: this.$route.params.id },
+        })
+        await new Promise((resolve) => {
+          this.event = computeRole(event, email)
+          resolve()
+        })
+        this.$store.commit('setDashboardRole', this.event.role)
+      } catch (error) {
+        console.log('meeeee', error)
+        this.$realmApp.currentUser.refreshCustomData()
+        await fetchTheEvents()
+      }
     }
+    await fetchTheEvents()
   },
   data() {
     return {
