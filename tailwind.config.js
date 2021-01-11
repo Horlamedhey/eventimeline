@@ -112,7 +112,7 @@ module.exports = {
         Bouncers: '#9483D9',
         MCs: '#707070',
         Rentals: '#D180D8',
-        'dashboard-accent': '#DBFFF2',
+        'dashboard-accent': '#D1F5E8',
         'dashboard-accent-variant': '#22BAB1',
         // ...
       },

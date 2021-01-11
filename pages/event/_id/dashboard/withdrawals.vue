@@ -10,7 +10,7 @@
           <BaseDollarIcon></BaseDollarIcon>
         </div>
         <h4 class="mt-2">Total sold</h4>
-        <h4 class="mt-1 text-1xl">N14500</h4>
+        <h4 class="mt-1 text-1xl">{{ amountSold | currencyFormatter }}</h4>
       </div>
       <div
         class="flex flex-col items-center w-4/12 p-5 text-center dashboard-card shadow-outline-dashboard-accent text-dashboard-accent-variant"
@@ -21,7 +21,7 @@
           <BaseWalletIcon></BaseWalletIcon>
         </div>
         <h4 class="mt-2">Available cash</h4>
-        <h4 class="mt-1 text-1xl">N11000</h4>
+        <h4 class="mt-1 text-1xl">{{ amountSold | currencyFormatter }}</h4>
       </div>
       <div class="w-4/12 text-3xl text-center">
         <div
@@ -60,6 +60,12 @@
 <script>
 export default {
   name: 'Withdrawals',
+  props: {
+    event: {
+      type: Object,
+      default: () => {},
+    },
+  },
   data() {
     return {
       noHistory: false,
@@ -81,6 +87,20 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    amountSold() {
+      return this.event.soldTickets.reduce((prevVal, currVal) => {
+        return (
+          prevVal +
+          currVal.units *
+            this.event.tickets.find(
+              (u) =>
+                u.ticketType.toLowerCase() === currVal.ticketType.toLowerCase()
+            ).ticketPrice
+        )
+      }, 0)
+    },
   },
 }
 </script>

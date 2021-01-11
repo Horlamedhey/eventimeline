@@ -33,11 +33,14 @@
         <div class="relative flex items-center justify-center p-2 mt-10">
           <BaseRadialChart
             :chart-data="[
-              ((ticketsCount - tickets.length) * 100) / ticketsCount,
-              (tickets.length * 100) / ticketsCount,
+              Math.round(
+                ((ticketsCount - tickets.length) * 100) / ticketsCount
+              ).toFixed(0),
+              Math.round((tickets.length * 100) / ticketsCount).toFixed(0),
             ]"
+            style="z-index: 1"
           ></BaseRadialChart>
-          <h3 class="absolute text-center text-primary-variant">
+          <h3 class="absolute z-0 text-center text-primary-variant">
             <span class="font-medium text-8xl"
               >{{
                 Math.round((tickets.length * 100) / ticketsCount).toFixed(0)
@@ -63,6 +66,7 @@
       :card-titles="tableHeads"
       :card-contents="tickets"
       no-data-text="No tickets sold yet"
+      class="lg:hidden"
     ></BaseBasicCards>
   </div>
 </template>

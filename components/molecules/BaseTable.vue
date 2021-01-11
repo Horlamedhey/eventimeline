@@ -29,38 +29,41 @@
           :class="tableHeads.length > 0 ? ['rounded', 'shadow-outline'] : []"
         >
           <tr v-for="(tableRow, i) in tableBody" :key="`tableRow-${i}`">
-            <td
-              v-for="tableRowItem in tableRow"
-              :key="tableRowItem"
-              class="table-body"
-              :style="
-                tableHeads.length === 0
-                  ? { paddingLeft: '0', paddingRight: '0' }
-                  : {}
-              "
-            >
-              {{ tableRowItem }}
-            </td>
-            <td v-if="rowHasAction">
-              <BaseButton
-                class="font-medium"
-                :class="[
-                  actionClass,
-                  icon !== null ? 'rounded-full p-1' : 'px-2 py-1 rounded',
-                  { ' cursor-default': takeAction === null },
-                ]"
-                @click="takeAction !== null ? takeAction(i) : takeAction"
+            <template v-for="(tableRowItem, key) in tableRow">
+              <td
+                v-if="!actionFields.includes(key)"
+                :key="tableRowItem"
+                class="table-body"
+                :class="{ 'px-0': tableHeads.length === 0 }"
               >
-                <component
-                  :is="icon"
-                  v-if="icon !== null"
-                  :class="actionClass"
-                ></component>
-                <span v-else>
-                  {{ actionText }}
-                </span>
-              </BaseButton>
-            </td>
+                {{ tableRowItem }}
+              </td>
+            </template>
+            <template v-for="(tableRowItem, key) in tableRow">
+              <td
+                v-if="actionFields.includes(key)"
+                :key="tableRowItem"
+                class="table-body"
+                :class="{ 'px-0': tableHeads.length === 0 }"
+              >
+                <BaseButton
+                  class="font-medium"
+                  :class="[
+                    tableRowItem ? actionActiveClass : actionClass,
+                    icon !== null ? 'rounded-full p-1' : 'px-2 py-1 rounded',
+                  ]"
+                  :disabled="tableRowItem"
+                  @click="
+                    tableRowItem ? null : $emit('takeAction', ticket.ticketId)
+                  "
+                >
+                  <component :is="icon" v-if="icon !== null"></component>
+                  <span v-else>
+                    {{ actionText }}
+                  </span>
+                </BaseButton>
+              </td>
+            </template>
           </tr>
         </tbody>
       </table>
@@ -84,9 +87,17 @@ export default {
       type: [String, Array],
       default: '',
     },
+    actionActiveClass: {
+      type: [String, Array],
+      default: '',
+    },
     noDataText: {
       type: String,
       default: '',
+    },
+    actionFields: {
+      type: Array,
+      default: () => [],
     },
     tableHeads: {
       type: Array,
@@ -103,10 +114,6 @@ export default {
     actionText: {
       type: String,
       default: '',
-    },
-    takeAction: {
-      type: Function,
-      default: null,
     },
   },
 }

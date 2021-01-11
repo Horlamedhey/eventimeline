@@ -6,12 +6,14 @@
     v-else
     :event="event"
     @agents="(agents) => (event.agents = agents)"
+    @takeAction="takeAction"
   ></nuxt-child>
 </template>
 
 <script>
 import fetchAdminEvent from '@/graphs/read/fetchAdminEvent'
-import computeRole from '../../../helpers/computeRole'
+import checkInTicketMutation from '@/graphs/update/checkInTicketMutation'
+import computeRole from '@/helpers/computeRole'
 export default {
   name: 'Dashboard',
   layout: 'dashboard',
@@ -42,6 +44,24 @@ export default {
     return {
       event: null,
     }
+  },
+  methods: {
+    async takeAction(ticketId) {
+      this.event.soldTickets.find(
+        (v) => v.ticketId === ticketId
+      ).checkedIn = true
+      try {
+        await this.$apolloClient.mutate({
+          mutation: checkInTicketMutation,
+          variables: { eventId: this.$route.params.id, ticketId },
+        })
+      } catch (error) {
+        console.log('meeeee', error)
+        // TODO: Keep the faild checking in browser till later
+        // this.$realmApp.currentUser.refreshCustomData()
+        // await fetchTheEvents()
+      }
+    },
   },
   fetchOnServer: false,
   // mounted() {

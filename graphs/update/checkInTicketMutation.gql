@@ -1,0 +1,5 @@
+mutation checkInTicket($eventId: String!, $ticketId: String!) {
+  checkInTicketMutation(
+    input: { input: { eventId: $eventId, ticketId: $ticketId } }
+  )
+}

@@ -78,11 +78,7 @@
             </span>
 
             <BaseDownloadIcon class="w-4 h-4 sm:w-5 sm:h-5"></BaseDownloadIcon>
-            <div
-              class="absolute flex items-center justify-center w-full h-full bg-opacity-75 bg-black-300"
-            >
-              Coming soon...
-            </div>
+            <BaseComingSoon />
           </BaseButton>
           <BaseButton
             class="relative flex items-center justify-around w-6/12 px-1 py-2 ml-3 font-bold duration-500 rounded transion sm:py-3 md:py-4 sm:ml-0 sm:w-full sm:mt-3 font-quicksand focus:outline-none"
