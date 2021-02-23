@@ -27,7 +27,7 @@
               ]
         "
         type="button"
-        @click="disabled ? null : openCloudinaryWidget"
+        @click="disabled ? null : openCloudinaryWidget()"
       >
         <BaseCameraIcon
           v-if="!disabled"
