@@ -85,18 +85,12 @@ export default {
   },
   computed: {
     tickets() {
-      return this.event.soldTickets.map((v) => {
-        const {
-          units,
-          ticketType: type,
-          buyerName: name,
-          ticketId,
-          seller: agent,
-        } = v
+      return (this.event.soldTickets || []).map((v) => {
+        const { units, ticketType: type, buyerName: name, ticketId, seller } = v
         return {
           name,
           ticketId,
-          agent,
+          agent: this.getSellerName(seller),
           type,
           amount: `${
             this.event.tickets.find(
@@ -112,25 +106,33 @@ export default {
       }, 0)
     },
     amountSold() {
-      return this.event.soldTickets.reduce((prevVal, currVal) => {
-        return (
-          prevVal +
-          currVal.units *
-            this.event.tickets.find(
-              (u) =>
-                u.ticketType.toLowerCase() === currVal.ticketType.toLowerCase()
-            ).ticketPrice
-        )
-      }, 0)
+      if (this.event.soldTickets) {
+        return this.event.soldTickets.reduce((prevVal, currVal) => {
+          return (
+            prevVal +
+            currVal.units *
+              this.event.tickets.find(
+                (u) =>
+                  u.ticketType.toLowerCase() ===
+                  currVal.ticketType.toLowerCase()
+              ).ticketPrice
+          )
+        }, 0)
+      }
+      return 0
     },
     lastSevenDaysSales() {
-      const daysAgo = []
-      for (let i = 0; i <= 6; i++) {
-        daysAgo.push(
-          this.event.soldTickets.filter((v) =>
-            moment(moment().subtract(i, 'days')).isSame(v.bookedOn, 'day')
-          ).length
-        )
+      const daysAgo = [0, 0, 0, 0, 0, 0, 0]
+      if (this.event.soldTickets) {
+        for (let i = 0; i <= 6; i++) {
+          daysAgo.splice(
+            i,
+            1,
+            this.event.soldTickets.filter((v) =>
+              moment(moment().subtract(i, 'days')).isSame(v.bookedOn, 'day')
+            ).length
+          )
+        }
       }
       return daysAgo.reverse()
     },

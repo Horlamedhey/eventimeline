@@ -1,7 +1,10 @@
 <template>
   <div class="p-5 mt-16 bg-white rounded-lg shadow-outline">
+    <h4 v-if="loading" class="text-lg font-medium text-center">
+      Loading data...
+    </h4>
     <h4
-      v-if="cardContents.length === 0"
+      v-else-if="cardContents.length === 0"
       class="text-lg font-medium text-center"
     >
       {{ noDataText }}
@@ -26,6 +29,7 @@
             >
               <template v-if="!actionFields.includes(key)">
                 <h3
+                  v-if="cardTitles.length > 0"
                   class="text-xl text-primary-variant-light whitespace-nowrap"
                 >
                   {{ cardTitles[j] }}:
@@ -116,6 +120,10 @@ export default {
     takeAction: {
       type: Function,
       default: null,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
 }

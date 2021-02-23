@@ -1,0 +1,17 @@
+mutation updateOneEvent(
+  $eventId: ObjectId!
+  $eventTitle: String
+  $eventDescription: String
+  $updatedAt: DateTime!
+) {
+  updateOneEvent(
+    query: { _id: $eventId }
+    set: {
+      eventTitle: $eventTitle
+      eventDescription: $eventDescription
+      updatedAt: $updatedAt
+    }
+  ) {
+    _id
+  }
+}

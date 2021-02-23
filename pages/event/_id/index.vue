@@ -118,7 +118,11 @@ export default {
           variables: { eventId: params.id },
         })
         // console.log(event)
-        return event
+        if (event) {
+          return event
+        } else {
+          await fetchTheEvents()
+        }
       } catch (err) {
         console.log('meeeee', err.message)
         if (app.$realmApp.currentUser) {

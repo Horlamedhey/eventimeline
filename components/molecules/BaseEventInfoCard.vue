@@ -59,7 +59,7 @@
             >
               {{
                 event.cheapestTicket.ticketPrice
-                  ? `N ${event.cheapestTicket.ticketPrice}`
+                  ? ` ${event.cheapestTicket.ticketPrice | currencyFormatter}`
                   : 'FREE'
               }}
             </div>

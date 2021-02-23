@@ -5,6 +5,8 @@
     :class="{
       'opacity-50': disabled,
       'cursor-not-allowed': disabled,
+      'cursor-default': cursorDisabled,
+      'cursor-pointer': !cursorDisabled,
       'bg-success': success,
       'bg-error': error,
       'bg-warning': warning,
@@ -15,7 +17,7 @@
     :target="computedTarget"
     :type="type"
     :disabled="disabled"
-    class="cursor-pointer focus:outline-none"
+    class="focus:outline-none"
     @click.stop="handleClick"
   >
     <!-- @slot Main slot used for text -->
@@ -49,6 +51,7 @@ export default {
     info: Boolean,
     /** Disabled mode */
     disabled: Boolean,
+    cursorDisabled: Boolean,
   },
   computed: {
     computedTarget() {

@@ -86,11 +86,11 @@ export default {
           to: `/event/${eventId}/dashboard/modify-event`,
           show: this.$store.state.dashboardRole === 'Organiser',
         },
-        {
-          label: 'Notifications',
-          icon: () => import('@/components/atoms/icons/BaseBellIcon'),
-          to: `/event/${eventId}/dashboard/notifications`,
-        },
+        // {
+        //   label: 'Notifications',
+        //   icon: () => import('@/components/atoms/icons/BaseBellIcon'),
+        //   to: `/event/${eventId}/dashboard/notifications`,
+        // },
       ]
     },
   },

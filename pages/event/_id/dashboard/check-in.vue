@@ -31,13 +31,12 @@
       :table-heads="tableHeads.concat([''])"
       :table-body="tickets"
       no-data-text="No check-ins yet"
-      row-has-action
       :action-fields="['checkedIn']"
       :icon="icon"
       action-active-class="text-dashboard-accent-variant"
       action-class="text-gray-400"
       class="hidden mt-10 lg:block"
-      @takeAction="(ticketId) => $emit('takeAction', ticketId)"
+      @takeAction="(index) => $emit('takeAction', tickets[index].ticketId)"
     ></BaseTable>
     <!-- Small screen -->
     <BaseBasicCards
@@ -51,7 +50,7 @@
       :icon="icon"
       no-data-text="No tickets sold yet"
       class="lg:hidden"
-      @takeAction="(ticketId) => $emit('takeAction', ticketId)"
+      @takeAction="(index) => $emit('takeAction', tickets[index].ticketId)"
     ></BaseBasicCards>
   </div>
 </template>
@@ -76,20 +75,20 @@ export default {
   },
   computed: {
     tickets() {
-      return this.event.soldTickets
+      return (this.event.soldTickets || [])
         .map((v) => {
           const {
             units,
             ticketType: type,
             buyerName: name,
             ticketId,
-            seller: agent,
+            seller,
             checkedIn,
           } = v
           return {
             name,
             ticketId,
-            agent,
+            agent: this.getSellerName(seller),
             type,
             amount: `${
               this.event.tickets.find(

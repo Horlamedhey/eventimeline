@@ -10,7 +10,7 @@
     >
       <BaseButton
         class="absolute top-0 right-0 mt-2 mr-2 sm:rounded-full focus:outline-none"
-        @click="closeBankAccountDialog"
+        @click="$emit('close')"
       >
         <BaseCloseIcon class="text-primary-lighter"></BaseCloseIcon>
       </BaseButton>
@@ -18,9 +18,7 @@
         style="max-width: 80%; margin: auto; text-align: center"
         class="dialog-texts"
       >
-        We found {{ $realmApp.currentUser.customData.accounts.length }} payment
-        credentials on your account, please choose a preferred one or close this
-        dialog to add a new one.
+        {{ textContent }}
       </p>
       <div
         class="flex flex-wrap justify-center mt-6 text-lg text-black-variant-600"
@@ -67,6 +65,7 @@
       </div>
       <BaseButton
         v-if="!loading"
+        :disabled="accounts.find((v) => v.selected) === undefined"
         type="button"
         class="flex items-center justify-center w-56 py-3 m-auto mt-8 font-medium rounded-full bg-secondary-light ripple-bg-secondary-light group"
         @click="continueWithChoice"
@@ -89,13 +88,13 @@ export default {
       type: Boolean,
       default: false,
     },
-    closeBankAccountDialog: {
-      type: Function,
-      default: () => {},
-    },
     bankAccounts: {
       type: Array,
       default: () => [],
+    },
+    textContent: {
+      type: String,
+      default: '',
     },
   },
   data() {

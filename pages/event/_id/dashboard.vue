@@ -7,6 +7,7 @@
     :event="event"
     @agents="(agents) => (event.agents = agents)"
     @takeAction="takeAction"
+    @updateEvent="updateEvent"
   ></nuxt-child>
 </template>
 
@@ -61,6 +62,9 @@ export default {
         // this.$realmApp.currentUser.refreshCustomData()
         // await fetchTheEvents()
       }
+    },
+    updateEvent(values) {
+      console.log(values)
     },
   },
   fetchOnServer: false,

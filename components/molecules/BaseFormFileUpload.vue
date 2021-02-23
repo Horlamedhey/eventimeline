@@ -15,6 +15,7 @@
       />
       <BaseButton
         id="uploadButton"
+        :cursor-disabled="disabled"
         :style="preview ? { backgroundImage: `url(${preview})` } : {}"
         class="w-10/12 px-20 py-16 m-auto transition duration-300 bg-center bg-cover border-2 border-dashed rounded sm:w-auto group"
         :class="
@@ -26,9 +27,10 @@
               ]
         "
         type="button"
-        @click="openCloudinaryWidget"
+        @click="disabled ? null : openCloudinaryWidget"
       >
         <BaseCameraIcon
+          v-if="!disabled"
           class="w-8 h-8 m-auto transition duration-300 group-hover:text-white"
           :class="error ? 'text-error' : 'text-black-300'"
         ></BaseCameraIcon>
@@ -83,6 +85,10 @@ export default {
       default: false,
     },
     noDescription: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
       type: Boolean,
       default: false,
     },

@@ -30,7 +30,7 @@
       action-text="Take Action"
       action-class="text-primary-variant ripple-bg-primary-variant-light"
       class="mt-10"
-      :take-action="takeAction"
+      @takeAction="takeAction"
     ></BaseTable>
   </div>
 </template>
@@ -70,7 +70,9 @@ export default {
     copyLink() {
       const copyText = document.createElement('input')
       new Promise((resolve) => {
-        copyText.value = this.tableBody[this.activeTableItem].agentId
+        copyText.value = `${window.location.origin}/event/${
+          this.event._id
+        }?agent=${this.tableBody[this.activeTableItem].agentId}`
         copyText.style.top = '0'
         copyText.style.left = '0'
         copyText.style.position = 'fixed'

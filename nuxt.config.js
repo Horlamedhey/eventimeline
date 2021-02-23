@@ -61,7 +61,7 @@ export default {
     'plugins/paystack.client.js',
     'plugins/nuxt-client-init.client.js',
     'plugins/html2pdf.client.js',
-    // 'plugins/vue-tailwind-date-picker.client.js',
+    'plugins/vue-currency-input.client.js',
   ],
   /*
    ** Auto import components

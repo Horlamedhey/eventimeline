@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import logoutMixin from '@/mixins/logoutMixin'
 export default {
   name: 'BaseHeader',
+  mixins: [logoutMixin],
   data() {
     return {
       loginOpen: false,
-      logoutConfirmation: false,
       timeline: null,
     }
   },
@@ -154,10 +154,6 @@ export default {
   },
   beforeMount() {
     this.timeline = this.$gsap.timeline()
-    this.$store.commit(
-      'setShowLogout',
-      this.$realmApp.currentUser.customData.email !== 'admin@eventimeline.com'
-    )
   },
   methods: {
     gotoMyEvents() {
@@ -173,25 +169,6 @@ export default {
     openLogin() {
       this.loginOpen = true
     },
-    logout() {
-      this.$store.commit('setShowLogout', false)
-      this.logoutConfirmation = false
-      for (let i = 0; i < this.$realmApp.allUsers.length; i++) {
-        const user = this.$realmApp.allUsers[i]
-        if (
-          user.state === 'active' &&
-          user.customData.email !== 'admin@eventimeline.com'
-        ) {
-          user.logOut()
-        }
-      }
-      if (this.$route.path !== '/') {
-        this.$router.replace('/')
-      }
-    },
-  },
-  computed: {
-    ...mapState(['showLogout']),
   },
 }
 </script>

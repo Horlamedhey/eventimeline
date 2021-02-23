@@ -49,9 +49,10 @@
           $realmApp.currentUser.customData.accounts !== undefined
         "
         :bank-account-dialog="bankAccountDialog"
-        :close-bank-account-dialog="() => (bankAccountDialog = false)"
         :bank-accounts="bankAccounts"
         :loading="loadingAccounts"
+        :text-content="bankAccountDialogTextContent"
+        @close="() => (bankAccountDialog = false)"
         @selectedData="processChoice"
       ></BaseBankAccountDialog>
     </client-only>
@@ -475,6 +476,13 @@ export default {
         // },
       ],
     }
+  },
+  computed: {
+    bankAccountDialogTextContent() {
+      return `We found ${this.$realmApp.currentUser.customData.accounts.length} payment
+        credentials on your account, please choose a preferred one or close this
+        dialog to add a new one.`
+    },
   },
   watch: {
     currentForm(curr, prev) {

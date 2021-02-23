@@ -105,9 +105,10 @@ const fetchTheEvents = async (app, route, lastId) => {
   }
 }
 export default {
-  async asyncData({ app, route, store }) {
+  async asyncData({ app, route, store, error }) {
     const { pageNumber, lastId } = store.state.lastFetch
-    const { events, count } = await fetchTheEvents(
+
+    const result = await fetchTheEvents(
       app,
       route,
       typeof pageNumber === 'number' &&
@@ -115,14 +116,19 @@ export default {
         ? lastId
         : undefined
     )
-    // console.log(this)
-    if (events && events.length > 0) {
-      store.commit('setLastFetch', {
-        lastId: events[events.length - 1]._id,
-        pageNumber: parseInt(route.query.page || 1),
-      })
+    if (result) {
+      const { events, count } = result
+      // console.log(this)
+      if (events && events.length > 0) {
+        store.commit('setLastFetch', {
+          lastId: events[events.length - 1]._id,
+          pageNumber: parseInt(route.query.page || 1),
+        })
+      }
+      return { events, count, loading: process.server }
+    } else {
+      throw error
     }
-    return { events, count, loading: process.server }
   },
   watchQuery: ['category', 'timeline', 'price', 'page'],
   onQueryChange() {
