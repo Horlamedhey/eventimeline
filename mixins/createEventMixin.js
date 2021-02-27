@@ -105,7 +105,7 @@ export default {
           if (
             ticket.maxAvailable === null ||
             ticket.ticketType === '' ||
-            isNaN(ticket.ticketPrice)
+            ticket.ticketPrice === ''
           ) {
             tickets.splice(i, 1)
           } else {
@@ -132,7 +132,7 @@ export default {
           eventTitle: eventTitle.trim(),
           eventDescription: eventDescription.trim(),
           eventCategory: eventCategory.trim(),
-          eventProvisions: eventProvisions.map((v) => v.trim()),
+          eventProvisions: (eventProvisions || []).map((v) => v.trim()),
           isProvisions:
             eventProvisions !== undefined && eventProvisions.length > 0,
           tickets,
@@ -212,11 +212,11 @@ export default {
           createdAt: new Date(),
           updatedAt: new Date(),
         }
-        console.log(finalVariables)
+        // console.log(finalVariables)
         resolve(finalVariables)
       })
 
-      console.log(userVariables)
+      // console.log(userVariables)
 
       try {
         //   create/update user

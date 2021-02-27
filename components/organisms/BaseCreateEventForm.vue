@@ -5,26 +5,26 @@
         :position="1"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
-        class="absolute z-0 w-full h-0 opacity-0"
+        class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventDetails>
       <BaseEventOrganiserDetails
         :position="2"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
-        class="absolute z-0 w-full h-0 opacity-0"
+        class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventOrganiserDetails>
       <BaseEventPaymentDetails
         :position="3"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         :banks="banks"
-        class="absolute z-0 w-full h-0 opacity-0"
+        class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventPaymentDetails>
       <BaseEventThirdPartyArtisans
         :position="4"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
-        class="absolute z-0 w-full h-0 opacity-0"
+        class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventThirdPartyArtisans>
       <BaseEventCreateFinish
         :position="5"
@@ -32,7 +32,7 @@
         :set-current-form="setCurrentForm"
         :loading="loading"
         :new-event-id="newEventId"
-        class="absolute z-0 w-full h-0 opacity-0"
+        class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventCreateFinish>
     </div>
   </div>
