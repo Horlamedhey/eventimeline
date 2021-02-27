@@ -1,4 +1,6 @@
 import setFormValues from '@/mixins/setFormValues'
+import arrayEqualityChecker from '~/helpers/arrayEqualityChecker'
+import objectEqualityChecker from '~/helpers/objectEqualityChecker'
 export default {
   mixins: [setFormValues],
   props: {
@@ -85,7 +87,7 @@ export default {
       // console.log(arg)
       this.completed = true
     },
-    validate(isValid) {
+    async validate(isValid) {
       if (isValid) {
         // console.log('valid', this.choicesSorted)
         const multiNamedFields = this.fields.filter(
@@ -99,7 +101,6 @@ export default {
             multiNames.push(multiName)
           }
         }
-
         for (const key in this.currValues) {
           const element = this.currValues[key]
           const visibility =
@@ -119,10 +120,69 @@ export default {
             if (multiNames.length > 0) {
               for (let i = 0; i < multiNames.length; i++) {
                 const multiName = multiNames[i]
-
                 if (key.includes(multiName)) {
                   if (this.processedCurrValues[multiName]) {
-                    this.processedCurrValues[multiName].push(element)
+                    if (
+                      typeof element === 'string' &&
+                      !this.processedCurrValues[multiName].includes(element)
+                    ) {
+                      // console.log(key, element, multiName, 'string')
+                      this.processedCurrValues[multiName].push(element)
+                    } else if (typeof element === 'object' && element.length) {
+                      const equalities = []
+                      // console.log(key, element, multiName, 'array')
+                      const arrayProcessedCurrValues = this.processedCurrValues[
+                        multiName
+                      ].filter(
+                        (v) => typeof element === 'object' && element.length
+                      )
+                      for (
+                        let j = 0;
+                        j < arrayProcessedCurrValues.length;
+                        j++
+                      ) {
+                        const arrayProcessedCurrValue =
+                          arrayProcessedCurrValues[i]
+                        equalities.push(
+                          await arrayEqualityChecker(
+                            arrayProcessedCurrValue,
+                            element
+                          )
+                        )
+                      }
+
+                      if (!equalities.includes(true)) {
+                        // console.log(element)
+                        this.processedCurrValues[multiName].push(element)
+                      }
+                    } else if (typeof element === 'object' && !element.length) {
+                      // console.log(key, element, multiName, 'object')
+                      const equalities = []
+                      const objectProcessedCurrValues = this.processedCurrValues[
+                        multiName
+                      ].filter(
+                        (v) => typeof element === 'object' && !element.length
+                      )
+                      for (
+                        let j = 0;
+                        j < objectProcessedCurrValues.length;
+                        j++
+                      ) {
+                        const objectProcessedCurrValue =
+                          objectProcessedCurrValues[i]
+                        equalities.push(
+                          await objectEqualityChecker(
+                            objectProcessedCurrValue,
+                            element
+                          )
+                        )
+                      }
+
+                      if (!equalities.includes(true)) {
+                        // console.log(element)
+                        this.processedCurrValues[multiName].push(element)
+                      }
+                    }
                   } else {
                     this.processedCurrValues[multiName] = [element]
                   }
@@ -154,10 +214,16 @@ export default {
       this.timeline.fromTo(
         this.$refs.formContainer,
         {
+          height: 0,
           opacity: 0,
           zIndex: 0,
         },
-        { opacity: 1, zIndex: 1, delay: 1.5 }
+        {
+          height: 'unset',
+          opacity: 1,
+          zIndex: 1,
+          delay: this.position === 1 ? 1.5 : 2,
+        }
       )
       this.timeline.fromTo(
         this.$refs.header,
@@ -173,16 +239,16 @@ export default {
       this.timeline.fromTo(
         this.$refs.form,
         {
-          x: 800,
-          scale: 0,
+          y: 400,
+          scale: 0.7,
         },
         {
-          x: 0,
+          y: 0,
           scale: 1,
-          duration: 1.5,
+          duration: 1,
           ease: 'elastic.out(1, 0.75)',
         },
-        '-=0.5'
+        '-=1.5'
       )
       this.timeline.fromTo(
         this.$refs.actionBtn,
@@ -208,42 +274,48 @@ export default {
         ease: 'bounce.in',
       })
       this.timeline.to(this.$refs.form, {
-        x: -800,
+        y: -400,
         scale: 0,
-        duration: 1.5,
+        duration: 1,
         ease: 'elastic.in(1, 0.75)',
+      })
+      this.timeline.to(this.$refs.formContainer, {
+        height: 0,
+        opacity: 0,
+        zIndex: 0,
       })
       this.timeline.to(this.$refs.actionBtn, {
         opacity: 0,
-        scale: 0.5,
+        scale: 0,
         duration: 1,
         ease: 'Power1.out',
-      })
-      this.timeline.to(this.$refs.formContainer, {
-        opacity: 0,
-        zIndex: 0,
       })
     },
 
     // show the previous form
     reShowForm() {
       this.timeline.to(this.$refs.formContainer, {
+        height: 'unset',
         opacity: 1,
         zIndex: 1,
-        delay: 1.5,
-      })
-      this.timeline.to(this.$refs.header, {
-        opacity: 1,
-        duration: 1,
-        ease: 'power1.out',
+        delay: 0.5,
       })
       this.timeline.to(
         this.$refs.form,
         {
-          x: 0,
+          y: 0,
           scale: 1,
-          duration: 1.5,
+          duration: 2,
           ease: 'elastic.out(1, 0.75)',
+        },
+        '-=0.5'
+      )
+      this.timeline.to(
+        this.$refs.header,
+        {
+          opacity: 1,
+          duration: 1,
+          ease: 'power1.out',
         },
         '-=1'
       )
@@ -269,9 +341,9 @@ export default {
       this.timeline.to(
         this.$refs.form,
         {
-          x: 800,
+          y: 400,
           scale: 0,
-          duration: 1.5,
+          duration: 2,
           ease: 'elastic.out(1, 0.75)',
         },
         '-=0.5'
@@ -286,10 +358,15 @@ export default {
         },
         '-=2'
       )
-      this.timeline.to(this.$refs.formContainer, {
-        opacity: 0,
-        zIndex: 0,
-      })
+      this.timeline.to(
+        this.$refs.formContainer,
+        {
+          height: 0,
+          opacity: 0,
+          zIndex: 0,
+        },
+        '-=2.2'
+      )
     },
   },
 }

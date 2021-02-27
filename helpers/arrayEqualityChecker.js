@@ -11,5 +11,5 @@ export default async (arr1, arr2) => {
     }
     resolve()
   })
-  return equality
+  return equality && arr1.length === arr2.length
 }

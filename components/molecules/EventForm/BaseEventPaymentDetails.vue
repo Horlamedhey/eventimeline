@@ -495,6 +495,9 @@ export default {
         this.loadingAccounts = true
         this.bankAccountDialog = true
         this.fetchBankAccounts()
+      } else {
+        this.loadingAccounts = false
+        this.bankAccountDialog = false
       }
     },
   },

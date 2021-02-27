@@ -13,163 +13,41 @@ import getArrayEquality from '@/helpers/arrayEqualityChecker'
 export default {
   methods: {
     async recordEvent() {
-      // collect event data
-      const {
-        eventDetails: {
-          eventTitle,
-          eventDescription,
-          eventCategory,
-          eventProvisions,
-          eventLocation,
-          eventDate,
-          eventTime,
-          eventImage,
-        },
-        organiserDetails: {
-          organiserName,
-          phone,
-          email,
-          // adminPass
-        },
-        paymentDetails: { accountName, accountNumber, bankName, tickets },
-        thirdPartyArtisans: thirdPartyPerks,
-      } = this.finalData
-
-      const finalEventDate = new Date(`${eventDate} ${eventTime}`)
-
-      for (let i = 0; i < tickets.length; i++) {
-        const ticket = tickets[i]
-        if (
-          ticket.maxAvailable === null ||
-          ticket.ticketType === '' ||
-          isNaN(ticket.ticketPrice)
-        ) {
-          tickets.splice(i, 1)
-        } else {
-          ticket.quantitySold = 0
-          ticket.currency = 'naira'
-          if (
-            typeof ticket.ticketPrice === 'string' &&
-            ticket.ticketPrice.toLowerCase() === 'free'
-          ) {
-            ticket.ticketPrice = 0
-          } else {
-            ticket.ticketPrice = parseInt(ticket.ticketPrice)
-          }
-        }
-      }
-      //   extract event imae an color
-      const eventImageAndColor = eventImage.split(' ')
-
       //   register/login
       const {
-        newUser,
-        user: {
-          id: authId,
-          accessToken,
-          customData: {
-            name: existingName,
-            phone: existingPhone,
-            accounts,
-            events,
-          },
-        },
+        user: { id: authId, accessToken },
       } = this.authUser
-
-      // collect existing data
-      const allAccounts = newUser ? [] : accounts.map((v) => v.$oid)
-      const allEvents = newUser ? [] : events.map((v) => v.$oid)
 
       //   confirm login and login apollo
       assert(authId === this.$realmApp.currentUser.id)
       this.$apolloHelpers.onLogin(accessToken)
 
-      // create bank account mutation variables
-      const accountVariables = {
-        accountName,
-        accountNumber,
-        bankName: bankName.split('_')[1],
-        bankCode: bankName.split('_')[0],
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
-
       // collect bank account id
-      const bankAccountId = await this.getBankAccountId(accountVariables)
-      if (!allAccounts.includes(bankAccountId) && bankAccountId !== null) {
-        allAccounts.unshift(bankAccountId)
-      }
-
-      // create event mutation variables
-      const eventVariables = {
-        email: email.toLowerCase(),
-        eventTitle,
-        eventDescription,
-        eventCategory,
-        eventProvisions,
-        isProvisions:
-          eventProvisions !== undefined && eventProvisions.length > 0,
-        tickets,
-        cheapestTicket: tickets.sort((ticket1, ticket2) =>
-          ticket1.ticketPrice > ticket2.ticketPrice ? 1 : -1
-        )[0],
-        eventLocation,
-        finalEventDate,
-        eventImage: eventImageAndColor[0],
-        color: eventImageAndColor[1],
-        textColor: getColorContrast(eventImageAndColor[1]),
-        thirdPartyPerks:
-          thirdPartyPerks.length > 0 ? thirdPartyPerks : undefined,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      }
+      const bankAccountId = await this.getBankAccountId()
 
       // collect event id
-      const newEventId = await this.getNewEventId(eventVariables)
+      const newEventId = await this.getNewEventId()
 
-      // create user mutation variables
-      const userVariables = {
-        organiserName:
-          organiserName !== existingName ? organiserName : undefined,
-        email: email.toLowerCase(),
-        phone: phone !== existingPhone ? phone : undefined,
-        authId,
-        bankAccounts: allAccounts,
-        events: [newEventId, ...allEvents],
+      //  update user with new event
+      await this.updateUserWithNewEvent(bankAccountId, newEventId)
+      this.newEventId = newEventId
+      this.loading = false
+    },
+
+    async getBankAccountId() {
+      // collect event data
+      const {
+        paymentDetails: { accountName, accountNumber, bankName },
+      } = this.finalData
+      // create bank account mutation variables
+      const accountVariables = {
+        accountName: accountName.trim(),
+        accountNumber: accountNumber.trim(),
+        bankName: bankName.split('_')[1].trim(),
+        bankCode: bankName.split('_')[0].trim(),
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      try {
-        //   create/update user
-        if (newUser) {
-          await this.$apolloClient.mutate({
-            mutation: InsertOneUserMutation,
-            variables: userVariables,
-          })
-          await this.$realmApp.currentUser.refreshCustomData()
-        } else {
-          await this.$apolloClient.mutate({
-            mutation:
-              accounts.length !== allAccounts.length ||
-              !(
-                accounts.length === allAccounts.length &&
-                (await getArrayEquality(
-                  accounts.map((v) => v.$oid),
-                  allAccounts
-                ))
-              )
-                ? UpdateOneUserMutationWithAccounts
-                : UpdateOneUserMutation,
-            variables: userVariables,
-          })
-        }
-        this.newEventId = newEventId
-        this.loading = false
-      } catch (err) {
-        console.error(err.message)
-      }
-    },
-    async getBankAccountId(accountVariables) {
       // proceed
       try {
         const {
@@ -200,7 +78,81 @@ export default {
         }
       }
     },
-    async getNewEventId(eventVariables) {
+
+    async getNewEventId() {
+      const eventVariables = await new Promise((resolve) => {
+        const {
+          eventDetails: {
+            eventTitle,
+            eventDescription,
+            eventCategory,
+            eventProvisions,
+            eventLocation,
+            eventDate,
+            eventTime,
+            eventImage,
+          },
+          organiserDetails: {
+            email,
+            // adminPass
+          },
+          paymentDetails: { tickets },
+          thirdPartyArtisans: thirdPartyPerks,
+        } = this.finalData
+
+        for (let i = 0; i < tickets.length; i++) {
+          const ticket = tickets[i]
+          if (
+            ticket.maxAvailable === null ||
+            ticket.ticketType === '' ||
+            isNaN(ticket.ticketPrice)
+          ) {
+            tickets.splice(i, 1)
+          } else {
+            ticket.quantitySold = 0
+            ticket.currency = 'naira'
+            ticket.ticketType = ticket.ticketType.trim()
+            if (
+              typeof ticket.ticketPrice === 'string' &&
+              ticket.ticketPrice.toLowerCase().trim() === 'free'
+            ) {
+              ticket.ticketPrice = 0
+            } else {
+              ticket.ticketPrice = parseInt(ticket.ticketPrice)
+            }
+          }
+        }
+
+        const cheapestTicket = tickets.sort((ticket1, ticket2) =>
+          ticket1.ticketPrice > ticket2.ticketPrice ? 1 : -1
+        )[0]
+        // create event mutation variables
+        const finalVariables = {
+          email: email.toLowerCase().trim(),
+          eventTitle: eventTitle.trim(),
+          eventDescription: eventDescription.trim(),
+          eventCategory: eventCategory.trim(),
+          eventProvisions: eventProvisions.map((v) => v.trim()),
+          isProvisions:
+            eventProvisions !== undefined && eventProvisions.length > 0,
+          tickets,
+          cheapestTicket,
+          eventLocation: eventLocation.trim(),
+          finalEventDate: new Date(`${eventDate} ${eventTime}`),
+          eventImage: eventImage.split(' ')[0].trim(),
+          color: eventImage.split(' ')[1].trim(),
+          textColor: getColorContrast(eventImage.split(' ')[1].trim()),
+          thirdPartyPerks:
+            thirdPartyPerks.length > 0
+              ? thirdPartyPerks.map((v) => v.trim())
+              : undefined,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+        // console.log(finalVariables)
+        resolve(finalVariables)
+      })
+      // console.log(eventVariables)
       // proceed
       try {
         const {
@@ -214,6 +166,81 @@ export default {
         return event
       } catch (err) {
         console.log(err.message)
+      }
+    },
+
+    async updateUserWithNewEvent(bankAccountId, newEventId) {
+      // collect event data
+      const {
+        organiserDetails: {
+          organiserName,
+          phone,
+          email,
+          // adminPass
+        },
+      } = this.finalData
+
+      // collect user data
+      const {
+        newUser,
+        user: {
+          id: authId,
+          customData: {
+            name: existingName,
+            phone: existingPhone,
+            accounts,
+            events,
+          },
+        },
+      } = this.authUser
+
+      const userVariables = await new Promise((resolve) => {
+        const allEvents = newUser ? [] : events.map((v) => v.$oid)
+        const allAccounts = newUser ? [] : accounts.map((v) => v.$oid)
+        if (!allAccounts.includes(bankAccountId) && bankAccountId !== null) {
+          allAccounts.unshift(bankAccountId)
+        }
+        // proceed
+        const finalVariables = {
+          organiserName:
+            organiserName !== existingName ? organiserName.trim() : undefined,
+          email: email.toLowerCase().trim(),
+          phone: phone !== existingPhone ? phone.trim() : undefined,
+          authId,
+          bankAccounts: allAccounts,
+          events: [newEventId, ...allEvents],
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        }
+        console.log(finalVariables)
+        resolve(finalVariables)
+      })
+
+      console.log(userVariables)
+
+      try {
+        //   create/update user
+        if (newUser) {
+          await this.$apolloClient.mutate({
+            mutation: InsertOneUserMutation,
+            variables: userVariables,
+          })
+          await this.$realmApp.currentUser.refreshCustomData()
+        } else {
+          await this.$apolloClient.mutate({
+            mutation:
+              accounts.length !== userVariables.bankAccounts.length ||
+              !(await getArrayEquality(
+                accounts.map((v) => v.$oid),
+                userVariables.bankAccounts
+              ))
+                ? UpdateOneUserMutationWithAccounts
+                : UpdateOneUserMutation,
+            variables: userVariables,
+          })
+        }
+      } catch (err) {
+        console.error(err.message)
       }
     },
   },

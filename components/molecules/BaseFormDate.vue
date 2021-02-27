@@ -16,7 +16,7 @@
       :value="value"
       :default-value="new Date()"
       value-type="format"
-      format="YYYY-MM-DD"
+      format="YYYY/MM/DD"
       :input-class="inputClassList"
       :disabled-date="disabledBeforeToday"
       @input="(value) => $emit('input', value)"

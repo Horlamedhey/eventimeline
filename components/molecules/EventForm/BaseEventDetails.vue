@@ -131,7 +131,7 @@ export default {
           inputClassList:
             'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
           validators: [{ component: 'required' }],
-          value: new Date().toISOString().split('T')[0],
+          value: new Date().toLocaleDateString().split('/').reverse().join('/'),
         },
         {
           component: 'BaseFormTime',
