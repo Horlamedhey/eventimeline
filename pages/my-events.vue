@@ -29,7 +29,7 @@ export default {
         } = await this.$apolloClient.query({
           query: fetchMyEvents,
           variables: {
-            email: this.$realmApp.currentUser.customData.email,
+            email: this.$realmApp.currentUser.profile.email,
             lastId:
               typeof pageNumber === 'number' &&
               parseInt(this.$route.query.page) === pageNumber + 1
@@ -51,7 +51,7 @@ export default {
           this.$realmApp.currentUser.refreshCustomData()
         }
       } catch (error) {
-        console.log('meeeee', error)
+        console.log('meeeee', error.message)
         this.$realmApp.currentUser.refreshCustomData()
         await fetchTheEvents()
       }
