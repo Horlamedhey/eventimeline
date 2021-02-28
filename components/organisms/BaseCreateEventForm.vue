@@ -6,28 +6,28 @@
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         class="absolute z-0 w-full h-0 px-1 opacity-0"
-      ></BaseEventDetails>
+      ></BaseEventDetails>-->
       <BaseEventOrganiserDetails
-        :position="2"
+        :position="1"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         class="absolute z-0 w-full h-0 px-1 opacity-0"
-      ></BaseEventOrganiserDetails>-->
+      ></BaseEventOrganiserDetails>
       <BaseEventPaymentDetails
-        :position="1"
+        :position="2"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         :banks="banks"
         class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventPaymentDetails>
       <BaseEventThirdPartyArtisans
-        :position="2"
+        :position="3"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         class="absolute z-0 w-full h-0 px-1 opacity-0"
       ></BaseEventThirdPartyArtisans>
       <BaseEventCreateFinish
-        :position="3"
+        :position="4"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         :loading="loading"
