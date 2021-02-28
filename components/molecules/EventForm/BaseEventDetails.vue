@@ -5,7 +5,7 @@
     </h3>
     <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline form-container">
-        <!-- <BaseForm
+        <BaseForm
           :form-name="formName"
           :fields="fields"
           :completed="completed"
@@ -13,7 +13,7 @@
           @input="setValues"
           @increment="incrementField"
           @decrement="decrementField"
-        ></BaseForm> -->
+        ></BaseForm>
       </div>
     </div>
 
@@ -60,99 +60,99 @@ export default {
           ],
           value: '',
         },
-        {
-          component: 'BaseFormTextArea',
-          name: 'eventDescription',
-          label: 'DESCRIPTION',
-          classList: 'mt-8 w-full',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 px-2 rounded w-full py-4 text-lg',
-          validators: [
-            { component: 'required' },
-            { component: 'minLength', param: 20 },
-          ],
-          value: '',
-        },
-        {
-          component: 'BaseFormSelect',
-          name: 'eventCategory',
-          options: [
-            { label: 'Birthday', value: 'birthday' },
-            { label: 'Conference', value: 'conference' },
-            { label: 'Convocation', value: 'convocation' },
-            { label: 'Dinner', value: 'dinner' },
-            { label: 'Seminar', value: 'seminar' },
-            { label: 'Hangout', value: 'hangout' },
-            { label: 'Launch Party', value: 'launch party' },
-            { label: 'Matriculation', value: 'matriculation' },
-            { label: 'Meetup', value: 'meetup' },
-            { label: 'Wedding', value: 'wedding' },
-            { label: 'Others', value: 'others' },
-          ],
-          label: 'SELECT CATEGORY',
-          classList: 'w-full mt-8',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
-          validators: [{ component: 'required' }],
-          emptyValueLabel: 'Choose category',
-          value: 'hangout',
-        },
-        {
-          component: 'BaseFormText',
-          multiName: 'eventProvisions',
-          name: 'eventProvisions1',
-          type: 'text',
-          label: 'PROVISIONS e.g. Security... (OPTIONAL)',
-          incremental: true,
-          classList: 'mt-8 w-full',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [{ component: 'minLength', param: 2 }],
-          value: '',
-        },
-        {
-          component: 'BaseFormText',
-          name: 'eventLocation',
-          type: 'text',
-          label: 'LOCATION',
-          autocomplete: 'on',
-          classList: 'mt-8 w-full',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [{ component: 'required' }],
-          value: '',
-        },
-        {
-          component: 'BaseFormDate',
-          name: 'eventDate',
-          type: 'text',
-          label: 'DATE',
-          classList: 'sm:w-1/2 sm:pr-2 w-full mt-8',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [{ component: 'required' }],
-          value: new Date().toLocaleDateString().split('/').reverse().join('/'),
-        },
-        {
-          component: 'BaseFormTime',
-          name: 'eventTime',
-          type: 'text',
-          label: 'TIME',
-          classList: 'sm:w-1/2 sm:pl-2 w-full mt-8',
-          inputClassList:
-            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-          validators: [{ component: 'required' }],
-          value: `01:00 AM`,
-        },
-        {
-          component: 'BaseFormFileUpload',
-          fieldId: 'imageInput',
-          name: 'eventImage',
-          type: 'text',
-          classList: 'w-full mt-8',
-          validators: [],
-          value: '',
-        },
+        // {
+        //   component: 'BaseFormTextArea',
+        //   name: 'eventDescription',
+        //   label: 'DESCRIPTION',
+        //   classList: 'mt-8 w-full',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 px-2 rounded w-full py-4 text-lg',
+        //   validators: [
+        //     { component: 'required' },
+        //     { component: 'minLength', param: 20 },
+        //   ],
+        //   value: '',
+        // },
+        // {
+        //   component: 'BaseFormSelect',
+        //   name: 'eventCategory',
+        //   options: [
+        //     { label: 'Birthday', value: 'birthday' },
+        //     { label: 'Conference', value: 'conference' },
+        //     { label: 'Convocation', value: 'convocation' },
+        //     { label: 'Dinner', value: 'dinner' },
+        //     { label: 'Seminar', value: 'seminar' },
+        //     { label: 'Hangout', value: 'hangout' },
+        //     { label: 'Launch Party', value: 'launch party' },
+        //     { label: 'Matriculation', value: 'matriculation' },
+        //     { label: 'Meetup', value: 'meetup' },
+        //     { label: 'Wedding', value: 'wedding' },
+        //     { label: 'Others', value: 'others' },
+        //   ],
+        //   label: 'SELECT CATEGORY',
+        //   classList: 'w-full mt-8',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full text-lg',
+        //   validators: [{ component: 'required' }],
+        //   emptyValueLabel: 'Choose category',
+        //   value: 'hangout',
+        // },
+        // {
+        //   component: 'BaseFormText',
+        //   multiName: 'eventProvisions',
+        //   name: 'eventProvisions1',
+        //   type: 'text',
+        //   label: 'PROVISIONS e.g. Security... (OPTIONAL)',
+        //   incremental: true,
+        //   classList: 'mt-8 w-full',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+        //   validators: [{ component: 'minLength', param: 2 }],
+        //   value: '',
+        // },
+        // {
+        //   component: 'BaseFormText',
+        //   name: 'eventLocation',
+        //   type: 'text',
+        //   label: 'LOCATION',
+        //   autocomplete: 'on',
+        //   classList: 'mt-8 w-full',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+        //   validators: [{ component: 'required' }],
+        //   value: '',
+        // },
+        // {
+        //   component: 'BaseFormDate',
+        //   name: 'eventDate',
+        //   type: 'text',
+        //   label: 'DATE',
+        //   classList: 'sm:w-1/2 sm:pr-2 w-full mt-8',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+        //   validators: [{ component: 'required' }],
+        //   value: new Date().toLocaleDateString().split('/').reverse().join('/'),
+        // },
+        // {
+        //   component: 'BaseFormTime',
+        //   name: 'eventTime',
+        //   type: 'text',
+        //   label: 'TIME',
+        //   classList: 'sm:w-1/2 sm:pl-2 w-full mt-8',
+        //   inputClassList:
+        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+        //   validators: [{ component: 'required' }],
+        //   value: `01:00 AM`,
+        // },
+        // {
+        //   component: 'BaseFormFileUpload',
+        //   fieldId: 'imageInput',
+        //   name: 'eventImage',
+        //   type: 'text',
+        //   classList: 'w-full mt-8',
+        //   validators: [],
+        //   value: '',
+        // },
       ],
     }
   },
