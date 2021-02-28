@@ -62,6 +62,7 @@ export default {
     'plugins/nuxt-client-init.client.js',
     'plugins/html2pdf.client.js',
     'plugins/vue-currency-input.client.js',
+    'plugins/datepicker.client.js',
   ],
   /*
    ** Auto import components

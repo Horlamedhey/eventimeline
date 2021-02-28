@@ -11,18 +11,19 @@
         <template v-if="required">* </template>{{ label }}
       </BaseLabel>
     </div>
-
-    <!-- <date-picker
-      :value="value"
-      :default-value="new Date()"
-      value-type="format"
-      format="YYYY/MM/DD"
-      :input-class="inputClassList"
-      :disabled-date="disabledBeforeToday"
-      @input="(value) => $emit('input', value)"
-      @focus="$emit('focus', $event)"
-      @blur="$emit('blur', $event)"
-    ></date-picker> -->
+    <client-only>
+      <date-picker
+        :value="value"
+        :default-value="new Date()"
+        value-type="format"
+        format="YYYY/MM/DD"
+        :input-class="inputClassList"
+        :disabled-date="disabledBeforeToday"
+        @input="(value) => $emit('input', value)"
+        @focus="$emit('focus', $event)"
+        @blur="$emit('blur', $event)"
+      ></date-picker>
+    </client-only>
 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
@@ -31,11 +32,9 @@
 </template>
 
 <script>
-// import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 export default {
   name: 'BaseFormDate',
-  // components: { DatePicker },
   props: {
     /** Label text for the field */
     label: String,
