@@ -12,7 +12,7 @@
       </BaseLabel>
     </div>
 
-    <date-picker
+    <!-- <date-picker
       :value="value"
       :default-value="new Date()"
       value-type="format"
@@ -26,16 +26,16 @@
 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
-import DatePicker from 'vue2-datepicker'
+// import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 export default {
   name: 'BaseFormDate',
-  components: { DatePicker },
+  // components: { DatePicker },
   props: {
     /** Label text for the field */
     label: String,
