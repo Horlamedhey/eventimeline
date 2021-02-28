@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="relative min-h-260 sm:min-h-220">
-      <!--  <BaseEventDetails
+      <!--  --><BaseEventDetails
         :position="1"
         :current-form="currentForm"
         :set-current-form="setCurrentForm"
         class="absolute z-0 w-full h-0 px-1 opacity-0"
-      ></BaseEventDetails>-->
+      ></BaseEventDetails>
       <BaseEventOrganiserDetails
         :position="1"
         :current-form="currentForm"
