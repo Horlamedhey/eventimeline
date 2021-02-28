@@ -122,17 +122,17 @@ export default {
           validators: [{ component: 'required' }],
           value: '',
         },
-        // {
-        //   component: 'BaseFormDate',
-        //   name: 'eventDate',
-        //   type: 'text',
-        //   label: 'DATE',
-        //   classList: 'sm:w-1/2 sm:pr-2 w-full mt-8',
-        //   inputClassList:
-        //     'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
-        //   validators: [{ component: 'required' }],
-        //   value: new Date().toLocaleDateString().split('/').reverse().join('/'),
-        // },
+        {
+          component: 'BaseFormDate',
+          name: 'eventDate',
+          type: 'text',
+          label: 'DATE',
+          classList: 'sm:w-1/2 sm:pr-2 w-full mt-8',
+          inputClassList:
+            'focus:border-2 border focus:border-accent4 border-black-200 h-10 px-2 rounded w-full py-4 text-lg',
+          validators: [{ component: 'required' }],
+          value: new Date().toLocaleDateString().split('/').reverse().join('/'),
+        },
         // {
         //   component: 'BaseFormTime',
         //   name: 'eventTime',
