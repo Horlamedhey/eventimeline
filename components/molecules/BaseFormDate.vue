@@ -12,7 +12,7 @@
       </BaseLabel>
     </div>
 
-    <!-- <date-picker
+    <date-picker
       :value="value"
       :default-value="new Date()"
       value-type="format"
@@ -23,7 +23,7 @@
       @focus="$emit('focus', $event)"
       @blur="$emit('blur', $event)"
     ></date-picker>
-
+    <!-- 
     <div>
       <BaseValidationMessages :error="error" :error-messages="errorMessages" />
     </div> -->
