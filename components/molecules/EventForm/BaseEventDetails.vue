@@ -15,7 +15,7 @@
           @decrement="decrementField"
         ></BaseForm>
       </div>
-    </div>
+    </div> -->
 
     <div ref="actionBtn" class="flex items-center justify-center mt-20">
       <BaseButton
@@ -32,7 +32,7 @@
           class="ml-2 next-button-content group-hover:transition group-hover:text-white"
         ></BaseArrowRightIcon>
       </BaseButton>
-    </div> -->
+    </div>
   </div>
 </template>
 
