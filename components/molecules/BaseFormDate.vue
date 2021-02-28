@@ -31,11 +31,11 @@
 </template>
 
 <script>
-// import DatePicker from 'vue2-datepicker'
+import DatePicker from 'vue2-datepicker'
 import 'vue2-datepicker/index.css'
 export default {
   name: 'BaseFormDate',
-  // components: { DatePicker },
+  components: { DatePicker },
   props: {
     /** Label text for the field */
     label: String,
