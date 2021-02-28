@@ -3,7 +3,7 @@
     <h3 ref="header" class="font-medium text-1xl sm:text-2-5xl">
       Step 1:<br />Event Details
     </h3>
-    <div ref="form" class="mt-10 shadow-md">
+    <!-- <div ref="form" class="mt-10 shadow-md">
       <div class="px-6 py-10 rounded shadow-outline form-container">
         <BaseForm
           :form-name="formName"
@@ -32,7 +32,7 @@
           class="ml-2 next-button-content group-hover:transition group-hover:text-white"
         ></BaseArrowRightIcon>
       </BaseButton>
-    </div>
+    </div> -->
   </div>
 </template>
 
