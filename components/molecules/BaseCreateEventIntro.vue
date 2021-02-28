@@ -6,7 +6,10 @@
     >
       Create<br />New Event
     </h2>
-    <p ref="description" class="w-full mt-5 text-base font-medium sm:text-2xl">
+    <p
+      ref="description"
+      class="w-full mt-5 text-base font-medium md:text-2xl sm:text-xl"
+    >
       Follow these simple steps to create your awesome event.
     </p>
     <BaseButton

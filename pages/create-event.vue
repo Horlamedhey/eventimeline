@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex flex-wrap justify-between pb-64 m-auto bg-white border-t md:flex-no-wrap font-quicksand xl:w-7/12"
+    class="flex flex-wrap justify-between pb-64 m-auto bg-white border-t lg:pb-96 md:flex-no-wrap font-quicksand xl:w-7/12"
   >
     <BaseCreateEventIntro
       :style="{
         backgroundImage: `url(${require('@/static/images/create-event-vector.png')})`,
       }"
-      class="px-8 py-20 bg-no-repeat bg-contain w-72 sm:w-96"
+      class="py-20 pl-5 pr-8 bg-no-repeat bg-contain w-72 sm:w-80"
     ></BaseCreateEventIntro>
     <BaseCreateEventForm
       :banks="banks"

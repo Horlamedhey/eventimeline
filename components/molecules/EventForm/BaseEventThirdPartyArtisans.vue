@@ -19,10 +19,7 @@
             >
               <BaseButton
                 class="relative w-full py-2 font-medium text-white rounded"
-                :class="[
-                  `bg-${thirdPartyRole.role.replace(' ', '-')}`,
-                  ` ripple-bg-${thirdPartyRole.role.replace(' ', '-')}`,
-                ]"
+                :class="[thirdPartyRole.color, thirdPartyRole.rippleColor]"
                 @click="selectOption(i)"
               >
                 {{ thirdPartyRole.role }}
@@ -91,12 +88,42 @@ export default {
       currValues: [],
       prevValues: [],
       thirdPartyRoles: [
-        { role: 'Photographers', selected: false },
-        { role: 'Catering Service', selected: false },
-        { role: 'DJs', selected: false },
-        { role: 'Bouncers', selected: false },
-        { role: 'MCs', selected: false },
-        { role: 'Rentals', selected: false },
+        {
+          role: 'Photographers',
+          color: 'bg-photographers',
+          rippleColor: ' ripple-bg-photographers',
+          selected: false,
+        },
+        {
+          role: 'Catering Service',
+          color: 'bg-catering-service',
+          rippleColor: ' ripple-bg-catering-service',
+          selected: false,
+        },
+        {
+          role: 'DJs',
+          color: 'bg-djs',
+          rippleColor: ' ripple-bg-djs',
+          selected: false,
+        },
+        {
+          role: 'Bouncers',
+          color: 'bg-bouncers',
+          rippleColor: ' ripple-bg-bouncers',
+          selected: false,
+        },
+        {
+          role: 'MCs',
+          color: 'bg-mcs',
+          rippleColor: ' ripple-bg-mcs',
+          selected: false,
+        },
+        {
+          role: 'Rentals',
+          color: 'bg-rentals',
+          rippleColor: ' ripple-bg-rentals',
+          selected: false,
+        },
       ],
     }
   },

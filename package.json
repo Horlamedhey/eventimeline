@@ -50,8 +50,8 @@
     "stylelint": "^13.6.1",
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^20.0.0",
+    "tailwindcss-ripple": "^0.6.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
-    "tailwindcss-ripple": "^0.5.0",
     "vue2-datepicker": "^3.7.0",
     "vuelidate": "^0.7.5"
   }

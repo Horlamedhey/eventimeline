@@ -13,25 +13,29 @@ import getArrayEquality from '@/helpers/arrayEqualityChecker'
 export default {
   methods: {
     async recordEvent() {
-      //   register/login
-      const {
-        user: { id: authId, accessToken },
-      } = this.authUser
+      try {
+        //   register/login
+        const {
+          user: { id: authId, accessToken },
+        } = this.authUser
 
-      //   confirm login and login apollo
-      assert(authId === this.$realmApp.currentUser.id)
-      this.$apolloHelpers.onLogin(accessToken)
+        //   confirm login and login apollo
+        assert(authId === this.$realmApp.currentUser.id)
+        this.$apolloHelpers.onLogin(accessToken)
 
-      // collect bank account id
-      const bankAccountId = await this.getBankAccountId()
+        // collect bank account id
+        const bankAccountId = await this.getBankAccountId()
 
-      // collect event id
-      const newEventId = await this.getNewEventId()
+        // collect event id
+        const newEventId = await this.getNewEventId()
 
-      //  update user with new event
-      await this.updateUserWithNewEvent(bankAccountId, newEventId)
-      this.newEventId = newEventId
-      this.loading = false
+        //  update user with new event
+        await this.updateUserWithNewEvent(bankAccountId, newEventId)
+        this.newEventId = newEventId
+        this.loading = false
+      } catch (err) {
+        console.log(err)
+      }
     },
 
     async getBankAccountId() {

@@ -63,6 +63,7 @@ export default {
         {
           component: 'BaseFormText',
           name: 'email',
+          fieldId: 'login-email',
           type: 'email',
           label: 'EMAIL',
           autocomplete: 'on',
