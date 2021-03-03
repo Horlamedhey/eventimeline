@@ -6,7 +6,7 @@
       <div class="w-full p-5 shadow-outline lg:w-8/12 dashboard-card">
         <div class="p-2 rounded-lg bg-dashboard-accent">
           <h1 class="text-3xl chart-text">
-            {{ event.eventDate | eventLiveDuration }} Days
+            {{ event.createdAt | eventLiveDuration }} Days
           </h1>
           <h3 class="chart-text">Avg. Tickets Sold Per 7 days.</h3>
         </div>
